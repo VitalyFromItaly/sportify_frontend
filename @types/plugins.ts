@@ -3,17 +3,17 @@ import { TNotificationPayload } from './domain';
 // import { IPresenterPlugin } from '~/plugins/presenter';
 import { IBrowserStorage } from '~/core/cache/Domain';
 import { IEventBus } from '~/core/bus/Domain';
+import IAuth from '~/core/auth/IAuth';
 declare module 'vue/types/vue' {
   // this.$api inside Vue components
   interface Vue {
     // $api: IApi;
     // $http: IFetchAdapter;
-    // $auth: IAuth;
+    $auth: IAuth;
     // $bus: IEventBus;
     // $presenter: IPresenterPlugin;
     $cache: IBrowserStorage;
     $bus: IEventBus;
-    // $auth: NuxtAxiosInstance;
     $notification: (payload: TNotificationPayload) => void;
   }
 }
@@ -22,12 +22,13 @@ declare module '@nuxt/types' {
   interface NuxtAppOptions {
     // $presenter: IPresenterPlugin;
     $cache: IBrowserStorage;
-    // $auth: NuxtAxiosInstance;
+    $auth: IAuth;
     $bus: IEventBus;
     $notification: (payload: TNotificationPayload) => void;
 
   }
   interface Context {
+    $auth: IAuth;
     // $presenter: IPresenterPlugin;
     // $auth: NuxtAxiosInstance;
     $cache: IBrowserStorage;

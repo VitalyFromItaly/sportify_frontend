@@ -1,11 +1,10 @@
-// import { Context, Plugin } from '@nuxt/types';
+import { Context, Plugin } from '@nuxt/types';
+import Auth from '~/core/auth/Auth';
 
-// const auth: Plugin = ({ $axios, $config }: Context, inject: any) => {
-//   const { baseUrl, authPort } = $config;
-//   const auth = $axios.create();
-//   auth.setBaseURL(`${baseUrl}:${authPort}`);
+const auth: Plugin = ({ $config }: Context, inject: any) => {
+  const auth = new Auth($config.baseUrl);
 
-//   inject('auth', auth);
-// };
+  inject('auth', auth);
+};
 
-// export default auth;
+export default auth;
