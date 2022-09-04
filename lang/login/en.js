@@ -9,8 +9,8 @@ export default {
   repeatPasswordPlaceholder: 'Type in your password',
   loginButton: 'Sign in',
   forgotPassword: 'Forgot your password?',
-  loginAlternativeHint: 'Already have an account?',
-  loginAlternativeHintLink: 'Sign in',
+  loginAlternativeHint: `Don't have an account?`,
+  loginAlternativeHintLink: 'Sign up',
   loginTooltipHeader: 'Password requires',
   loginTooltipContent: ['8 symbols minimum', '1 capital letter', '1 special symbol']
 };

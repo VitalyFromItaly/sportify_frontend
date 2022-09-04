@@ -17,9 +17,9 @@ import { buttonClasses, disabledButtonClasses } from './domain/Domain';
 
 @Component
 export default class UIButton extends Vue {
-  @Prop({ default: false }) fullWidth: boolean;
-  @Prop({ default: EButtonAppearance.PRIMARY }) appearance: TButtonType;
-  @Prop({ default: false }) isDisabled: boolean;
+  @Prop({ type: Boolean, default: false }) fullWidth: boolean;
+  @Prop({ type: String, default: EButtonAppearance.PRIMARY }) appearance: TButtonType;
+  @Prop({ type: Boolean, default: false }) isDisabled: boolean;
 
   private get disabledClasses(): string {
     const classes = disabledButtonClasses[this.appearance];

@@ -8,57 +8,96 @@
 
 /* eslint-disable */
 import Vue from "vue";
-import { ValidationObserver, ValidationProvider, extend, localize } from 'vee-validate';
+import VueI18n from 'vue-i18n';
+import { ValidationObserver, ValidationProvider, extend, configure } from 'vee-validate';
 import ru from 'vee-validate/dist/locale/ru.json';
+import en from 'vee-validate/dist/locale/en.json';
 import * as rules from 'vee-validate/dist/rules';
-import { password } from '~/core/validation'
-import { email, confirmed, required, max, max_value } from 'vee-validate/dist/rules.umd.js';
+import { context } from '~/core/context';
+configure({
+  defaultMessage: (field, values) => {
+    // override the field name.
+    values._field_ = context.i18n.t(`fields.${field}`);
+
+    return context.i18n.t(`validation.${values._rule_}`, values);
+  }
+});
 
 // install rules and localization
 Object.keys(rules).forEach((rule) => {
   extend(rule, rules[rule]);
 });
 
-localize('ru', ru);
-
-extend('required', {
-  ...required,
-  message: 'Поле обязательно к заполнению'
-});
-
-extend('email', {
-  ...email,
-  message: 'Проверьте написание email-адреса'
-});
-
-extend('check-forbidden-symbols',  text => {
-  const forbiddenSymbols = /[[\]{}<>]/;
-  if (forbiddenSymbols.test(text)) {
-    return 'Комментарий содержит запрещённые символы.'
-  }
-
-  return true;
-});
+// extend('password', {
+//   ...password,
+//   message: 'Пароль не удовлетворяет требованиям'
+// });
 
 extend('password', {
-  ...password,
-  message: 'Пароль не удовлетворяет требованиям'
+  // getMessage: field => `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. , . _ & ? etc)`,
+  validate: value => {
+      const passwordRegex = new RegExp("/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/");
+      return strongRegex.test(value);
+  }
 });
 
-extend('confirmed', {
-  ...confirmed,
-  message: 'Пароли не совпадают'
-});
+// localize({
+//   en: {
+//     messages: {
+//       email: 'Invalid e-mail',
+//       required: 'The field is required',
+//       password: 'Incorrect password',
+//       passwordConfirmed: `Passwords don't match`
+//     }
+//   },
+//   ru: {
+//     messages: {
+//       required: 'Поле обязательно для заполнения',
+//       password: 'Пароль не удовлетворяет требованиям',
+//       passwordConfirmed: 'Пароли не совпадают',
+//       email: 'Проверьте написание email-адреса'
+//     }
+//   }
+// });
 
-extend('max', {
-  ...max,
-  message: (_, { length}) => `Количество символов не может быть больше ${length}`
-});
+// extend('required', {
+//   ...required,
+//   message: 'Поле обязательно к заполнению'
+// });
 
-extend('max_value', {
-  ...max_value,
-  message: (_, { max}) => `Значение не может быть больше ${max}`
-});
+// extend('email', {
+//   ...email,
+//   message: 'Проверьте написание email-адреса'
+// });
+
+// extend('check-forbidden-symbols',  text => {
+//   const forbiddenSymbols = /[[\]{}<>]/;
+//   if (forbiddenSymbols.test(text)) {
+//     return 'Комментарий содержит запрещённые символы.'
+//   }
+
+//   return true;
+// });
+
+// extend('password', {
+//   ...password,
+//   message: 'Пароль не удовлетворяет требованиям'
+// });
+
+// extend('confirmed', {
+//   ...confirmed,
+//   message: 'Пароли не совпадают'
+// });
+
+// extend('max', {
+//   ...max,
+//   message: (_, { length}) => `Количество символов не может быть больше ${length}`
+// });
+
+// extend('max_value', {
+//   ...max_value,
+//   message: (_, { max}) => `Значение не может быть больше ${max}`
+// });
 
 // Install components globally
 Vue.component('ValidationObserver', ValidationObserver);

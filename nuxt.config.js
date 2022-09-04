@@ -53,6 +53,7 @@ export default () => {
       '~/plugins/auth',
       '~/plugins/api',
       '~/plugins/validation',
+      '~/plugins/i18n',
       '~/plugins/store',
       '~/plugins/presenter',
       '~/plugins/cache',
@@ -102,7 +103,8 @@ export default () => {
           ],
           strategy: 'no_prefix',
           langDir: 'lang/',
-          defaultLocale: 'en'
+          defaultLocale: 'en',
+          silentTranslationWarn: true
         }
       ]
     ],

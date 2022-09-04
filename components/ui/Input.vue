@@ -6,13 +6,14 @@
     <input
       :id="id"
       :value="value"
-      class="inline border pl-3 py-1 focus:outline-none focus:border-middleTeal"
+      class="inline border pl-3 py-1 focus:outline-none"
       :class="[internalSize, internalClasses]"
       :type="type"
       :placeholder="placeholder"
       @input="updateValue"
+      @blur="isFocusLost = true"
     />
-    <p v-if="isError" class="text-rose-600">
+    <p v-if="isFocusLost && isError" class="text-rose-600">
       {{ errorMessage }}
     </p>
   </div>
@@ -42,23 +43,25 @@ export default class UIInput extends Vue {
     }
   }) size: TInputSize;
 
-  @Prop({ default: false }) required: boolean;
-  @Prop({ default: false }) isDisabled: boolean;
+  @Prop({ type: Boolean, default: false }) required: boolean;
+  @Prop({ type: Boolean, default: false }) isDisabled: boolean;
   @Prop({ default: 'Placeholder' }) placeholder: string;
-  @Prop({ default: false }) isError: boolean;
+  @Prop({ type: Boolean, default: false }) isError: boolean;
   @Prop({ default: '' }) errorMessage: string;
 
   @Model('input') readonly value!: TInputTypeValue;
 
   private id: string = uuidv4();
 
+  private isFocusLost = false;
+
   private updateValue(event: any): void {
     this.$emit('input', event.target.value);
   }
 
   private get internalClasses(): string {
+    if (this.isFocusLost && this.isError) { return inputClasses.isError; }
     if (this.isDisabled) { return inputClasses.isDisabled; }
-    if (this.isError) { return inputClasses.isError; }
     return inputClasses.default;
   }
 

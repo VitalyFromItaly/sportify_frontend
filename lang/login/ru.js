@@ -9,8 +9,8 @@ export default {
   repeatPasswordPlaceholder: 'Введите пароль',
   loginButton: 'Войти',
   forgotPassword: 'Забыли пароль?',
-  loginAlternativeHint: 'Уже есть аккаунт?',
-  loginAlternativeHintLink: 'Войти',
+  loginAlternativeHint: 'Нет аккаунта?',
+  loginAlternativeHintLink: 'Зарегистрироваться',
   loginTooltipHeader: 'Требования к паролю',
   loginTooltipContent: ['Минимум 8 символов', '1 заглавная буква', '1 специальный символ']
 };

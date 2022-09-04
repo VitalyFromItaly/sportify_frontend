@@ -32,6 +32,6 @@ export const inputTextSizes = {
 
 export const inputClasses = {
   isDisabled: 'bg-disabled cursor-not-allowed',
-  default: 'hover:border-middleTeal active:border-middleTeal focus:border-middleTeal, border-disabled dark:bg-dark dark:text-gray-300',
+  default: 'hover:border-middleTeal active:border-middleTeal focus:border-middleTeal border-disabled dark:bg-dark dark:text-gray-300',
   isError: 'border-rose-600'
 };

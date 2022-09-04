@@ -11,8 +11,9 @@
       :type="type"
       :placeholder="placeholder"
       @input="updateValue"
+      @blur="isTouched = true"
     />
-    <p v-if="isError" class="text-rose-600">
+    <p v-if="isTouched && isError" class="text-rose-600">
       {{ errorMessage }}
     </p>
   </div>
@@ -51,6 +52,8 @@ export default class UIInput extends Vue {
   @Model('input') readonly value!: TInputTypeValue;
 
   private id: string = uuidv4();
+
+  private isTouched = false;
 
   private updateValue(event: any): void {
     this.$emit('input', event.target.value);
