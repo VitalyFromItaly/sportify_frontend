@@ -1,21 +1,23 @@
 <template>
   <button
-    class="px-5 py-1 m-1"
-    :class="classes"
+    class="px-5 py-1 my-1"
+    :class="[classes, fullWidth ? 'w-full': '' ]"
     :disabled="isDisabled"
+    @click="$emit('click')"
   >
     <slot></slot>
   </button>
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop } from 'nuxt-property-decorator';
-import { EButtonAppearance } from './@types';
-import type { TButtonType } from './@types';
-import { buttonClasses, disabledButtonClasses } from './Domain';
+import { Vue, Component, Prop } from 'vue-property-decorator';
+import { EButtonAppearance } from './domain/@types';
+import type { TButtonType } from './domain/@types';
+import { buttonClasses, disabledButtonClasses } from './domain/Domain';
 
 @Component
 export default class UIButton extends Vue {
+  @Prop({ default: false }) fullWidth: boolean;
   @Prop({ default: EButtonAppearance.PRIMARY }) appearance: TButtonType;
   @Prop({ default: false }) isDisabled: boolean;
 

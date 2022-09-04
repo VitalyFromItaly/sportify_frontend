@@ -1,6 +1,5 @@
 export default () => {
   const fullEnvName = process.env.NODE_ENV || 'dev';
-
   const url = process.env.BASE_URL || 'http://localhost';
   const port = process.env.PORT || 3000;
   const authPort = process.env.AUTH_PORT || 3000;
@@ -15,7 +14,7 @@ export default () => {
     // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
     ssr: false,
     server: {
-      port: 3012,
+      port: 3001,
       host: '0.0.0.0'
     },
     // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -38,17 +37,28 @@ export default () => {
 
     // Global CSS: https://go.nuxtjs.dev/config-css
     css: [],
+    colorMode: {
+      preference: 'system', // default value of $colorMode.preference
+      fallback: 'light', // fallback value if not system preference found
+      hid: 'nuxt-color-mode-script',
+      globalName: '__NUXT_COLOR_MODE__',
+      componentName: 'ColorScheme',
+      classPrefix: '',
+      storageKey: 'nuxt-color-mode',
+      classSuffix: ''
+    },
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
+      '~/plugins/main',
       '~/plugins/auth',
       '~/plugins/api',
-      '~/plugins/context',
       '~/plugins/validation',
       '~/plugins/store',
       '~/plugins/presenter',
       '~/plugins/cache',
       '~/plugins/notification',
       '~/plugins/bus',
+      '~/plugins/context',
       '~/plugins/directives'
     ],
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -68,7 +78,8 @@ export default () => {
       // https://go.nuxtjs.dev/typescript
       '@nuxt/typescript-build',
       // https://go.nuxtjs.dev/tailwindcss
-      '@nuxtjs/tailwindcss'
+      '@nuxtjs/tailwindcss',
+      '@nuxt/postcss8'
     ],
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [
@@ -80,7 +91,7 @@ export default () => {
               name: 'Russian',
               code: 'ru',
               iso: 'ru-RU',
-              file: 'rus.js'
+              file: 'ru.js'
             },
             {
               name: 'English',
@@ -89,13 +100,24 @@ export default () => {
               file: 'en.js'
             }
           ],
+          strategy: 'no_prefix',
           langDir: 'lang/',
           defaultLocale: 'en'
         }
       ]
     ],
     // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {}
+    build: {
+      postcss: {
+        plugins: {
+          tailwindcss: {},
+          autoprefixer: {}
+        }
+      }
+    }
+    // router: {
+    //   middleware: 'route-guard'
+    // }
   };
   return config;
 };

@@ -7,7 +7,7 @@
     <div class="mr-3">
       user email
     </div>
-    <chevron-down />
+    <chevron-down color="white" />
     <div v-if="isUserMenuShown" class="absolute bg-white text-gray-900 right-6 top-11 w-32">
       menu
     </div>
@@ -31,7 +31,7 @@ div {
   outline-style:none;
 }
 *, *:before, *:after {
-  -webkit-user-select: none; /* Chrome/Safari */     
+  -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
 }
 </style>

@@ -1,3 +1,5 @@
+import login from './login/en';
 export default {
-  hello: 'Hello World'
+  hello: 'Hello World',
+  login
 };

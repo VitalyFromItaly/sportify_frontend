@@ -1,12 +1,12 @@
 <template>
-  <div class="flex flex-col">
-    <label v-if="label" :for="id">{{ label }}
+  <div class="flex flex-col my-4">
+    <label v-if="label" class="dark:text-lightGray" :for="id">{{ label }}
       <span v-if="required" class=" text-lightTeal font-semibold">*</span>
     </label>
     <input
       :id="id"
       :value="value"
-      class="inline border-2 pl-3 focus:outline-none"
+      class="inline border pl-3 py-1 focus:outline-none focus:border-middleTeal"
       :class="[internalSize, internalClasses]"
       :type="type"
       :placeholder="placeholder"
@@ -18,13 +18,14 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Model } from 'nuxt-property-decorator';
+import { Vue, Component, Prop, Model } from 'vue-property-decorator';
 import { v4 as uuidv4 } from 'uuid';
-import type { TInputSize, TInputType, TInputTypeValue } from './@types';
-import { EInputTypes, EInputSize } from './@types';
-import { inputTextSizes, inputNumberSizes, inputClasses } from './Domain';
+import type { TInputSize, TInputType, TInputTypeValue } from './domain/@types';
+import { EInputTypes, EInputSize } from './domain/@types';
+import { inputTextSizes, inputNumberSizes, inputClasses } from './domain/Domain';
 @Component
 export default class UIInput extends Vue {
+  @Prop({ default: 'Label' }) label: string;
   @Prop({
     default: EInputTypes.TEXT,
     validator(value: TInputType) {
@@ -33,7 +34,6 @@ export default class UIInput extends Vue {
     }
   }) type: TInputType;
 
-  @Prop({ default: 'Label' }) label: string;
   @Prop({
     default: EInputSize.SM,
     validator(value: TInputSize) {

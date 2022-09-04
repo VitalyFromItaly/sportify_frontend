@@ -9,10 +9,6 @@ export type TState = TFetchState & {
   data: any;
 };
 
-export type TMountPayload = {
-  id: number;
-};
-
 export interface IService {
   read(id: number): Promise<any>;
 }

@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p v-if="label">
+  <div class="m-1">
+    <p v-if="label" class="dark:text-lightGray">
       {{ label }}
     </p>
       <!-- :class="[{ 'bg-cyan-900': value }, bgColor]" -->
@@ -19,7 +19,7 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Model, Prop } from 'nuxt-property-decorator';
+import { Vue, Component, Model, Prop } from 'vue-property-decorator';
 @Component
 export default class Toggle extends Vue {
   @Prop({ required: false, default: '' }) label: string;

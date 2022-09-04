@@ -5,17 +5,17 @@ import { Module, Mutation, VuexModule } from 'vuex-module-decorators';
   namespaced: true
 })
 export default class Core extends VuexModule {
-  currentPageName: string = 'Поиск';
-  isLoading = true;
+  isLoading = false;
+  isDarkTheme = false;
+
+  @Mutation
+  setTheme(value: boolean): void {
+    this.isDarkTheme = value;
+  }
 
   @Mutation
   setIsLoading(): void {
     this.isLoading = true;
-  }
-
-  @Mutation
-  setCurrentPageName(name: string): void {
-    this.currentPageName = name;
   }
 
   @Mutation

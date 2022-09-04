@@ -15,8 +15,9 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
 
   constructor(stateMutator: IVuexStateHolder<TState>) {
     super(stateMutator);
-    this.bus = context.$bus;
-    this.service = new Service();
+    const { $bus, api } = context;
+    this.bus = $bus;
+    this.service = new Service($api);
   }
 
   @PresenterCatcher()

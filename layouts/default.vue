@@ -1,8 +1,10 @@
 <template>
-  <main>
+  <main class="flex flex-col min-h-screen dark:bg-dark">
     <layout-header />
     <!-- <auth-logo /> -->
-    <nuxt />
+    <div class="flex-grow">
+      <nuxt class="" />
+    </div>
   </main>
 </template>
 

@@ -16,17 +16,10 @@ export default class <%= h.changeCase.upperCaseFirst(name) %> extends Vue {
 
   private presenter: IPresenter;
 
-  get documentId(): number {
-    return +this.$route.params.id;
-  }
-
   public async mounted(): Promise<void> {
     this.presenter = this.$presenter.<%= name %>Instance;
-    const payload: TMountPayload = {
-      documentId: this.documentId
-    };
 
-    await this.presenter.onMounted(payload);
+    await this.presenter.onMounted();
   }
 }
 </script>

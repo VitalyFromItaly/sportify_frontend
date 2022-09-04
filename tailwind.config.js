@@ -1,7 +1,14 @@
 const colors = require('tailwindcss/colors');
 module.exports = {
   darkMode: 'class',
-  content: ['./src/**/*.{html,js}'],
+  content: [
+    './components/**/*.{js,vue,ts}',
+    './layouts/**/*.vue',
+    './stories/**/*.vue',
+    './pages/**/*.vue',
+    './plugins/**/*.{js,ts}',
+    './nuxt.config.{js,ts}'
+  ],
   theme: {
     linearBorderGradients: {
       directions: {
@@ -40,7 +47,8 @@ module.exports = {
       yellow: colors.yellow,
       cyan: colors.cyan,
       red: colors.red,
-      rose: colors.rose
+      rose: colors.rose,
+      fuchsia: colors.fuchsia
     },
     fontFamily: {
       sans: ['Graphik', 'sans-serif'],
@@ -56,7 +64,9 @@ module.exports = {
         middleTeal: '#327387',
         disabled: '#DFE0D8',
         disabledTextPrimary: '#BEBEBC',
-        error: '#EB0658'
+        dark: '#393939',
+        lightDark: '#585959',
+        lightGray: '#F2F2F2'
       },
       spacing: {
         '8xl': '96rem',
@@ -68,6 +78,7 @@ module.exports = {
     }
   },
   variants: {
+    textColor: ['visited', 'hover'],
     linearBorderGradients: ['responsive'], // defaults to ['responsive']
     repeatingLinearBorderGradients: ['responsive'] // defaults to ['responsive']
   },

@@ -11,18 +11,11 @@
       </div>
       <div class="flex flex-col space-y-5 w-1/2 ml-2">
         <div>
-          <label class="block" for="select">Choose button appearance</label>
-          <select id="select" v-model="chosenMode" class=" bg-gray-500">
-            <option v-for="({ value, text }, index) in buttonOptions" :key="index" :value="value">
-              {{ text }}
-            </option>
-          </select>
+          <ui-select v-model="chosenMode" :options="buttonOptions" label="button appearance" />
         </div>
         <ui-input v-model="text" label="button inner text" />
         <div>
           <ui-toggle v-model="isDisabled" label="disable button state" />
-          <!-- <input v-model="isDisabled" type="radio" :value="true" name="disabled" /> -->
-          <!-- <input v-model="isDisabled" type="radio" :value="false" name="enabled" /> -->
         </div>
       </div>
     </div>
@@ -31,7 +24,7 @@
 
 <script lang='ts'>
 import { Vue, Component } from 'nuxt-property-decorator';
-import { EButtonAppearance, TButtonType } from '../ui/@types';
+import { EButtonAppearance, TButtonType } from '../ui/domain/@types';
 @Component
 export default class ButtonExample extends Vue {
   text: string = 'button text';

@@ -1,19 +1,17 @@
 ---
 to: business/<%= section %>/<%= name %>/Service.ts
 ---
-import type { NuxtAxiosInstance } from '@nuxtjs/axios';
 import { IService, EUrls } from './Domain';
 import { IBrowserStorage } from '~/core/cache/Domain';
 import { EHttpCodes } from '~/@types/http';
-import { context } from '~/core/context';
 
 export default class Service implements IService {
   private readonly cache: IBrowserStorage;
-  private readonly axios: NuxtAxiosInstance;
-  constructor() {
+  private readonly swagger: Api<unknown>;
+  constructor(swagger: Api<unknown>) {
     const { $cache, $axios } = context;
     this.cache = $cache;
-    this.axios = $axios;
+    this.swagger = swagger;
   }
 
   async read(id: number): Promise<any> {

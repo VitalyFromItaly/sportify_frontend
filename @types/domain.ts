@@ -1,27 +1,13 @@
 /* eslint-disable no-unused-vars */
-export enum ENavTabs {
-  SEARCH = 'search',
-  REQUESTS = 'requests',
-  // SETTINGS = 'settings',
-  // STATE = 'state',
-  JOURNAL = 'journal',
+
+export enum ESystemDefaultLanguage {
+  RU = 'ru-RU',
+  EN = 'en-EN'
 }
 
-export enum Pages {
-  SEARCH = 'search',
-  REQUESTS = 'requests',
-  SETTINGS = 'settings',
-  STATE = 'state',
-  JOURNAL = 'journal',
-  RESULTS = 'results'
-}
-
-export enum EPageNames {
-  search = 'Поиск',
-  requests = 'Запросы',
-  settings = 'Настройки',
-  state = 'Состояние',
-  journal = 'Журнал',
+export enum EAppLanguages {
+  RU = 'ru',
+  EN = 'en'
 }
 
 export enum EVuexNamespaces {
@@ -63,14 +49,12 @@ export type TNotificationPayload = {
   data?: any
 };
 
-export enum EQueryExistence {
-  NO,
-  YES
+export enum ETheme {
+  DARK = 'dark',
+  LIGHT = 'light'
 }
 
-export enum EQueryResultState {
-  NEVER,
-  PENDING,
-  DONE,
-  ERROR
+export enum ELayout {
+  DEFAULT = 'default',
+  AUTH = 'auth'
 }

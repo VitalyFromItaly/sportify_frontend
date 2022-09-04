@@ -8,9 +8,23 @@
   >
     <path
       d="M26.0825 9.77883L18.245 17.5455L10.2513 9.54657"
-      stroke="white"
+      :stroke="color"
       stroke-width="1.58312"
       stroke-linecap="round"
     />
   </svg>
 </template>
+
+<script lang='ts'>
+import { Vue, Component, Prop } from 'nuxt-property-decorator';
+@Component
+export default class ChevronDown extends Vue {
+  @Prop({
+    type: String,
+    default: 'black',
+    validator(value: string) {
+      return ['black', 'white'].includes(value);
+    }
+  }) color: string;
+}
+</script>
