@@ -1,4 +1,4 @@
-import { UserCredsDto } from '~/Api/Api';
+import { CreateUserDto, UserCredsDto } from '~/Api/Api';
 import { TFetchState } from '~/business/core/Domain';
 import { IVuexObservable } from '~/business/core/store/Domain';
 
@@ -8,16 +8,20 @@ export type TState = TFetchState & {
 };
 
 export type TLoginForm = UserCredsDto;
+export type TRegisterForm = CreateUserDto;
 
 export interface IService {
-  read(id: number): Promise<any>;
+  login(payload: TLoginForm): Promise<any>;
+  register(payload: TRegisterForm): Promise<any>;
+  logout(): Promise<any>;
 }
 
 export interface IPresenter extends IVuexObservable<TState> {
-  onMounted(): Promise<void>;
+  onLogin(payload: TLoginForm): Promise<void>;
+  onLogout(): Promise<void>;
 }
 
-export const initLoginState = (): TState => ({
+export const initAuthorizationState = (): TState => ({
   isLoading: true,
   isError: false,
   data: null,

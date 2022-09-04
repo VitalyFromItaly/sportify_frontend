@@ -7,7 +7,7 @@
 
 <script lang='ts'>
 import { Vue, Component } from 'nuxt-property-decorator';
-import SignInForm from '~/business/login/views/SignInForm.vue';
+import SignInForm from '~/business/authorization/views/SignInForm.vue';
 import { ELayout } from '~/@types/domain';
 import MainLogo from '~/components/svg/MainLogo.vue';
 @Component({ layout: ELayout.AUTH, components: { SignInForm, MainLogo } })

@@ -1,5 +1,5 @@
 // import PermissionDenied from '../errors/PermissionDenied';
-import IAuth, { ETokens, TLogin, TRegisterPayload, TResponseUserCreate, TTokensInfo, TTokenType } from './IAuth';
+import IAuth, { ETokens, TTokensInfo, TTokenType } from './IAuth';
 import cache from '~/core/cache/cache';
 import { EAuthKeys, EAuthTags } from '~/@types/cache';
 import { RefreshTokenDto, TokenDto } from '~/Api/Api';

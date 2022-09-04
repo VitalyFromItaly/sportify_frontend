@@ -26,8 +26,10 @@ declare module 'vue/types/vue' {
 
 declare module '@nuxt/types' {
   interface NuxtAppOptions {
+    $api: IApi;
     $presenter: IPresenterPlugin;
     $cache: IBrowserStorage;
+    $auth: IAuth;
     $bus: IEventBus;
     $notification: (payload: TNotificationPayload) => void;
 
@@ -35,6 +37,7 @@ declare module '@nuxt/types' {
   interface Context {
     $presenter: IPresenterPlugin;
     $auth: IAuth;
+    $api: IApi;
     $cache: IBrowserStorage;
     $notification: (payload: TNotificationPayload) => void;
     $bus: IEventBus;
@@ -47,6 +50,8 @@ declare module 'vuex/types/index' {
   interface Store<S> {
     // $presenter: IPresenterPlugin;
     $cache: IBrowserStorage;
+    $api: IApi;
+    $auth: IAuth;
     // $auth: NuxtAxiosInstance;
     $bus: IEventBus;
     $notification: (payload: TNotificationPayload) => void;

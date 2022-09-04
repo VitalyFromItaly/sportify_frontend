@@ -1,9 +1,9 @@
 import { Context } from '@nuxt/types';
 import BaseVuexStateHolder from '~/business/core/store/BaseVuexStateHolder';
 
-import { IPresenter as ILoginPresenter, initLoginState } from '~/business/login/Domain';
-import LoginPresenter from '~/business/login/Presenter';
-import { LOGIN_STORE_NS } from '~/business/login/store/index';
+import { IPresenter as ILoginPresenter, initAuthorizationState } from '~/business/authorization/Domain';
+import LoginPresenter from '~/business/authorization/Presenter';
+import { AUTHORIZATION_STORE_NS } from '~/business/authorization/store/index';
 
 export interface IPresenterPlugin {
   loginInstance: ILoginPresenter;
@@ -20,7 +20,7 @@ const presenter = (context: Context, inject: any) => {
         return presenterLogin;
       }
 
-      const loginAdapter = new BaseVuexStateHolder(store, initLoginState(), LOGIN_STORE_NS);
+      const loginAdapter = new BaseVuexStateHolder(store, initAuthorizationState(), AUTHORIZATION_STORE_NS);
       presenterLogin = new LoginPresenter(loginAdapter);
       return presenterLogin;
     }

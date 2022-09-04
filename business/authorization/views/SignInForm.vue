@@ -1,17 +1,18 @@
 <template>
   <form @submit.prevent="login">
     <validation-observer ref="validator">
-      <validation-provider v-slot="{ errors, failed }" name="email" rules="email|required">
+      <validation-provider ref="field.email" v-slot="{ errors, failed }" name="email" rules="email|required">
         <ui-input
           v-model="form.email"
           required
+          type="email"
           :placeholder="$t('login.common.loginPlaceholder')"
           :label="$t('login.common.loginLabel')"
           :is-error="failed"
           :error-message="errors[0]"
         />
       </validation-provider>
-      <validation-provider v-slot="{ errors, failed }" name="email" rules="password|required">
+      <validation-provider ref="field.password" v-slot="{ errors, failed }" name="password" rules="password|required">
         <ui-input
           v-model="form.password"
           required
@@ -19,6 +20,7 @@
           :label="$t('login.common.passwordLabel')"
           :is-error="failed"
           :error-message="errors[0]"
+          type="password"
         />
       </validation-provider>
 
@@ -43,24 +45,27 @@
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
 import type { TState, IPresenter, TLoginForm } from '../Domain';
-import { loginStoreModule } from '../store';
+import { authorizationStoreModule } from '../store';
 
 @Component
 export default class SignInForm extends Vue {
-  @loginStoreModule.State('internalState') state: TState;
+  @authorizationStoreModule.State('internalState') state: TState;
 
   private form = {} as TLoginForm;
 
   private presenter: IPresenter;
 
-  public async mounted(): Promise<void> {
+  private mounted(): void {
     this.presenter = this.$presenter.loginInstance;
-    await this.presenter.onMounted();
   }
 
   private async login(): Promise<void> {
     // @ts-ignore
     const isFromValid = await this.$refs.validator.validate();
+    if (!isFromValid) {
+      return;
+    }
+    await this.presenter.onLogin(this.form);
     console.log({ isFromValid });
     console.log(this.form);
   }

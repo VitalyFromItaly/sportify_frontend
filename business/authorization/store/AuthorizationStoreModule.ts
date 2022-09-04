@@ -1,5 +1,5 @@
 import { Module } from 'vuex-module-decorators';
-import { initLoginState, TState } from '../Domain';
+import { initAuthorizationState, TState } from '../Domain';
 import { BaseVuexModule } from '~/business/core/store/BaseVuexModule';
 
 @Module({
@@ -7,5 +7,5 @@ import { BaseVuexModule } from '~/business/core/store/BaseVuexModule';
   stateFactory: true
 })
 export default class LoginStoreModule extends BaseVuexModule<TState> {
-  internalState: TState = initLoginState();
+  internalState: TState = initAuthorizationState();
 }

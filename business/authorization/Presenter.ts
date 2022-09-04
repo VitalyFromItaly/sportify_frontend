@@ -1,5 +1,5 @@
 import Service from './Service';
-import { IPresenter, TState, IService } from './Domain';
+import type { IPresenter, TState, IService, TLoginForm } from './Domain';
 import { VuexObservable } from '~/business/core/store/VuexObservable';
 import { IVuexStateHolder } from '~/business/core/store/Domain';
 import { EEventBusName, IEventBus } from '~/core/bus/Domain';
@@ -12,15 +12,18 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
 
   constructor(stateMutator: IVuexStateHolder<TState>) {
     super(stateMutator);
-    console.log({ context });
     const { $bus, $api } = context;
     this.bus = $bus;
-    this.service = new Service($api);
+    this.service = new Service($api.swagger);
   }
 
   @PresenterCatcher()
-  public async onMounted(): Promise<void> {
-    // const { data: { data } } = await this.service.read(this.state.id);
-    // this.onChangeState({ data });
+  public async onLogin(payload: TLoginForm): Promise<void> {
+    const response = await this.service.login(payload);
+    console.log({ response });
+  }
+
+  public async onLogout(): Promise<void> {
+    throw new Error('Method not implemented.');
   }
 }

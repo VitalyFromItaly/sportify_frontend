@@ -9,7 +9,7 @@ export default function PresenterCatcher() {
     const originalMethod = descriptor.value;
     descriptor.value = function(...args: any[]) {
       try {
-        context.store.commit('Core/setIsLoading');
+        // context.store.commit('Core/setIsLoading');
         // @ts-ignore
         this.onChangeState({ isLoading: true });
         const result = originalMethod.apply(this, args);
@@ -20,7 +20,7 @@ export default function PresenterCatcher() {
             .then(() => {
               // @ts-ignore
               this.onChangeState({ isLoading: false });
-              context.store.commit('Core/removeIsLoading');
+              // context.store.commit('Core/removeIsLoading');
             })
             .catch((error: any) => {
               _handleError(this, error);
