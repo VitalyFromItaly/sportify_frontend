@@ -3,6 +3,10 @@ import { IBrowserStorage } from '~/core/cache/Domain';
 // import { EHttpCodes } from '~/@types/http';
 import { Api, CreateUserDto } from '~/Api/Api';
 import { context } from '~/core/context';
+import { EHttpCodes } from '~/@types/http';
+import { TTokensInfo } from '~/core/auth/IAuth';
+import { EAuthKeys, EAuthTags } from '~/@types/cache';
+import { ONE_DAY } from '~/constants/time';
 
 export default class Service implements IService {
   private readonly cache: IBrowserStorage;
@@ -14,8 +18,13 @@ export default class Service implements IService {
   }
 
   public async login(payload: TLoginForm): Promise<any> {
-    const response = await this.swagger.auth.login(payload);
-    console.log({ response });
+    const { data, status } = await this.swagger.auth.login(payload);
+    if (status !== EHttpCodes.SUCCESS) {
+      return null;
+    }
+
+    this.cache.set<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH, data, ONE_DAY);
+    return data;
   }
 
   register(payload: CreateUserDto): Promise<any> {
