@@ -3,16 +3,22 @@
     <label v-if="label" class="dark:text-lightGray" :for="id">{{ label }}
       <span v-if="required" class=" text-lightTeal font-semibold">*</span>
     </label>
-    <input
-      :id="id"
-      :value="value"
-      class="inline border pl-3 py-1 focus:outline-none"
-      :class="[internalSize, internalClasses]"
-      :type="type"
-      :placeholder="placeholder"
-      @input="updateValue"
-      @blur="isFocusLost = true"
-    />
+    <div class="relative">
+      <input
+        :id="id"
+        :value="value"
+        class="inline border pl-3 py-1 focus:outline-none"
+        :class="[internalSize, internalClasses]"
+        :type="internalType"
+        :placeholder="placeholder"
+        @input="onUpdateValue"
+        @blur="onBlur"
+      />
+      <button v-if="type === EInputTypes.PASSWORD && !!value" type="button" @click="onTogglePasswordVisibility">
+        <eye v-if="type === EInputTypes.PASSWORD && internalType === EInputTypes.PASSWORD" class="eye-icon" />
+        <eye-crossed v-if="type === EInputTypes.PASSWORD && internalType !== EInputTypes.PASSWORD" class="eye-icon" />
+      </button>
+    </div>
     <p v-if="isFocusLost && isError" class="text-rose-600">
       {{ errorMessage }}
     </p>
@@ -24,7 +30,10 @@ import { v4 as uuidv4 } from 'uuid';
 import type { TInputSize, TInputType, TInputTypeValue } from './domain/@types';
 import { EInputTypes, EInputSize } from './domain/@types';
 import { inputTextSizes, inputNumberSizes, inputClasses } from './domain/Domain';
-@Component
+import Eye from '~/components/svg/Eye.vue';
+import EyeCrossed from '~/components/svg/EyeCrossed.vue';
+
+@Component({ components: { Eye, EyeCrossed } })
 export default class UIInput extends Vue {
   @Prop({ default: 'Label' }) label: string;
   @Prop({
@@ -52,10 +61,15 @@ export default class UIInput extends Vue {
   @Model('input') readonly value!: TInputTypeValue;
 
   private id: string = uuidv4();
-
+  private EInputTypes = EInputTypes;
+  private internalType: TInputType = EInputTypes.TEXT;
   private isFocusLost = false;
 
-  private updateValue(event: any): void {
+  private mounted(): void {
+    this.internalType = this.type;
+  }
+
+  private onUpdateValue(event: any): void {
     this.$emit('input', event.target.value);
   }
 
@@ -74,5 +88,22 @@ export default class UIInput extends Vue {
 
     return inputNumberSizes[this.size];
   }
+
+  private onTogglePasswordVisibility(): void {
+    if (this.internalType === EInputTypes.PASSWORD) {
+      this.internalType = EInputTypes.TEXT;
+    } else {
+      this.internalType = EInputTypes.PASSWORD;
+    }
+  }
+
+  private onBlur(): void {
+    this.isFocusLost = true;
+  }
 }
 </script>
+<style lang="postcss" scoped>
+  .eye-icon {
+    @apply w-6 absolute right-3 -top-0.5;
+  }
+</style>

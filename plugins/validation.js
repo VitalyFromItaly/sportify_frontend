@@ -36,7 +36,6 @@ Object.keys(rules).forEach((rule) => {
 extend('password', {
   // getMessage: field => `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. , . _ & ? etc)`,
   validate: value => {
-    console.log({ value });
       const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
       return passwordRegex.test(value);
   }
