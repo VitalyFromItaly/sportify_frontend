@@ -1,4 +1,5 @@
 import { Module, Mutation, VuexModule } from 'vuex-module-decorators';
+import type { TNotification } from '~/@types/domain';
 
 @Module({
   stateFactory: true,
@@ -7,6 +8,18 @@ import { Module, Mutation, VuexModule } from 'vuex-module-decorators';
 export default class Core extends VuexModule {
   isLoading = false;
   isDarkTheme = false;
+  notifications: TNotification[] = [];
+
+  @Mutation
+  addNotification(payload: TNotification): void {
+    this.notifications.push(payload);
+  }
+
+  @Mutation
+  removeNotification(payload: TNotification): void {
+    const index = this.notifications.indexOf(payload);
+    this.notifications.splice(index, 1);
+  }
 
   @Mutation
   setTheme(value: boolean): void {

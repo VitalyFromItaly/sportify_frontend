@@ -32,3 +32,14 @@ export enum EContainer {
   STANDARD = 'standard',
   EXPANDABLE = 'expandable'
 }
+
+export enum ENotificationType {
+  SUCCESS = 'success',
+  INFO = 'info',
+  ERROR = 'error'
+}
+
+export enum ENotificationLevel {
+  PAGE = 'page',
+  INLINE = 'inline'
+}

@@ -41,7 +41,6 @@ export default class Container extends Vue {
   }
 
   mounted(): void {
-    console.log(this.$slots);
   }
 }
 </script>

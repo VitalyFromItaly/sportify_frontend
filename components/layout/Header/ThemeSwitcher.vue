@@ -2,8 +2,8 @@
   <div class="flex space-x-10">
     <div class="flex items-center space-x-2">
       <ui-toggle v-model="isDarkTheme" bg-color="bg-cyan-900" circle-color="bg-lightTeal" />
-      <sun v-if="!isDarkTheme" class="w-5" />
       <moon v-if="isDarkTheme" class="w-5" />
+      <sun v-else class="w-5" />
     </div>
   </div>
 </template>
@@ -27,13 +27,6 @@ export default class ModeSwitcher extends Vue {
 
   @Watch('isDarkTheme')
   onChangeTheme(theme: boolean): void {
-    // if (theme) {
-    //   this.$colorMode.preference = ETheme.DARK;
-    //   return;
-    // }
-
-    // this.$colorMode.preference = ETheme.LIGHT;
-
     if (
       (!theme && !localStorage.getItem('theme')) ||
         localStorage.getItem('theme') == null
@@ -52,7 +45,6 @@ export default class ModeSwitcher extends Vue {
   }
 
   mounted(): void {
-    console.log(this.$colorMode);
     const theme = localStorage.getItem('theme');
     if (theme === ETheme.DARK || (!('theme' in localStorage) &&
         window.matchMedia('(prefers-color-scheme: dark)').matches)

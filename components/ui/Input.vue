@@ -7,7 +7,7 @@
       <input
         :id="id"
         :value="value"
-        class="inline border pl-3 py-1 focus:outline-none"
+        class="inline border-2 pl-3 py-1 focus:outline-none dark:placeholder-gray-400 dark:text-gray-400"
         :class="[internalSize, internalClasses]"
         :type="internalType"
         :placeholder="placeholder"
@@ -15,7 +15,7 @@
         @blur="onBlur"
       />
       <button v-if="type === EInputTypes.PASSWORD && !!value" type="button" @click="onTogglePasswordVisibility">
-        <eye v-if="type === EInputTypes.PASSWORD && internalType === EInputTypes.PASSWORD" class="eye-icon" />
+        <eye v-if="[type, internalType].every(t => t === EInputTypes.PASSWORD)" class="eye-icon" />
         <eye-crossed v-if="type === EInputTypes.PASSWORD && internalType !== EInputTypes.PASSWORD" class="eye-icon" />
       </button>
     </div>
@@ -35,28 +35,27 @@ import EyeCrossed from '~/components/svg/EyeCrossed.vue';
 
 @Component({ components: { Eye, EyeCrossed } })
 export default class UIInput extends Vue {
-  @Prop({ default: 'Label' }) label: string;
+  @Prop({ type: String, default: 'Label' }) label: string;
+  @Prop({ type: Boolean, default: false }) required: boolean;
+  @Prop({ type: Boolean, default: false }) isDisabled: boolean;
+  @Prop({ type: String, default: 'Placeholder' }) placeholder: string;
+  @Prop({ type: Boolean, default: false }) isError: boolean;
+  @Prop({ type: String, default: '' }) errorMessage: string;
   @Prop({
+    type: String,
     default: EInputTypes.TEXT,
-    validator(value: TInputType) {
-      // @ts-ignore
+    validator(value: EInputTypes) {
       return Object.values(EInputTypes).includes(value);
     }
-  }) type: TInputType;
+  }) type: EInputTypes;
 
   @Prop({
+    type: String,
     default: EInputSize.SM,
-    validator(value: TInputSize) {
-      // @ts-ignore
+    validator(value: EInputSize) {
       return Object.values(EInputSize).includes(value);
     }
   }) size: TInputSize;
-
-  @Prop({ type: Boolean, default: false }) required: boolean;
-  @Prop({ type: Boolean, default: false }) isDisabled: boolean;
-  @Prop({ default: 'Placeholder' }) placeholder: string;
-  @Prop({ type: Boolean, default: false }) isError: boolean;
-  @Prop({ default: '' }) errorMessage: string;
 
   @Model('input') readonly value!: TInputTypeValue;
 
@@ -70,7 +69,8 @@ export default class UIInput extends Vue {
   }
 
   private onUpdateValue(event: any): void {
-    this.$emit('input', event.target.value);
+    const { value } = event.target;
+    this.$emit('input', this.type === EInputTypes.NUMBER ? +value : value);
   }
 
   private get internalClasses(): string {
@@ -80,7 +80,6 @@ export default class UIInput extends Vue {
   }
 
   private get internalSize(): string {
-    // @ts-ignore
     const isTextInput = [EInputTypes.TEXT, EInputTypes.EMAIL, EInputTypes.PASSWORD].includes(this.type);
     if (isTextInput) {
       return inputTextSizes[this.size];
