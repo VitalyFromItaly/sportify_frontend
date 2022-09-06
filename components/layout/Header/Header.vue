@@ -13,7 +13,7 @@
 
 import { Vue, Component } from 'nuxt-property-decorator';
 import ThemeSwitcher from './ThemeSwitcher.vue';
-import UserInfo from './UserInfo.vue';
+import UserInfo from '~/business/user/views/UserInfo.vue';
 import SportifyLogo from '~/components/svg/MainLogo.vue';
 @Component({ components: { SportifyLogo, ThemeSwitcher, UserInfo } })
 export default class Header extends Vue {}

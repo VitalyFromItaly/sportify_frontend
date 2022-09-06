@@ -1,3 +1,5 @@
+import { TLocation } from '~/@types/framework';
+
 /* eslint-disable no-unused-vars */
 export interface IEventBus {
   on(eventName: string, clb: (payload: any) => void): () => void
@@ -6,5 +8,7 @@ export interface IEventBus {
 
 export enum EEventBusName {
   NOTIFICATION = 'notification',
-  ROUTER = 'route'
+  ROUTER = 'router'
 }
+
+export type TRouterEvent = TLocation;

@@ -7,7 +7,11 @@ type TApiConfig = {
   baseApiParams: any;
 };
 const apiPlugin: Plugin = async({ $config, $auth }, inject) => {
+  let accessToken = '';
   const token = $auth.getAccessToken();
+  if (token) {
+    accessToken = token.access_token;
+  }
   // if (!token) {
   //   await $auth.checkTokens();
   //   token = $auth.getAccessToken();
@@ -16,7 +20,7 @@ const apiPlugin: Plugin = async({ $config, $auth }, inject) => {
   const swaggerResultConfig: TApiConfig = {
     baseUrl: $config.baseUrl,
     // customFetch: customFetch($bus),
-    baseApiParams: { headers: { Authorization: `Bearer ${token || ''}` } }
+    baseApiParams: { headers: { Authorization: `Bearer ${accessToken || ''}` } }
   };
 
   const swagger = new Api(swaggerResultConfig);

@@ -7,16 +7,19 @@ export type TLogin = UserCredsDto;
 export type TUser = User;
 export type TTokenType = 'refresh_token' | 'access_token';
 
+export type TAccessToken = Omit<TTokensInfo, 'refresh_token'| 'refresh_token_expires_in'>;
+export type TRefreshToken = Omit<TTokensInfo, 'access_token'| 'access_token_expires_in'>;
+
 export enum ETokens {
   REFRESH = 'refresh_token',
   ACCESS = 'access_token'
 }
 export default interface IAuth {
-  // register(payload: TRegisterPayload): Promise<TResponseUserCreate>;
-  // login(payload: TLogin): Promise<TTokensInfo>;
-  getAccessToken(): TTokensInfo['access_token'];
+  getAccessToken(): TAccessToken;
   updateAccessToken(): Promise<void>;
   checkTokens(): Promise<void>;
   updateTokens(): Promise<void>;
-  getRefreshToken(): TTokensInfo['refresh_token'];
+  getRefreshToken(): TRefreshToken;
+  getTokens(): TTokensInfo;
+  isAuth(): boolean;
 }

@@ -1,8 +1,8 @@
 import Service from './Service';
-import type { IPresenter, TState, IService, TLoginForm } from './Domain';
+import { IPresenter, TState, IService } from './Domain';
 import { VuexObservable } from '~/business/core/store/VuexObservable';
 import { IVuexStateHolder } from '~/business/core/store/Domain';
-import { EEventBusName, IEventBus, TRouterEvent } from '~/core/bus/Domain';
+import { EEventBusName, IEventBus } from '~/core/bus/Domain';
 import PresenterCatcher from '~/core/decorators/PresenterCatcher';
 import { context } from '~/core/context';
 
@@ -18,19 +18,8 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
   }
 
   @PresenterCatcher()
-  public async onLogin(payload: TLoginForm): Promise<void> {
-    const tokens = await this.service.login(payload);
-    if (tokens) {
-      this.bus.emit<TRouterEvent>(EEventBusName.ROUTER, {
-        name: 'profile'
-      });
-    }
-  }
-
-  public onLogout(): void {
-    this.service.logout();
-    this.bus.emit<TRouterEvent>(EEventBusName.ROUTER, {
-      name: 'sign-in'
-    });
+  public async onMounted(): Promise<void> {
+    const user = await this.service.read();
+    this.onChangeState({ user });
   }
 }

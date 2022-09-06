@@ -1,7 +1,8 @@
 import login from './login/en';
 import validation from './validation/en';
+import profile from './profile/en';
 export default {
-  hello: 'Hello World',
   login,
-  validation
+  validation,
+  profile
 };

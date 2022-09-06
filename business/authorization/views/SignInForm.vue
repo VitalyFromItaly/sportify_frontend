@@ -60,17 +60,14 @@ export default class SignInForm extends Vue {
   }
 
   private async login(): Promise<void> {
-    console.log('login');
-    
     // @ts-ignore
     const isFromValid = await this.$refs.validator.validate();
     if (!isFromValid) {
-      console.warn('[Sign in form] form is not valid');
+      console.warn('[Sign-in form] form is not valid');
       return;
     }
     await this.presenter.onLogin(this.form);
-    console.log({ isFromValid });
-    console.log(this.form);
+    // await this.$auth.updateAccessToken();
   }
 }
 </script>
