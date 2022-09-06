@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import { INotifications, TNotificationPayload } from './domain';
+import { INotifications } from './domain';
 // import { IPresenterPlugin } from '~/plugins/presenter';
 import { IBrowserStorage } from '~/core/cache/Domain';
 import { IEventBus } from '~/core/bus/Domain';

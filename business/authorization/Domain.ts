@@ -4,8 +4,7 @@ import { IVuexObservable } from '~/business/core/store/Domain';
 import { TTokensInfo } from '~/core/auth/IAuth';
 
 export type TState = TFetchState & {
-  id: number;
-  data: any;
+  tokens: TTokensInfo;
 };
 
 export type TLoginForm = UserCredsDto;
@@ -14,17 +13,16 @@ export type TRegisterForm = CreateUserDto;
 export interface IService {
   login(payload: TLoginForm): Promise<TTokensInfo>;
   register(payload: TRegisterForm): Promise<any>;
-  logout(): Promise<any>;
+  logout(): any;
 }
 
 export interface IPresenter extends IVuexObservable<TState> {
   onLogin(payload: TLoginForm): Promise<void>;
-  onLogout(): Promise<void>;
+  onLogout(): void;
 }
 
 export const initAuthorizationState = (): TState => ({
-  isLoading: true,
+  isLoading: false,
   isError: false,
-  data: null,
-  id: null
+  tokens: null
 });

@@ -239,6 +239,21 @@ export namespace User {
     export type RequestHeaders = {};
     export type ResponseBody = void;
   }
+  /**
+   * No description
+   * @tags User
+   * @name Get
+   * @request GET:/user
+   * @secure
+   * @response `default` `User` get user info by token
+   */
+  export namespace Get {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = any;
+  }
 }
 
 export namespace Auth {
@@ -255,21 +270,6 @@ export namespace Auth {
     export type RequestBody = UserCredsDto;
     export type RequestHeaders = {};
     export type ResponseBody = TokenDto;
-  }
-  /**
-   * No description
-   * @tags Auth
-   * @name User
-   * @request GET:/auth/user
-   * @secure
-   * @response `default` `User` get user info by token
-   */
-  export namespace User {
-    export type RequestParams = {};
-    export type RequestQuery = {};
-    export type RequestBody = never;
-    export type RequestHeaders = {};
-    export type ResponseBody = any;
   }
   /**
    * No description
@@ -575,6 +575,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         type: ContentType.Json,
         ...params,
       }),
+
+    /**
+     * No description
+     *
+     * @tags User
+     * @name Get
+     * @request GET:/user
+     * @secure
+     * @response `default` `User` get user info by token
+     */
+    get: (params: RequestParams = {}) =>
+      this.request<any, User>({
+        path: `/user`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
   };
   auth = {
     /**
@@ -592,23 +609,6 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         type: ContentType.Json,
         format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @tags Auth
-     * @name User
-     * @request GET:/auth/user
-     * @secure
-     * @response `default` `User` get user info by token
-     */
-    user: (params: RequestParams = {}) =>
-      this.request<any, User>({
-        path: `/auth/user`,
-        method: "GET",
-        secure: true,
         ...params,
       }),
 

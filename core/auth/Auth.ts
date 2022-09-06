@@ -1,18 +1,26 @@
 // import PermissionDenied from '../errors/PermissionDenied';
-import IAuth, { ETokens, TTokensInfo, TTokenType } from './IAuth';
+import has from 'lodash/has';
+import IAuth, { ETokens, TAccessToken, TRefreshToken, TTokensInfo, TTokenType } from './IAuth';
 import cache from '~/core/cache/cache';
 import { EAuthKeys, EAuthTags } from '~/@types/cache';
 import { RefreshTokenDto, TokenDto } from '~/Api/Api';
+import { context } from '../context';
+import { TRouteEventPayload } from '~/@types/domain';
+import { EEventBusName } from '../bus/Domain';
 
 export default class Auth implements IAuth {
-  private tokensInfo: TTokensInfo;
+  private tokensInfo = {} as TTokensInfo;
   private CACHE_TTL = 60 * 60 * 24; // one day
   private CHECK_MINUTES_LEFT = 5; // 5 mins
   constructor(private baseUrl: string) {}
 
+  public isAuth(): boolean {
+    const { access_token } = this.getAccessToken() || {};
+    return !!access_token;
+  }
+
   public async checkTokens(): Promise<void> {
-    const tokens = this.getTokensFromCache();
-    if (!tokens) {
+    if (!this.hasTokens()) {
       this.redirectToAuthPage();
       return;
     }
@@ -28,17 +36,18 @@ export default class Auth implements IAuth {
     }
   }
 
-  isTokenExpired(tokenType: TTokenType): boolean {
+  private isTokenExpired(tokenType: TTokenType): boolean {
     let token, expiresIn;
 
     if (tokenType === ETokens.REFRESH) {
-      const { refresh_token, refresh_token_expires_in } = this.getTokensFromCache();
+      const { refresh_token, refresh_token_expires_in } = this.getTokens();
+      console.log({ refresh_token, refresh_token_expires_in });
       token = refresh_token;
       expiresIn = refresh_token_expires_in;
     }
 
     if (tokenType === ETokens.ACCESS) {
-      const { access_token, access_token_expires_in } = this.getTokensFromCache();
+      const { access_token, access_token_expires_in } = this.getTokens();
       token = access_token;
       expiresIn = access_token_expires_in;
     }
@@ -57,12 +66,30 @@ export default class Auth implements IAuth {
     return minutesLeft < this.CHECK_MINUTES_LEFT;
   }
 
+  public getTokens(): TTokensInfo {
+    if (this.hasTokens()) {
+      return this.tokensInfo;
+    }
+
+    const tokenInfo = cache.get<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH);
+    if (!tokenInfo) {
+      return null;
+    }
+
+    this.setTokenInfo(tokenInfo);
+    return tokenInfo;
+  }
+
   private redirectToAuthPage(): void {
-    window.location.replace('/');
+    alert('redirect');
+    context.$bus.emit<TRouteEventPayload>(EEventBusName.ROUTER, {
+      name: 'sign-in'
+    });
   }
 
   public async updateAccessToken(): Promise<void> {
-    const { access_token, access_token_expires_in } = await this.refreshAccessToken({ refresh_token: this.getRefreshToken() });
+    const { refresh_token } = this.getRefreshToken();
+    const { access_token, access_token_expires_in } = await this.refreshAccessToken({ refresh_token });
     this.tokensInfo.access_token = access_token;
     this.tokensInfo.access_token_expires_in = access_token_expires_in;
     this.setTokenInfo(this.tokensInfo);
@@ -71,7 +98,10 @@ export default class Auth implements IAuth {
   private async refreshAccessToken(data: RefreshTokenDto): Promise<TokenDto> {
     const response = await fetch(this.baseUrl + '/auth/refresh-access-token', {
       method: 'GET',
-      body: JSON.stringify(data)
+      headers: {
+        Authorization: `Token ${data.refresh_token}`
+      }
+      // body: JSON.stringify(data)
       // credentials: 'include',
 
     });
@@ -84,15 +114,15 @@ export default class Auth implements IAuth {
   }
 
   public async updateTokens(): Promise<void> {
-    const data = await this.refreshTokens({ refresh_token: this.getRefreshToken() });
+    const { refresh_token } = this.getRefreshToken();
+    const data = await this.refreshTokens({ refresh_token });
     this.setTokenInfo(data);
   }
 
   private async refreshTokens(data: RefreshTokenDto): Promise<TokenDto> {
     const response = await fetch(this.baseUrl + '/auth/refresh-tokens', {
       method: 'GET',
-      body: JSON.stringify(data)
-      // credentials: 'include',
+      headers: { Authorization: `Token ${data.refresh_token}` }
     });
 
     if (response.status !== 200) {
@@ -102,70 +132,55 @@ export default class Auth implements IAuth {
     return await response.json();
   }
 
-  // public async register(payload: TRegisterPayload): Promise<TResponseUserCreate> {
-  //   const { data, status } = await this.userApi.create(payload);
-  //   console.log({ data, status });
-  //   return data;
-  // }
-
-  // public async login(payload: TLogin): Promise<TTokensInfo> {
-  //   const { data, status } = await this.authApi.login(payload);
-  //   if (!data) {
-  //     throw new PermissionDenied();
-  //   }
-
-  //   console.log({ data, status });
-
-  //   cache.set(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH, data, this.CACHE_TTL);
-  //   this.setTokenInfo(data);
-  //   return data;
-  // }
-
-  public getTokensFromCache(): TTokensInfo {
-    const tokenInfo = cache.get<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH);
-    if (!tokenInfo) {
-      this.redirectToAuthPage();
-      return;
-    }
-
-    this.setTokenInfo(tokenInfo);
-    return tokenInfo;
-  }
-
   private setTokenInfo(tokenInfo: TTokensInfo): void {
     cache.set(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH, tokenInfo, this.CACHE_TTL);
     this.tokensInfo = tokenInfo;
   }
 
-  public getRefreshToken(): TTokensInfo['refresh_token'] {
-    if (this.tokensInfo.refresh_token) {
-      return this.tokensInfo.refresh_token;
+  public getRefreshToken(): TRefreshToken {
+    if (this.tokensInfo) {
+      const { refresh_token, refresh_token_expires_in } = this.tokensInfo;
+      return { refresh_token, refresh_token_expires_in };
     }
 
-    const { refresh_token: token } = cache.get<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH);
-    if (!token) {
+    const { refresh_token, refresh_token_expires_in } = cache.get<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH);
+    if (!refresh_token) {
       return null;
     }
 
-    this.tokensInfo.refresh_token = token;
-    return token;
+    this.tokensInfo.refresh_token = refresh_token;
+    this.tokensInfo.refresh_token_expires_in = refresh_token_expires_in;
+    return { refresh_token, refresh_token_expires_in };
   }
 
-  public getAccessToken(): TTokensInfo['refresh_token'] {
-    if (this.tokensInfo?.access_token) {
-      return this.tokensInfo.access_token;
+  private hasTokens(): boolean {
+    const hasLocalTokens = has(this.tokensInfo, ETokens.ACCESS) && has(this.tokensInfo, ETokens.REFRESH);
+    if (hasLocalTokens) {
+      return true;
     }
 
-    const tokensInfo = cache.get<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH);
-    if (!tokensInfo) {
-      return null;
+    const cacheTokens = cache.get<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH);
+    if (cacheTokens) {
+      this.setTokenInfo(cacheTokens);
     }
-    const { access_token } = tokensInfo;
+
+    return !!cacheTokens;
+  }
+
+  public getAccessToken(): TAccessToken {
+    if (this.hasTokens()) {
+      const { access_token, access_token_expires_in } = this.tokensInfo;
+      return { access_token, access_token_expires_in };
+    }
+
+    const { access_token, access_token_expires_in } = cache.get<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH) || {};
+
     if (!access_token) {
       return null;
     }
 
     this.tokensInfo.access_token = access_token;
-    return access_token;
+    this.tokensInfo.access_token_expires_in = access_token_expires_in;
+    return { access_token, access_token_expires_in };
   }
 }
