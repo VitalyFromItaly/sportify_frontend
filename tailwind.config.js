@@ -10,6 +10,16 @@ module.exports = {
     './nuxt.config.{js,ts}'
   ],
   theme: {
+    screens: {
+      tablet: '640px',
+      // => @media (min-width: 640px) { ... }
+
+      laptop: '1024px',
+      // => @media (min-width: 1024px) { ... }
+
+      desktop: '1280px'
+      // => @media (min-width: 1280px) { ... }
+    },
     linearBorderGradients: {
       directions: {
         // defaults to these values
@@ -66,7 +76,8 @@ module.exports = {
         disabledTextPrimary: '#BEBEBC',
         dark: '#393939',
         lightDark: '#585959',
-        lightGray: '#F2F2F2'
+        lightGray: '#F2F2F2',
+        darkGray: '#BEBEBC'
       },
       spacing: {
         '8xl': '96rem',
@@ -78,7 +89,7 @@ module.exports = {
     }
   },
   variants: {
-    textColor: ['visited', 'hover'],
+    textColor: ['visited', 'hover', 'dark'],
     linearBorderGradients: ['responsive'], // defaults to ['responsive']
     repeatingLinearBorderGradients: ['responsive'] // defaults to ['responsive']
   },

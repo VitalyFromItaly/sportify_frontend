@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import { TNotificationPayload } from './domain';
+import { INotifications, TNotificationPayload } from './domain';
 // import { IPresenterPlugin } from '~/plugins/presenter';
 import { IBrowserStorage } from '~/core/cache/Domain';
 import { IEventBus } from '~/core/bus/Domain';
@@ -20,7 +20,7 @@ declare module 'vue/types/vue' {
     $presenter: IPresenterPlugin;
     $cache: IBrowserStorage;
     $bus: IEventBus;
-    $notification: (payload: TNotificationPayload) => void;
+    $notification: INotifications;
   }
 }
 
@@ -31,15 +31,14 @@ declare module '@nuxt/types' {
     $cache: IBrowserStorage;
     $auth: IAuth;
     $bus: IEventBus;
-    $notification: (payload: TNotificationPayload) => void;
-
+    $notification: INotifications;
   }
   interface Context {
     $presenter: IPresenterPlugin;
     $auth: IAuth;
     $api: IApi;
     $cache: IBrowserStorage;
-    $notification: (payload: TNotificationPayload) => void;
+    $notification: INotifications;
     $bus: IEventBus;
   }
 }
@@ -48,12 +47,11 @@ declare module 'vuex/types/index' {
   // this.$myInjectedFunction inside Vuex stores
   // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
   interface Store<S> {
-    // $presenter: IPresenterPlugin;
+    $presenter: IPresenterPlugin;
     $cache: IBrowserStorage;
     $api: IApi;
     $auth: IAuth;
-    // $auth: NuxtAxiosInstance;
     $bus: IEventBus;
-    $notification: (payload: TNotificationPayload) => void;
+    $notification: INotifications;
   }
 }

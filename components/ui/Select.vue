@@ -1,11 +1,11 @@
 <template>
-  <div class="flex flex-col m-1">
+  <div class="flex flex-col">
     <label class="dark:text-lightGray" :for="id">{{ label }}</label>
     <select
       :id="id"
       :disabled="isDisabled"
       :value="value"
-      class="w-52 h-7 border focus:outline-none"
+      class="w-52 h-8 border-2 focus:outline-none"
       :class="[classes, internalSize]"
       @change="onChange($event.target.value)"
     >
@@ -30,13 +30,12 @@ import { EInputSize } from './domain/@types';
 @Component
 export default class Select extends Vue {
   @Prop({ type: String, required: true }) label: string;
-  @Prop({ type: String, default: 'choose value...' }) placeholder: string;
+  @Prop({ type: String, default: 'Choose value...' }) placeholder: string;
   @Prop({ type: Boolean, default: false }) isDisabled: boolean;
   @Prop({ required: true }) value: TInputTypeValue;
     @Prop({
       default: EInputSize.SM,
-      validator(value: TInputSize) {
-      // @ts-ignore
+      validator(value: EInputSize) {
         return Object.values(EInputSize).includes(value);
       }
     }) size: TInputSize;

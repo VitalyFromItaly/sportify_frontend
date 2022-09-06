@@ -3,7 +3,7 @@
     <h2 class="text-center bg-gray-200 py-2">
       Input
     </h2>
-    <div class="mx-10 md:flex">
+    <div class="mx-10 laptop:flex">
       <div class="w-1/2 border-r">
         <ui-input
           v-model="exampleModel"

@@ -35,3 +35,17 @@ export const inputClasses = {
   default: 'hover:border-middleTeal active:border-middleTeal focus:border-middleTeal border-disabled dark:bg-dark dark:text-gray-300',
   isError: 'border-rose-600'
 };
+
+export const noticeComponentClasses = {
+  success: 'border-lightTeal',
+  error: 'border-rose-600',
+  info: 'border-darkGray'
+};
+
+export const noticeIconClasses = {
+  success: 'text-lightTeal',
+  error: 'text-rose-600',
+  info: 'text-darkGray'
+};
+
+export const NOTICE_PAGE_TYPE_ALIVE = 6000; // 6 seconds

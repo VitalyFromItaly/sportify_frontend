@@ -1,19 +1,23 @@
 <template>
-  <div class="m-1">
-    <p v-if="label" class="dark:text-lightGray">
+  <div class="m-1 inline-block">
+    <p v-if="label" class=" dark:text-lightGray">
       {{ label }}
     </p>
-      <!-- :class="[{ 'bg-cyan-900': value }, bgColor]" -->
-    <div
-      class="w-12 h-6 flex items-center rounded-full p-1 duration-300 cursor-pointer"
-      :class="classes"
-      :aria-checked="value.toString()"
-      @click="toggle"
-    >
+    <div class="flex items-center">
       <div
-        class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300"
-        :class="[{ 'translate-x-5': value }]"
-      ></div>
+        class="w-12 h-6 flex items-center rounded-full p-1 duration-300 cursor-pointer"
+        :class="classes"
+        :aria-checked="value.toString()"
+        @click="toggle"
+      >
+        <div
+          class="bg-white w-5 h-5 rounded-full shadow-md transform duration-300"
+          :class="[{ 'translate-x-5': value }]"
+        ></div>
+      </div>
+      <p v-if="textOn && textOff" class="ml-2 dark:text-lightGray">
+        {{ value ? textOn : textOff }}
+      </p>
     </div>
   </div>
 </template>
@@ -22,13 +26,16 @@
 import { Vue, Component, Model, Prop } from 'vue-property-decorator';
 @Component
 export default class Toggle extends Vue {
-  @Prop({ required: false, default: '' }) label: string;
-  @Prop({ default: 'bg-gray-300' }) bgColor: string;
-  @Prop({ default: 'bg-white' }) circleColor: string;
+  @Prop({ type: String, required: false, default: '' }) label: string;
+  @Prop({ type: String, default: 'bg-gray-300' }) bgColor: string;
+  @Prop({ type: String, required: false }) textOn: string;
+  @Prop({ type: String, required: false }) textOff: string;
+  @Prop({ type: String, default: 'bg-white' }) circleColor: string;
   @Model('input') value!: boolean;
 
-  toggle(): void {
+  public toggle(): void {
     this.$emit('input', !this.value);
+    this.$emit('change', !this.value);
   }
 
   private get classes(): string {
