@@ -57,8 +57,8 @@ export default () => {
       '~/plugins/store',
       '~/plugins/presenter',
       '~/plugins/cache',
-      '~/plugins/notification',
       '~/plugins/bus',
+      '~/plugins/notification',
       '~/plugins/context',
       '~/plugins/directives'
     ],
@@ -84,6 +84,7 @@ export default () => {
     ],
     // Modules: https://go.nuxtjs.dev/config-modules
     modules: [
+      'portal-vue/nuxt',
       [
         '@nuxtjs/i18n',
         {

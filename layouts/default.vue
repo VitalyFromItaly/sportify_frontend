@@ -1,10 +1,15 @@
 <template>
   <main class="flex flex-col min-h-screen dark:bg-dark">
+    <portal-target multiple name="main" />
     <layout-header />
     <!-- <auth-logo /> -->
     <div class="flex-grow">
       <nuxt class="" />
     </div>
+    <portal-target class="notifications" name="notifications" multiple />
+    <portal to="notifications">
+      <layout-notification class="" />
+    </portal>
   </main>
 </template>
 
@@ -19,3 +24,12 @@ export default class DefaultLayout extends Vue {
   }
 }
 </script>
+<style scoped>
+  .notifications {
+  position: fixed;
+  top: 1.5rem;
+  z-index: 100;
+  right: 3%;
+  /* transform: translateX(-50%); */
+  }
+</style>

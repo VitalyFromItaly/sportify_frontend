@@ -5,6 +5,7 @@
     <example-toggle />
     <example-select />
     <example-container />
+    <example-notification />
   </div>
 </template>
 <script lang='ts'>
@@ -14,6 +15,7 @@ import ExampleInput from '~/components/ui-stand/ExampleInput.vue';
 import ExampleToggle from '~/components/ui-stand/ExampleToggle.vue';
 import ExampleSelect from '~/components/ui-stand/ExampleSelect.vue';
 import ExampleContainer from '~/components/ui-stand/ExampleContainer.vue';
-@Component({ components: { ExampleButton, ExampleInput, ExampleToggle, ExampleSelect, ExampleContainer } })
+import ExampleNotification from '~/components/ui-stand/ExampleNotification.vue';
+@Component({ components: { ExampleButton, ExampleInput, ExampleToggle, ExampleSelect, ExampleContainer, ExampleNotification } })
 export default class UIStand extends Vue {}
 </script>

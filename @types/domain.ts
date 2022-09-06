@@ -58,3 +58,35 @@ export enum ELayout {
   DEFAULT = 'default',
   AUTH = 'auth'
 }
+
+export enum ENotificationType {
+  SUCCESS = 'success',
+  INFO = 'info',
+  ERROR = 'error'
+}
+
+export type TNotification = {
+  title: string;
+  content: string;
+  type: ENotificationType;
+  id: string;
+  alive?: number;
+ };
+
+export type TNotificationParams = {
+  alive?: number;
+};
+
+export interface IRawNotifications {
+  success: (title: string, content: string, params: TNotificationParams) => void;
+  error: (title: string, content: string, params: TNotificationParams) => void;
+  info: (title: string, content: string, params: TNotificationParams) => void;
+  _prepare: (title: string, content: string, type: ENotificationType, params: TNotificationParams) => void;
+  _add: (notification: TNotification) => void;
+ }
+
+export interface INotifications {
+  success: (title: string, content: string, params: TNotificationParams) => void;
+  error: (title: string, content: string, params: TNotificationParams) => void;
+  info: (title: string, content: string, params: TNotificationParams) => void;
+ }
