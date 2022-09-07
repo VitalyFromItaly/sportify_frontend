@@ -19,8 +19,8 @@ export default class Service implements IService {
       return null;
     }
 
-    const res = await response.json();
+    const user = await response.json();
 
-    return res.user;
+    return user;
   }
 }
