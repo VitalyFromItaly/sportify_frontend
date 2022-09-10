@@ -1,5 +1,6 @@
-import { context } from '~/core/context';
-export default function PresenterCatcher() {
+import { context } from '../context';
+
+export default function PresenterCatcher(useCoreLoading = false) {
   return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
     if (descriptor === undefined) {
       // @ts-ignore
@@ -9,7 +10,9 @@ export default function PresenterCatcher() {
     const originalMethod = descriptor.value;
     descriptor.value = function(...args: any[]) {
       try {
-        // context.store.commit('Core/setIsLoading');
+        if (useCoreLoading) {
+          context.store.commit('Core/setIsLoading');
+        }
         // @ts-ignore
         this.onChangeState({ isLoading: true });
         const result = originalMethod.apply(this, args);
@@ -20,7 +23,9 @@ export default function PresenterCatcher() {
             .then(() => {
               // @ts-ignore
               this.onChangeState({ isLoading: false });
-              // context.store.commit('Core/removeIsLoading');
+              if (useCoreLoading) {
+                context.store.commit('Core/removeIsLoading');
+              }
             })
             .catch((error: any) => {
               _handleError(this, error);
@@ -37,7 +42,6 @@ export default function PresenterCatcher() {
 
 function _handleError(ctx: any, error: Error) {
   ctx.onChangeState({ isError: true, isLoading: false });
-  context.store.commit('Core/removeIsLoading');
 
   console.error('[Presenter catcher]', error);
 }

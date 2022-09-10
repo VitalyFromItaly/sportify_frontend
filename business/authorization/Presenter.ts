@@ -20,16 +20,19 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
   @PresenterCatcher()
   public async onLogin(payload: TLoginForm): Promise<void> {
     const tokens = await this.service.login(payload);
-    if (tokens) {
-      this.bus.emit<TRouterEvent>(EEventBusName.ROUTER, {
-        name: 'profile'
-      });
+    if (!tokens) {
+      return;
     }
+    // @ts-ignore
+    context.$api.swagger.baseApiParams.headers.Authorization = `Bearer ${tokens.access_token}`;
+    this.bus.emit<TRouterEvent>(EEventBusName.AUTH_ROUTER, {
+      name: 'account'
+    });
   }
 
   public onLogout(): void {
     this.service.logout();
-    this.bus.emit<TRouterEvent>(EEventBusName.ROUTER, {
+    this.bus.emit<TRouterEvent>(EEventBusName.AUTH_ROUTER, {
       name: 'sign-in'
     });
   }

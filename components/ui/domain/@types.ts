@@ -43,3 +43,13 @@ export enum ENotificationLevel {
   PAGE = 'page',
   INLINE = 'inline'
 }
+
+export type TTypeId = string | number;
+
+export enum EComponentTags {
+  TABS = 'tabs'
+}
+
+export enum EComponentKeys {
+  ACTIVE_TAB = 'activeTabId'
+}

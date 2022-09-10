@@ -7,8 +7,10 @@ export interface IEventBus {
 }
 
 export enum EEventBusName {
-  NOTIFICATION = 'notification',
-  ROUTER = 'router'
+  NOTIFICATION = 'notification_default',
+  AUTH_NOTIFICATION = 'notification_auth',
+  ROUTER = 'router',
+  AUTH_ROUTER = 'router_auth'
 }
 
 export type TRouterEvent = TLocation;

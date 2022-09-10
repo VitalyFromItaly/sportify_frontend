@@ -1,9 +1,10 @@
 <template>
-  <div v-if="userInfo" class="flex items-center cursor-pointer" @click="onShowUserMenu">
+  <div v-if="user" class="flex items-center cursor-pointer" @click="onShowUserMenu">
     <user-icon />
     <div class="mr-3">
-      {{ state.user.email }}
+      {{ user.email }}
     </div>
+    <ui-button appearance="transparent" @click="onLogout"> logout </ui-button>
     <chevron-down color="white" />
     <div v-if="isUserMenuShown" class="absolute bg-white text-gray-900 right-6 top-11 w-32">
       menu
@@ -13,14 +14,14 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator';
-import type { TState, IPresenter, TUserInfo } from '../Domain';
+import type { IPresenter, TUserInfo } from '../Domain';
 import { userStoreModule } from '../store';
 import ChevronDown from '~/components/svg/ChevronDown.vue';
 import UserIcon from '~/components/svg/User.vue';
 
 @Component({ components: { ChevronDown, UserIcon } })
-export default class UserInfo extends Vue {
-  @userStoreModule.State('internalState') state: TState;
+export default class user extends Vue {
+  @userStoreModule.Getter user: TUserInfo;
 
   private isUserMenuShown: boolean = false;
   private presenter: IPresenter;
@@ -29,14 +30,14 @@ export default class UserInfo extends Vue {
     this.isUserMenuShown = !this.isUserMenuShown;
   }
 
-  private get userInfo(): TUserInfo {
-    return this.state.user;
-  }
-
   public async mounted(): Promise<void> {
     this.presenter = this.$presenter.userInstance;
 
     await this.presenter.onMounted();
+  }
+
+  private onLogout(): void {
+    this.$presenter.loginInstance.onLogout();
   }
 }
 </script>

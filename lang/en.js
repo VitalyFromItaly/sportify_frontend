@@ -1,8 +1,10 @@
 import login from './login/en';
 import validation from './validation/en';
-import profile from './profile/en';
+import account from './account/en';
+import measurementStandards from './measurementStandards/en';
 export default {
   login,
   validation,
-  profile
+  account,
+  measurementStandards
 };

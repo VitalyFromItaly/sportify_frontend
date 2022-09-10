@@ -61,8 +61,8 @@ module.exports = {
       fuchsia: colors.fuchsia
     },
     fontFamily: {
-      sans: ['Graphik', 'sans-serif'],
-      serif: ['Merriweather', 'serif']
+      sans: ['Arimo', 'sans-serif'],
+      serif: ['Arimo', 'serif']
     },
     extend: {
       width: {
@@ -77,7 +77,9 @@ module.exports = {
         dark: '#393939',
         lightDark: '#585959',
         lightGray: '#F2F2F2',
-        darkGray: '#BEBEBC'
+        darkGray: '#BEBEBC',
+        darkGrayText: '#525252',
+        darkText: '#18181b'
       },
       spacing: {
         '8xl': '96rem',
@@ -89,6 +91,8 @@ module.exports = {
     }
   },
   variants: {
+    translate: ['active'],
+    scale: ['active'],
     textColor: ['visited', 'hover', 'dark'],
     linearBorderGradients: ['responsive'], // defaults to ['responsive']
     repeatingLinearBorderGradients: ['responsive'] // defaults to ['responsive']

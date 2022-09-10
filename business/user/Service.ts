@@ -1,4 +1,4 @@
-import { IService, TUserInfo } from './Domain';
+import { IService, TUser } from './Domain';
 import { EHttpCodes } from '~/@types/http';
 import cache from '~/core/cache/cache';
 import { IBrowserStorage } from '~/core/cache/Domain';
@@ -13,7 +13,7 @@ export default class Service implements IService {
     this.swagger = swagger;
   }
 
-  public async read(): Promise<TUserInfo> {
+  public async read(): Promise<TUser> {
     const response = await this.swagger.user.get();
     if (response.status !== EHttpCodes.SUCCESS) {
       return null;

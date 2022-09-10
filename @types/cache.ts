@@ -7,3 +7,11 @@ export enum EAuthKeys {
   ACCESS_TOKEN = 'access_token',
   FULL_TOKEN_INFO = 'full_token_Info'
 }
+
+export enum ECacheTags {
+  SYSTEM = 'system'
+}
+
+export enum ECacheKeys {
+  THEME = 'theme'
+}

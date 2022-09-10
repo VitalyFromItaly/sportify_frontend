@@ -1,12 +1,13 @@
 import { Plugin } from '@nuxt/types';
 import { Api } from '~/api/Api';
+import customFetch from '~/core/http/customFetch';
 // import customFetch from '~/core/http/customFetch';
 type TApiConfig = {
   baseUrl: string;
   customFetch?: typeof fetch;
   baseApiParams: any;
 };
-const apiPlugin: Plugin = async({ $config, $auth }, inject) => {
+const apiPlugin: Plugin = ({ $config, $auth }, inject) => {
   let accessToken = '';
   const token = $auth.getAccessToken();
   if (token) {
@@ -19,7 +20,7 @@ const apiPlugin: Plugin = async({ $config, $auth }, inject) => {
 
   const swaggerResultConfig: TApiConfig = {
     baseUrl: $config.baseUrl,
-    // customFetch: customFetch($bus),
+    customFetch: customFetch(),
     baseApiParams: { headers: { Authorization: `Bearer ${accessToken || ''}` } }
   };
 

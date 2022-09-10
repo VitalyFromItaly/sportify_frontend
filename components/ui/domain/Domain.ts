@@ -49,3 +49,9 @@ export const noticeIconClasses = {
 };
 
 export const NOTICE_PAGE_TYPE_ALIVE = 6000; // 6 seconds
+
+export const tabClasses = {
+  default: 'border-darkGray',
+  active: 'border-lightTeal',
+  disabled: 'border-darkGray cursor-not-allowed text-darkGray'
+};
