@@ -9,6 +9,43 @@
  * ---------------------------------------------------------------
  */
 
+export interface Activity {
+  /** uniq id */
+  id: number;
+
+  /** calories burn per minute */
+  calorie_cost: number;
+
+  /** activity name en */
+  name_en: string;
+
+  /** activity name ru */
+  name_ru: string;
+
+  /** activity icon */
+  icon: string;
+
+  /**
+   * activity type
+   * @example 2
+   */
+  type: number;
+
+  /**
+   * activity was created
+   * @format date-time
+   * @example 2022-07-31 22:13:20.794424
+   */
+  created_at: string;
+
+  /**
+   * activity was updated
+   * @format date-time
+   * @example 2022-07-31 22:13:20.794424
+   */
+  updated_at: string;
+}
+
 export interface User {
   /**
    * user`s uniq id
@@ -55,16 +92,25 @@ export interface User {
   weight: number | null;
 
   /**
+   * user`s training goal
+   * @example 0
+   */
+  goal: number;
+
+  /**
    * user`s age
    * @example 78
    */
   age: number | null;
 
   /**
-   * user`s age
-   * @example 78
+   * user status
+   * @example 0
    */
-  dominant_hand: number;
+  status: number;
+
+  /** user activities  */
+  activities: Activity[];
 }
 
 export interface CreateUserDto {
@@ -275,7 +321,7 @@ export namespace Auth {
    * No description
    * @tags Auth
    * @name RefreshAccessToken
-   * @request GET:/auth/refresh-access-token
+   * @request POST:/auth/refresh-access-token
    * @secure
    * @response `default` `TokenDto` refresh tokens
    */
@@ -290,7 +336,7 @@ export namespace Auth {
    * No description
    * @tags Auth
    * @name RefreshTokens
-   * @request GET:/auth/refresh-tokens
+   * @request POST:/auth/refresh-tokens
    * @secure
    * @response `default` `TokenDto` refresh tokens
    */
@@ -617,14 +663,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Auth
      * @name RefreshAccessToken
-     * @request GET:/auth/refresh-access-token
+     * @request POST:/auth/refresh-access-token
      * @secure
      * @response `default` `TokenDto` refresh tokens
      */
     refreshAccessToken: (data: RefreshTokenDto, params: RequestParams = {}) =>
       this.request<any, TokenDto>({
         path: `/auth/refresh-access-token`,
-        method: "GET",
+        method: "POST",
         body: data,
         secure: true,
         type: ContentType.Json,
@@ -636,14 +682,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Auth
      * @name RefreshTokens
-     * @request GET:/auth/refresh-tokens
+     * @request POST:/auth/refresh-tokens
      * @secure
      * @response `default` `TokenDto` refresh tokens
      */
     refreshTokens: (data: RefreshTokenDto, params: RequestParams = {}) =>
       this.request<any, TokenDto>({
         path: `/auth/refresh-tokens`,
-        method: "GET",
+        method: "POST",
         body: data,
         secure: true,
         type: ContentType.Json,

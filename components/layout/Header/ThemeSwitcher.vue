@@ -11,11 +11,19 @@
 import { Vue, Component, namespace, Watch } from 'nuxt-property-decorator';
 import Sun from '~/components/svg/Sun.vue';
 import Moon from '~/components/svg/Moon.vue';
-import { ETheme } from '~/@types/domain';
-const coreState = namespace('Core');
+import { ETheme, EVuexNamespaces } from '~/@types/domain';
+import { ECacheKeys, ECacheTags } from '~/@types/cache';
+import { USER_STORE_NS } from '~/business/user/store';
+
+const coreState = namespace(EVuexNamespaces.CORE);
+
 @Component({ components: { Moon, Sun } })
 export default class ModeSwitcher extends Vue {
   @coreState.Mutation setTheme:(value: boolean) => void;
+
+  private get userId(): number {
+    return this.$store.getters[`${USER_STORE_NS}/id`];
+  }
 
   private get isDarkTheme(): boolean {
     return this.$store.state.Core.isDarkTheme;
@@ -27,34 +35,42 @@ export default class ModeSwitcher extends Vue {
 
   @Watch('isDarkTheme')
   onChangeTheme(theme: boolean): void {
-    if (
-      (!theme && !localStorage.getItem('theme')) ||
-        localStorage.getItem('theme') == null
-    ) {
+    const cachedTheme = this.getThemeFromCache();
+    if ((!theme && !cachedTheme) || cachedTheme === null) {
       document.querySelector('html').classList.add(ETheme.DARK);
-      localStorage.setItem('theme', ETheme.DARK);
+      this.setThemeInCache(ETheme.DARK);
       this.isDarkTheme = true;
     }
     if (theme) {
       document.querySelector('html').classList.add(ETheme.DARK);
-      localStorage.setItem('theme', ETheme.DARK);
+      this.setThemeInCache(ETheme.DARK);
     } else if (!theme) {
       document.querySelector('html').classList.remove(ETheme.DARK);
-      localStorage.setItem('theme', ETheme.LIGHT);
+      this.setThemeInCache(ETheme.LIGHT);
     }
   }
 
+  destroyed() {
+    document.querySelector('html').classList.remove(ETheme.DARK);
+  }
+
   mounted(): void {
-    const theme = localStorage.getItem('theme');
-    if (theme === ETheme.DARK || (!('theme' in localStorage) &&
-        window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
+    const theme = this.getThemeFromCache();
+    if (theme === ETheme.DARK || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
       document.querySelector('html').classList.add(ETheme.DARK);
       this.isDarkTheme = true;
     } else {
       document.querySelector('html').classList.remove(ETheme.DARK);
       this.isDarkTheme = false;
     }
+  }
+
+  private getThemeFromCache(): string {
+    return this.$cache.get<string>(`${ECacheKeys.THEME}:${this.userId}`, ECacheTags.SYSTEM);
+  }
+
+  private setThemeInCache(theme: string): void {
+    this.$cache.set<string>(`${ECacheKeys.THEME}:${this.userId}`, ECacheTags.SYSTEM, theme, 100000000);
   }
 }
 </script>

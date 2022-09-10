@@ -1,6 +1,6 @@
 <template>
   <button
-    class="px-5 py-1 my-1"
+    class="button"
     :class="[classes, fullWidth ? 'w-full': '' ]"
     :disabled="isDisabled"
     @click="$emit('click')"
@@ -35,3 +35,9 @@ export default class UIButton extends Vue {
   }
 }
 </script>
+
+<style scoped lang="postcss">
+  .button {
+    @apply px-5 py-1 my-1 transform active:scale-95 active:translate-y-0.5 active:translate-x-0.5;
+  }
+</style>

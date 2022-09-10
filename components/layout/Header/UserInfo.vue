@@ -18,7 +18,7 @@ import { Vue, Component } from 'nuxt-property-decorator';
 import User from '../../svg/User.vue';
 import ChevronDown from '../../svg/ChevronDown.vue';
 @Component({ components: { User, ChevronDown } })
-export default class UserInfo extends Vue {
+export default class user extends Vue {
   isUserMenuShown: boolean = false;
 
   private onShowUserMenu(): void {

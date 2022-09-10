@@ -18,8 +18,6 @@ export default interface IAuth {
   getAccessToken(): TAccessToken;
   updateAccessToken(): Promise<void>;
   checkTokens(): Promise<void>;
-  updateTokens(): Promise<void>;
-  getRefreshToken(): TRefreshToken;
-  getTokens(): TTokensInfo;
   isAuth(): boolean;
+  getTokens(): TTokensInfo;
 }

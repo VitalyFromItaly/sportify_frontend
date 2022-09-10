@@ -1,9 +1,14 @@
 <template>
-  <main class="flex flex-col min-h-screen dark:bg-dark dark:text-white">
+  <main class="flex flex-col min-h-screen text-base text-darkText dark:bg-dark dark:text-white font-sans">
     <portal-target multiple name="main" />
     <layout-header />
-    <!-- <auth-logo /> -->
-    <div class="flex-grow px-5">
+    <!-- <ui-button @click="changeLocale('ru')">
+      Russian
+    </ui-button>
+    <ui-button @click="changeLocale('en')">
+      English
+    </ui-button> -->
+    <div class="flex-grow global-padding">
       <nuxt class="" />
     </div>
     <portal-target class="notifications" name="notifications" multiple />
@@ -15,14 +20,17 @@
 
 <script lang="ts">
 import { Vue, Component } from 'nuxt-property-decorator';
-import { TRouteEventPayload } from '~/@types/domain';
+import { localeChanged } from 'vee-validate';
+import { TRouteEventPayload, TNotificationPayload, EAppLanguages } from '~/@types/domain';
 import AuthLogo from '~/components/svg/AuthLogo.vue';
 import { EEventBusName } from '~/core/bus/Domain';
 
-@Component({ components: { AuthLogo } })
+// @Component({ components: { AuthLogo } })
+@Component({ components: { AuthLogo }, middleware: ['route-guard'] })
 export default class DefaultLayout extends Vue {
   mounted(): void {
     this.onRouterEvent();
+    this.onNotificationEvent();
     if (!this.$auth.isAuth()) {
       console.warn('[auth] not auth');
       this.$router.replace({ name: 'sign-in' });
@@ -40,9 +48,24 @@ export default class DefaultLayout extends Vue {
       this.$router.push({ name, params });
     });
   }
+
+  private onNotificationEvent(): void {
+    this.$bus.on(EEventBusName.NOTIFICATION, (payload: TNotificationPayload) => {
+      const { type, content, title, params } = payload;
+      this.$notification[type](title, content, params);
+    });
+  }
+
+  changeLocale(lang: EAppLanguages): void {
+    this.$i18n.setLocale(lang);
+    localeChanged();
+  }
 }
 </script>
-<style scoped>
+<style lang="postcss">
+  .global-padding {
+    @apply px-14;
+  }
   .notifications {
   position: fixed;
   top: 1.5rem;

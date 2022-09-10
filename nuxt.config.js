@@ -117,10 +117,10 @@ export default () => {
           autoprefixer: {}
         }
       }
-    },
-    router: {
-      middleware: 'route-guard'
     }
+    // router: {
+    //   middleware: 'route-guard'
+    // }
   };
   return config;
 };
