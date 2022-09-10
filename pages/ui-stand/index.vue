@@ -1,5 +1,6 @@
 <template>
   <div class="space-y-3">
+    <example-radio-button />
     <example-tabs />
     <example-button />
     <example-input />
@@ -12,6 +13,7 @@
 <script lang='ts'>
 import { Vue, Component } from 'nuxt-property-decorator';
 import ExampleTabs from '~/components/ui-stand/ExampleTabs.vue';
+import ExampleRadioButton from '~/components/ui-stand/ExampleRadioButton.vue';
 import ExampleButton from '~/components/ui-stand/ExampleButton.vue';
 import ExampleInput from '~/components/ui-stand/ExampleInput.vue';
 import ExampleToggle from '~/components/ui-stand/ExampleToggle.vue';
@@ -26,7 +28,8 @@ import ExampleNotification from '~/components/ui-stand/ExampleNotification.vue';
     ExampleSelect,
     ExampleContainer,
     ExampleNotification,
-    ExampleTabs
+    ExampleTabs,
+    ExampleRadioButton
   }
 })
 export default class UIStand extends Vue {}

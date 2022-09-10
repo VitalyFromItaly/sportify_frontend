@@ -1,5 +1,5 @@
 <template>
-  <main class="flex flex-col min-h-screen text-base text-darkText dark:bg-dark dark:text-white font-sans">
+  <main v-if="isAppLoaded" class="flex flex-col min-h-screen text-base text-darkText dark:bg-dark dark:text-white font-sans">
     <portal-target multiple name="main" />
     <layout-header />
     <!-- <ui-button @click="changeLocale('ru')">
@@ -9,7 +9,7 @@
       English
     </ui-button> -->
     <div class="flex-grow global-padding">
-      <nuxt class="" />
+      <nuxt />
     </div>
     <portal-target class="notifications" name="notifications" multiple />
     <portal to="notifications">
@@ -28,7 +28,8 @@ import { EEventBusName } from '~/core/bus/Domain';
 // @Component({ components: { AuthLogo } })
 @Component({ components: { AuthLogo }, middleware: ['route-guard'] })
 export default class DefaultLayout extends Vue {
-  mounted(): void {
+  isAppLoaded = false;
+  async mounted(): Promise<void> {
     this.onRouterEvent();
     this.onNotificationEvent();
     if (!this.$auth.isAuth()) {
@@ -37,6 +38,14 @@ export default class DefaultLayout extends Vue {
       return;
     }
     console.log('[auth] success');
+    await this.initApp();
+    this.isAppLoaded = true;
+  }
+
+  private async initApp(): Promise<void> {
+    await Promise.all([
+      this.$presenter.userInstance.onLoad()
+    ]);
   }
 
   private onRouterEvent(): void {

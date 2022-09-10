@@ -53,3 +53,10 @@ export enum EComponentTags {
 export enum EComponentKeys {
   ACTIVE_TAB = 'activeTabId'
 }
+
+export type TRadioButtonOption = {
+  value: string | number;
+  label: string;
+  disabled?: boolean;
+  checked?: boolean;
+};
