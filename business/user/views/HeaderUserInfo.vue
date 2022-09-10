@@ -30,11 +30,11 @@ export default class user extends Vue {
     this.isUserMenuShown = !this.isUserMenuShown;
   }
 
-  public async mounted(): Promise<void> {
-    this.presenter = this.$presenter.userInstance;
+  // public async mounted(): Promise<void> {
+  //   this.presenter = this.$presenter.userInstance;
 
-    await this.presenter.onMounted();
-  }
+  //   await this.presenter.onMounted();
+  // }
 
   private onLogout(): void {
     this.$presenter.loginInstance.onLogout();

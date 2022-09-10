@@ -45,7 +45,7 @@ export interface IService {
 }
 
 export interface IPresenter extends IVuexObservable<TState> {
-  onMounted(): Promise<void>;
+  onLoad(): Promise<void>;
 }
 
 export const initUserState = (): TState => ({

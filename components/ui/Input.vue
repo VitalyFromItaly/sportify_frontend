@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col my-4">
-    <label v-if="label" class="dark:text-lightGray" :for="id">{{ label }}
-      <span v-if="required" class=" text-lightTeal font-semibold">*</span>
+    <label v-if="label" class="dark:text-lightGray" :for="id">
+      {{ label }} <span v-if="required" class=" text-lightTeal font-semibold">*</span>
     </label>
     <div class="relative">
       <input

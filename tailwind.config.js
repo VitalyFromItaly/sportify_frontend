@@ -78,7 +78,7 @@ module.exports = {
         lightDark: '#585959',
         lightGray: '#F2F2F2',
         darkGray: '#BEBEBC',
-        darkGrayText: '#525252',
+        disabledDark: '#525252',
         darkText: '#18181b'
       },
       spacing: {

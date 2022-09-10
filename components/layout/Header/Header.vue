@@ -1,9 +1,10 @@
 <template>
   <div class="bg-gradient-to-r from-lightTeal to-middleTeal text-white global-padding py-2 text-sm font-extralight">
-    <div class="flex justify-between">
+    <div class="flex justify-between items-baseline">
       <sportify-logo color="white" />
+      <ui-link v-if="$config.environment === 'dev'" :to="({ name: 'ui-stand' })">ui-stend</ui-link>
       <div class="flex space-x-10">
-        <theme-switcher v-if="hasUser" />
+        <theme-switcher />
         <user-info-header />
       </div>
     </div>

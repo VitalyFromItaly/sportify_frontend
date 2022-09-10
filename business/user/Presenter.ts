@@ -18,7 +18,7 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
   }
 
   @PresenterCatcher()
-  public async onMounted(): Promise<void> {
+  public async onLoad(): Promise<void> {
     const user = await this.service.read();
     this.onChangeState({ user });
   }

@@ -58,7 +58,7 @@ export default class Auth implements IAuth {
     return minutesLeft < this.CHECK_MINUTES_LEFT;
   }
 
-  private getTokens(): TTokensInfo {
+  public getTokens(): TTokensInfo {
     const tokenInfo = cache.get<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH);
     if (!tokenInfo) {
       return null;

@@ -28,6 +28,7 @@ export default class ParametersInfo extends Vue {
     rows.push({ left: this.$tc('account.knownUser.height'), right: height ? `${height} ${this.$t('measurementStandards.centimetersShort')}` : '—' });
     rows.push({ left: this.$tc('account.knownUser.weight'), right: weight ? `${weight} ${this.$t('measurementStandards.kilogramShort')}` : '—' });
     rows.push({ left: this.$tc('account.knownUser.age'), right: age || '—' });
+    // @ts-ignore
     const activitiesToSting = !!activities && activities.length ? activities.map(activity => activity[`name_${this.$i18n.localeProperties.code}`]).join(', ') : '—';
     rows.push({ left: this.$tc('account.knownUser.activities'), right: activitiesToSting });
     rows.push({ left: this.$tc('account.knownUser.gender'), right: this.$tc(`account.gender.${genderDictionary[gender]}`) });

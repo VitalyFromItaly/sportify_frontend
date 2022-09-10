@@ -50,9 +50,9 @@ export default class ModeSwitcher extends Vue {
     }
   }
 
-  destroyed() {
-    document.querySelector('html').classList.remove(ETheme.DARK);
-  }
+  // destroyed() {
+  //   document.querySelector('html').classList.remove(ETheme.DARK);
+  // }
 
   mounted(): void {
     const theme = this.getThemeFromCache();
