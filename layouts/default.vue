@@ -2,12 +2,12 @@
   <main v-if="isAppLoaded" class="flex flex-col min-h-screen text-base text-darkText dark:bg-dark dark:text-white font-sans">
     <portal-target multiple name="main" />
     <layout-header />
-    <!-- <ui-button @click="changeLocale('ru')">
+    <ui-button @click="changeLocale('ru')">
       Russian
     </ui-button>
     <ui-button @click="changeLocale('en')">
       English
-    </ui-button> -->
+    </ui-button>
     <div class="flex-grow global-padding">
       <nuxt />
     </div>

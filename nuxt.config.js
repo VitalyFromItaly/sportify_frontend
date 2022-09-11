@@ -49,6 +49,7 @@ export default () => {
     },
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
     plugins: [
+      '~/plugins/calendar',
       '~/plugins/main',
       '~/plugins/auth',
       '~/plugins/api',
@@ -59,8 +60,8 @@ export default () => {
       '~/plugins/cache',
       '~/plugins/bus',
       '~/plugins/notification',
-      '~/plugins/context',
-      '~/plugins/directives'
+      '~/plugins/context'
+      // '~/plugins/directives'
     ],
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: [

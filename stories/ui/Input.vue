@@ -1,10 +1,11 @@
 <template>
   <div class="flex flex-col">
-    <label v-if="label" :for="id">{{ label }}
+    <ui-label :for-id="id" :label="label">
       <span v-if="required" class=" text-lightTeal font-semibold">*</span>
-    </label>
+    </ui-label>
     <input
       :id="id"
+      v-click-outside="clickOutside"
       :value="value"
       class="inline border-2 pl-3 focus:outline-none"
       :class="[internalSize, internalClasses]"
@@ -24,7 +25,9 @@ import { v4 as uuidv4 } from 'uuid';
 import type { TInputSize, TInputType, TInputTypeValue } from './domain/@types';
 import { EInputTypes, EInputSize } from './domain/@types';
 import { inputTextSizes, inputNumberSizes, inputClasses } from './domain/Domain';
-@Component
+import { clickOutside } from '~/helpers/directives';
+
+@Component({ directives: { clickOutside } })
 export default class UIInput extends Vue {
   @Prop({
     default: EInputTypes.TEXT,
@@ -44,7 +47,7 @@ export default class UIInput extends Vue {
   }) size: TInputSize;
 
   @Prop({ default: false }) required: boolean;
-  @Prop({ default: false }) isDisabled: boolean;
+  @Prop({ default: false }) disabled: boolean;
   @Prop({ default: 'Placeholder' }) placeholder: string;
   @Prop({ default: false }) isError: boolean;
   @Prop({ default: '' }) errorMessage: string;
@@ -55,12 +58,16 @@ export default class UIInput extends Vue {
 
   private isTouched = false;
 
+  private clickOutside(): void {
+    console.log('clickoutside');
+  }
+
   private updateValue(event: any): void {
     this.$emit('input', event.target.value);
   }
 
   private get internalClasses(): string {
-    if (this.isDisabled) { return inputClasses.isDisabled; }
+    if (this.disabled) { return inputClasses.disabled; }
     if (this.isError) { return inputClasses.isError; }
     return inputClasses.default;
   }

@@ -1,9 +1,9 @@
 <template>
-  <div>
-    <h2 class="text-center bg-gray-200 py-2">
+  <abstract-ui-example>
+    <template #header>
       Container
-    </h2>
-    <div class="mx-10 flex">
+    </template>
+    <template #component>
       <div>
         <ui-container type="expandable">
           <template #header>
@@ -12,13 +12,16 @@
           Container
         </ui-container>
       </div>
-    </div>
-  </div>
+    </template>
+    <template #settings></template>
+  </abstract-ui-example>
 </template>
 
 <script lang='ts'>
 import { Vue, Component } from 'nuxt-property-decorator';
-@Component
+import AbstractUiExample from './AbstractUiExample.vue';
+
+@Component({ components: { AbstractUiExample } })
 export default class ExampleContainer extends Vue {
 }
 </script>

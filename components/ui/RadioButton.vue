@@ -1,11 +1,7 @@
 <template>
   <div>
-    <div v-if="label">
-      {{ label }}
-    </div>
-    <div v-if="description" class="text-sm">
-      {{ description }}
-    </div>
+    <ui-label v-if="label" :label="label" />
+    <ui-label v-if="description" :label="description" class="text-sm block" />
     <div v-if="options.length" :class="[ horizontal ? 'flex space-x-8' : '' ]">
       <div v-for="(option, index) in options" :key="index" class="flex items-center space-x-1" :class="[ horizontal ? '' : '' ]">
         <input
@@ -19,7 +15,7 @@
           :checked="isOptionChecked(option)"
           v-on="inputListeners(option.value)"
         />
-        <label :for="getId(index, option.label)" :class="[option.disabled ? 'disabled' : '']">{{ option.label }}</label>
+        <ui-label :label="option.label" :for-id="getId(index, option.label)" :class="[option.disabled ? 'disabled' : '']" />
       </div>
     </div>
   </div>
