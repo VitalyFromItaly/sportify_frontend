@@ -31,7 +31,7 @@ export const inputTextSizes = {
 };
 
 export const inputClasses = {
-  isDisabled: 'bg-disabled cursor-not-allowed',
+  disabled: 'bg-disabled cursor-not-allowed',
   default: 'hover:border-middleTeal active:border-middleTeal focus:border-middleTeal border-disabled dark:bg-dark dark:text-gray-300',
   isError: 'border-rose-600'
 };
@@ -54,4 +54,30 @@ export const tabClasses = {
   default: 'border-darkGray',
   active: 'border-lightTeal',
   disabled: 'border-darkGray dark:border-disabledDark dark:text-disabledDark cursor-not-allowed text-darkGray'
+};
+
+export const keyCodes = Object.freeze({
+  enter: 13,
+  tab: 9,
+  delete: 46,
+  esc: 27,
+  space: 32,
+  up: 38,
+  down: 40,
+  left: 37,
+  right: 39,
+  end: 35,
+  home: 36,
+  del: 46,
+  backspace: 8,
+  insert: 45,
+  pageup: 33,
+  pagedown: 34
+});
+
+export const DATE_PICKER_COLOR = 'teal';
+
+export const POSSIBLE_LOCALES = {
+  en: 'en-US',
+  ru: 'ru-RU'
 };

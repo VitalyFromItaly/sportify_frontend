@@ -2,7 +2,7 @@
   <button
     class="button"
     :class="[classes, fullWidth ? 'w-full': '' ]"
-    :disabled="isDisabled"
+    :disabled="disabled"
     @click="$emit('click')"
   >
     <slot></slot>
@@ -19,7 +19,7 @@ import { buttonClasses, disabledButtonClasses } from './domain/Domain';
 export default class UIButton extends Vue {
   @Prop({ type: Boolean, default: false }) fullWidth: boolean;
   @Prop({ type: String, default: EButtonAppearance.PRIMARY }) appearance: TButtonType;
-  @Prop({ type: Boolean, default: false }) isDisabled: boolean;
+  @Prop({ type: Boolean, default: false }) disabled: boolean;
 
   private get disabledClasses(): string {
     const classes = disabledButtonClasses[this.appearance];
@@ -27,7 +27,7 @@ export default class UIButton extends Vue {
   }
 
   private get classes(): string {
-    return this.isDisabled ? this.disabledClasses : this.classesByAppearance;
+    return this.disabled ? this.disabledClasses : this.classesByAppearance;
   }
 
   private get classesByAppearance(): string {

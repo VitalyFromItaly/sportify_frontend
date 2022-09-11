@@ -1,26 +1,26 @@
 <template>
-  <div>
-    <h2 class="text-center bg-gray-200 py-2">
+  <abstract-ui-example>
+    <template #header>
       Select
-    </h2>
-    <div class="mx-10 flex">
-      <div class="w-1/2 border-r">
-        <ui-select v-model="selectModel" label="select" :options="options" :is-disabled="isDisabled" />
-      </div>
-      <div>
-        <ui-toggle v-model="isDisabled" label="disable select" />
-      </div>
-    </div>
-  </div>
+    </template>
+    <template #component>
+      <ui-select v-model="selectModel" label="select" :options="options" :disabled="disabled" />
+    </template>
+    <template #settings>
+      <ui-toggle v-model="disabled" label="disable select" />
+    </template>
+  </abstract-ui-example>
 </template>
 
 <script lang='ts'>
 import { Vue, Component } from 'nuxt-property-decorator';
 import { TSelectOption } from '../ui/domain/@types';
-@Component
+import AbstractUiExample from './AbstractUiExample.vue';
+
+@Component({ components: { AbstractUiExample } })
 export default class ExampleSelect extends Vue {
   private selectModel: string = '';
-  private isDisabled = false;
+  private disabled = false;
   private options: TSelectOption[] = [
     { text: 'text1', value: 'value1' },
     { text: 'text2', value: 'value2' },

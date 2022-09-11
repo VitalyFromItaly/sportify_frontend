@@ -2,17 +2,17 @@
   <nuxt-link
     v-if="useRouter"
     :to="link"
-    :disabled="isDisabled"
-    :class="[classes, isDisabled ? 'cursor-not-allowed': '' ]"
+    :disabled="disabled"
+    :class="[classes, disabled ? 'cursor-not-allowed': '' ]"
     @click="onClick"
   >
     <slot></slot>
   </nuxt-link>
   <a
     v-else
-    :disabled="isDisabled"
+    :disabled="disabled"
     :target="target"
-    :class="[classes, isDisabled ? 'cursor-not-allowed': '' ]"
+    :class="[classes, disabled ? 'cursor-not-allowed': '' ]"
     :href="link"
     @click="onClick"
   >
@@ -27,7 +27,7 @@ import type { TRawLocation } from '~/@types/framework';
 @Component
 export default class Link extends Vue {
   @Prop({ type: Boolean, default: true }) useRouter: boolean;
-  @Prop({ type: Boolean, default: false }) isDisabled: boolean;
+  @Prop({ type: Boolean, default: false }) disabled: boolean;
   @Prop({ type: Boolean, default: false }) blank: boolean;
   @Prop({ type: [String, Object], default: '' }) to: TRawLocation;
 
@@ -53,7 +53,7 @@ export default class Link extends Vue {
       e.preventDefault();
     }
 
-    if (this.isDisabled) {
+    if (this.disabled) {
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();

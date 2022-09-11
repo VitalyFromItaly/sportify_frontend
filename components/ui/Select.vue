@@ -1,9 +1,9 @@
 <template>
   <div class="flex flex-col">
-    <label class="dark:text-lightGray" :for="id">{{ label }}</label>
+    <ui-label :for-id="id" :label="label" :disabled="disabled" />
     <select
       :id="id"
-      :disabled="isDisabled"
+      :disabled="disabled"
       :value="value"
       class="w-52 h-8 border-2 focus:outline-none"
       :class="[classes, internalSize]"
@@ -31,7 +31,7 @@ import { EInputSize } from './domain/@types';
 export default class Select extends Vue {
   @Prop({ type: String, required: true }) label: string;
   @Prop({ type: String, default: 'Choose value...' }) placeholder: string;
-  @Prop({ type: Boolean, default: false }) isDisabled: boolean;
+  @Prop({ type: Boolean, default: false }) disabled: boolean;
   @Prop({ required: true }) value: TInputTypeValue;
     @Prop({
       default: EInputSize.SM,
@@ -53,7 +53,7 @@ export default class Select extends Vue {
   private id = uuidv4();
 
   private get classes(): string {
-    if (this.isDisabled) { return inputClasses.isDisabled; }
+    if (this.disabled) { return inputClasses.disabled; }
     return inputClasses.default;
   }
 

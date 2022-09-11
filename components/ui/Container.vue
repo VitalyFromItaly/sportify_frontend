@@ -1,5 +1,5 @@
 <template>
-  <div class=" bg-lightGray dark:bg-lightDark dark:text-gray-300 m-1 px-2 py-1">
+  <div class=" bg-lightGray dark:bg-lightDark dark:text-gray-300 px-2 py-1 inline-block">
     <div v-if="type === EContainer.EXPANDABLE" class="flex justify-between items-center">
       <slot name="header"></slot>
       <button @click="isExpanded = !isExpanded">

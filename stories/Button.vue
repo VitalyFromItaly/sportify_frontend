@@ -2,7 +2,7 @@
   <button
     class="px-5 py-1 mx-1 mt-5"
     :class="[classes]"
-    :disabled="isDisabled"
+    :disabled="disabled"
   >
     <slot></slot>
   </button>
@@ -17,7 +17,7 @@ import { buttonClasses, disabledButtonClasses } from './ui/domain/Domain';
 @Component
 export default class UIButton extends Vue {
   @Prop({ default: EButtonAppearance.PRIMARY }) appearance: TButtonType;
-  @Prop({ default: false }) isDisabled: boolean;
+  @Prop({ default: false }) disabled: boolean;
 
   private get disabledClasses(): string {
     const classes = disabledButtonClasses[this.appearance];
@@ -25,7 +25,7 @@ export default class UIButton extends Vue {
   }
 
   private get classes(): string {
-    return this.isDisabled ? this.disabledClasses : this.classesByAppearance;
+    return this.disabled ? this.disabledClasses : this.classesByAppearance;
   }
 
   private get classesByAppearance(): string {
