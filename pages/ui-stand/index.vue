@@ -1,5 +1,6 @@
 <template>
   <div class="space-y-3">
+    <example-loader />
     <example-date-picker />
     <example-radio-button />
     <example-tabs />
@@ -13,6 +14,7 @@
 </template>
 <script lang='ts'>
 import { Vue, Component } from 'nuxt-property-decorator';
+import ExampleLoader from '~/components/ui-stand/ExampleLoader.vue';
 import ExampleDatePicker from '~/components/ui-stand/ExampleDatePicker.vue';
 import ExampleTabs from '~/components/ui-stand/ExampleTabs.vue';
 import ExampleRadioButton from '~/components/ui-stand/ExampleRadioButton.vue';
@@ -32,7 +34,8 @@ import ExampleNotification from '~/components/ui-stand/ExampleNotification.vue';
     ExampleNotification,
     ExampleTabs,
     ExampleRadioButton,
-    ExampleDatePicker
+    ExampleDatePicker,
+    ExampleLoader
   }
 })
 export default class UIStand extends Vue {}

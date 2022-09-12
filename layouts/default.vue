@@ -2,13 +2,13 @@
   <main v-if="isAppLoaded" class="flex flex-col min-h-screen text-base text-darkText dark:bg-dark dark:text-white font-sans">
     <portal-target multiple name="main" />
     <layout-header />
-    <ui-button @click="changeLocale('ru')">
+    <!-- <ui-button @click="changeLocale('ru')">
       Russian
     </ui-button>
     <ui-button @click="changeLocale('en')">
       English
-    </ui-button>
-    <div class="flex-grow global-padding">
+    </ui-button> -->
+    <div class="body">
       <nuxt />
     </div>
     <portal-target class="notifications" name="notifications" multiple />
@@ -74,6 +74,10 @@ export default class DefaultLayout extends Vue {
 <style lang="postcss">
   .global-padding {
     @apply px-14;
+  }
+
+  .body {
+    @apply flex-grow global-padding z-10 mt-12;
   }
   .notifications {
   position: fixed;
