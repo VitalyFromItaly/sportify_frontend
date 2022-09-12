@@ -60,3 +60,5 @@ export type TRadioButtonOption = {
   disabled?: boolean;
   checked?: boolean;
 };
+
+export type TCheckboxValue = string | number | boolean | [] | object | any;

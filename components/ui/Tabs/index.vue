@@ -1,10 +1,10 @@
 <template>
   <div>
-    <ul class="flex">
+    <ul class="flex flex-wrap">
       <li v-for="(tab, index) in tabs" :key="index" class="">
         <span
           :class="getHeaderClasses(tab)"
-          class="border-b-2 mx-1 px-2 cursor-pointer"
+          class="border-b-2 mx-1 px-2 cursor-pointer whitespace-nowrap"
           :aria-controls="tab.computedId"
           :href="tab.computedId"
           :aria-selected="tab.isActive"
@@ -83,7 +83,7 @@ export default class UITabs extends Vue {
     this.tabs.forEach((tab) => {
       tab.isActive = tab.computedId === selectedTab.computedId;
     });
-    this.$emit('changed', { tab: selectedTab });
+    this.$emit('changed', { tab: selectedTab, id: selectedTab.computedId });
 
     this.activeTabId = selectedTab.computedId;
   }
