@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gradient-to-r from-lightTeal to-middleTeal text-white global-padding py-2 text-sm font-extralight">
+  <div class="fixed top-0 left-0 right-0 z-20 h-12 bg-gradient-to-r from-lightTeal to-middleTeal text-white global-padding py-2 text-sm font-extralight">
     <div class="flex justify-between items-baseline">
       <sportify-logo color="white" />
       <ui-link v-if="$config.environment === 'dev'" :to="({ name: 'ui-stand' })">ui-stend</ui-link>
