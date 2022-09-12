@@ -11,7 +11,7 @@ export const buttonClasses: TButtonClass = {
 };
 
 export const disabledButtonClasses: TButtonClass = {
-  [EButtonAppearance.PRIMARY]: 'bg-disabled text-disabledTextPrimary',
+  [EButtonAppearance.PRIMARY]: 'bg-disabled text-mainGray',
   [EButtonAppearance.SECONDARY]: 'border-2 border-disabled bg-transparent text-disabled',
   [EButtonAppearance.TRANSPARENT]: 'bg-transparent text-disabled'
 };

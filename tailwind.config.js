@@ -73,7 +73,7 @@ module.exports = {
         lightTeal: '#469BA2',
         middleTeal: '#327387',
         disabled: '#DFE0D8',
-        disabledTextPrimary: '#BEBEBC',
+        mainGray: '#BEBEBC',
         dark: '#393939',
         lightDark: '#585959',
         lightGray: '#F2F2F2',
