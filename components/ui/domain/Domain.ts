@@ -53,7 +53,7 @@ export const NOTICE_PAGE_TYPE_ALIVE = 6000; // 6 seconds
 export const tabClasses = {
   default: 'border-darkGray',
   active: 'border-lightTeal',
-  disabled: 'border-darkGray dark:border-disabledDark dark:text-disabledDark cursor-not-allowed text-darkGray'
+  disabled: 'border-darkGray dark:border-middleDark dark:text-middleDark cursor-not-allowed text-darkGray'
 };
 
 export const keyCodes = Object.freeze({

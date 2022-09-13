@@ -1,15 +1,15 @@
 <template>
-  <transition name="block">
+  <transition name="bounce">
     <slot></slot>
   </transition>
 </template>
 
 <style scoped>
-  .block-enter-active {
+  .bounce-enter-active {
     animation: bounce-in .5s;
   }
 
-  .block-leave-active {
+  .bounce-leave-active {
     animation: bounce-out .5s;
   }
 
