@@ -83,7 +83,8 @@ module.exports = {
         lightGray: '#F2F2F2',
         darkGray: '#BEBEBC',
         middleDark: '#525252',
-        darkText: '#18181b'
+        darkText: '#18181b',
+        lightestTeal: '#CCE5E8'
       },
       spacing: {
         '8xl': '96rem',
