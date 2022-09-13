@@ -65,6 +65,10 @@ module.exports = {
       serif: ['Arimo', 'serif']
     },
     extend: {
+      rotate: {
+        0: '0deg',
+        180: '180deg'
+      },
       width: {
         numberInput: '12rem',
         smallTextInput: ''

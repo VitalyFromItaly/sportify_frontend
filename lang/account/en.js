@@ -1,5 +1,9 @@
 import aboutMe from './about-me/en';
 export default {
+  info: {
+    link: 'Account settings',
+    logout: 'Log out'
+  },
   header: 'Account settings',
   tabs: {
     personal: 'Personal',

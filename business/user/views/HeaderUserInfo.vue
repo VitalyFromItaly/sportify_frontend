@@ -1,13 +1,28 @@
 <template>
-  <div v-if="user" class="flex items-center cursor-pointer" @click="onShowUserMenu">
-    <user-icon />
-    <div class="mr-3">
-      {{ user.email }}
-    </div>
-    <ui-button appearance="transparent" @click="onLogout"> logout </ui-button>
-    <chevron-down color="white" />
-    <div v-if="isUserMenuShown" class="absolute bg-white text-gray-900 right-6 top-11 w-32">
-      menu
+  <div v-if="user" v-click-outside="outside" class="relative">
+    <div class="flex items-center cursor-pointer" @click="onShowUserMenu">
+      <user-icon />
+      <div class="mr-3">
+        {{ user.email }}
+      </div>
+      <!-- <ui-button appearance="transparent" @click="onLogout"> logout </ui-button> -->
+      <button><chevron-down color="white" :class="classes" /></button>
+      <transition-block>
+        <div v-if="isUserMenuShown" class="absolute bg-white text-gray-900 right-0 top-10 shadow-2xl">
+          <ul class="text-left">
+            <li class="li">
+              <p @click="$router.push({ name: 'account' })">
+                {{ $t('account.info.link') }}
+              </p>
+            </li>
+            <li class="li">
+              <p @click="onLogout">
+                {{ $t('account.info.logout') }}
+              </p>
+            </li>
+          </ul>
+        </div>
+      </transition-block>
     </div>
   </div>
 </template>
@@ -18,13 +33,21 @@ import type { IPresenter, TUserInfo } from '../Domain';
 import { userStoreModule } from '../store';
 import ChevronDown from '~/components/svg/ChevronDown.vue';
 import UserIcon from '~/components/svg/User.vue';
+import { clickOutside } from '~/helpers/directives';
 
-@Component({ components: { ChevronDown, UserIcon } })
+@Component({ components: { ChevronDown, UserIcon }, directives: { clickOutside } })
 export default class user extends Vue {
   @userStoreModule.Getter user: TUserInfo;
 
   private isUserMenuShown: boolean = false;
   private presenter: IPresenter;
+
+  private get classes(): object {
+    return {
+      'rotate-180': this.isUserMenuShown,
+      'rotate-0': !this.isUserMenuShown
+    };
+  }
 
   private onShowUserMenu(): void {
     this.isUserMenuShown = !this.isUserMenuShown;
@@ -36,6 +59,10 @@ export default class user extends Vue {
   //   await this.presenter.onMounted();
   // }
 
+  outside(): void {
+    this.isUserMenuShown = false;
+  }
+
   private onLogout(): void {
     this.$presenter.loginInstance.onLogout();
   }
@@ -43,6 +70,20 @@ export default class user extends Vue {
 </script>
 
 <style scoped>
+
+.li {
+  @apply hover:bg-lightGray px-3 py-2;
+}
+
+.rotate-180 {
+  transform: rotate(180deg);
+  transition: transform 200ms ease;
+}
+
+.rotate-0 {
+  transform: rotate(0deg);
+}
+
 div {
   outline-style:none;
 }
