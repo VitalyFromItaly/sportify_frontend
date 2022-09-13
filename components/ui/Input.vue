@@ -143,9 +143,6 @@ export default class UIInput extends Vue {
   }
 
   private onUpdateValue(event: any): void {
-    console.log({ event });
-    console.log({ target: event.target });
-    console.log({ value: event.target.value });
     const { value } = event.target;
     this.$emit('input', this.type === EInputTypes.NUMBER ? +value : value);
   }

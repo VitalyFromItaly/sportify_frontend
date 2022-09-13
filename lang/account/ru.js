@@ -1,5 +1,9 @@
 import aboutMe from './about-me/ru';
 export default {
+  info: {
+    link: 'Настройки аккаунта',
+    logout: 'Выйти'
+  },
   header: 'Настройки аккаунта',
   tabs: {
     personal: 'Персональные',

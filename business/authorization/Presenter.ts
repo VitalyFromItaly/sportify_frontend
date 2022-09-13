@@ -31,9 +31,9 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
   }
 
   public onLogout(): void {
-    this.service.logout();
     this.bus.emit<TRouterEvent>(EEventBusName.AUTH_ROUTER, {
       name: 'sign-in'
     });
+    this.service.logout();
   }
 }
