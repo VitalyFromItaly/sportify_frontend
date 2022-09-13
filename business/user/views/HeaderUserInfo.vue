@@ -5,10 +5,9 @@
       <div class="mr-3">
         {{ user.email }}
       </div>
-      <!-- <ui-button appearance="transparent" @click="onLogout"> logout </ui-button> -->
       <button><chevron-down color="white" :class="classes" /></button>
-      <transition-block>
-        <div v-if="isUserMenuShown" class="absolute bg-white text-gray-900 right-0 top-10 shadow-2xl">
+      <transition-bounce>
+        <div v-if="isUserMenuShown" class="absolute bg-white dark:bg-middleDark dark:text-lightGray text-gray-900 right-0 top-10 shadow-2xl">
           <ul class="text-left">
             <li class="li">
               <p @click="$router.push({ name: 'account' })">
@@ -22,7 +21,7 @@
             </li>
           </ul>
         </div>
-      </transition-block>
+      </transition-bounce>
     </div>
   </div>
 </template>

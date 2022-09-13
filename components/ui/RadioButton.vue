@@ -76,7 +76,7 @@ input[type='radio'] {
 }
 
 .disabled {
-  @apply cursor-not-allowed dark:text-disabledDark text-darkGray;
+  @apply cursor-not-allowed dark:text-middleDark text-darkGray;
 }
 
 </style>

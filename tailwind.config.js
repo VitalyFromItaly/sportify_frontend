@@ -82,7 +82,7 @@ module.exports = {
         lightDark: '#585959',
         lightGray: '#F2F2F2',
         darkGray: '#BEBEBC',
-        disabledDark: '#525252',
+        middleDark: '#525252',
         darkText: '#18181b'
       },
       spacing: {
