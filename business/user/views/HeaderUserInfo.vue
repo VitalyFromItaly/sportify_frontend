@@ -15,7 +15,7 @@
               </p>
             </li>
             <li class="li">
-              <p @click="onLogout">
+              <p @mousedown="onLogout">
                 {{ $t('account.info.logout') }}
               </p>
             </li>
@@ -81,6 +81,7 @@ export default class user extends Vue {
 
 .rotate-0 {
   transform: rotate(0deg);
+  transition: transform 200ms ease;
 }
 
 div {

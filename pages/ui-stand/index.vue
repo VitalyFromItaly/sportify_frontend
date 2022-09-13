@@ -16,6 +16,7 @@
 </template>
 <script lang='ts'>
 import { Vue, Component, Watch } from 'nuxt-property-decorator';
+const ExampleNumberInput = () => import('~/components/ui-stand/ExampleNumberInput.vue');
 const ExampleCheckbox = () => import('~/components/ui-stand/ExampleCheckbox.vue');
 const ExampleLoader = () => import('~/components/ui-stand/ExampleLoader.vue');
 const ExampleDatePicker = () => import('~/components/ui-stand/ExampleDatePicker.vue');
@@ -29,6 +30,7 @@ const ExampleContainer = () => import('~/components/ui-stand/ExampleContainer.vu
 const ExampleNotification = () => import('~/components/ui-stand/ExampleNotification.vue');
 @Component({
   components: {
+    ExampleNumberInput,
     ExampleCheckbox,
     ExampleButton,
     ExampleInput,
@@ -55,6 +57,7 @@ export default class UIStand extends Vue {
 
   private get components(): { component: any; name: string; }[] {
     return [
+      { component: ExampleNumberInput, name: 'number-input' },
       { component: ExampleCheckbox, name: 'checkbox' },
       { component: ExampleLoader, name: 'loader' },
       { component: ExampleDatePicker, name: 'date-picker' },
