@@ -14,8 +14,6 @@ export enum EVuexNamespaces {
   CORE = 'Core'
 }
 
-export type TNotificationType = 'warn' | 'success' | 'error';
-
 export type TRouteEventPayload = {
   name: string;
   params?: { [x: string]: string }
@@ -37,10 +35,12 @@ export enum ENotificationType {
   ERROR = 'error'
 }
 
+export type TNotificationType = 'success' | 'info' | 'error';
+
 export type TNotification = {
-  title: string;
+  title: string | null;
   content: string;
-  type: ENotificationType;
+  type: TNotificationType;
   id: string;
   alive?: number;
  };
@@ -64,3 +64,36 @@ export interface INotifications {
   error: (title: string, content: string, params?: TNotificationParams) => void;
   info: (title: string, content: string, params?: TNotificationParams) => void;
  }
+
+export enum EGender {
+  MALE = 1,
+  FEMALE,
+  OTHER
+}
+
+export enum EUserStatus {
+  NEW = 0,
+  KNOWN
+}
+
+export enum EGoal {
+  WEIGHT_REDUCTION,
+  MUSCLE_GAIN,
+  WEIGHT_MAINTENANCE,
+  COMPETITION_PREPARATION
+}
+
+export type TUserComment = {
+  comment: string;
+  date: Date;
+};
+
+export enum ELanguages {
+  En = 'en',
+  Ru = 'ru'
+}
+
+export enum EActivityType {
+  ANAEROBIC = 1, // swimming, running
+  AEROBIC, // like gym, pullups, pushups
+}

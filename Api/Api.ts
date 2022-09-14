@@ -9,6 +9,11 @@
  * ---------------------------------------------------------------
  */
 
+export enum ELanguages {
+  En = "en",
+  Ru = "ru",
+}
+
 export interface Activity {
   /** uniq id */
   id: number;
@@ -99,15 +104,22 @@ export interface User {
 
   /**
    * user`s age
-   * @example 78
+   * @format date-time
+   * @example "1916-07-15T21:28:41.000Z"
    */
-  age: number | null;
+  birthday: string | null;
 
   /**
    * user status
    * @example 0
    */
   status: number;
+
+  /** user comments */
+  comments: string[];
+
+  /** user chosen language */
+  language: ELanguages;
 
   /** user activities  */
   activities: Activity[];
@@ -131,6 +143,9 @@ export interface CreateUserDto {
    * @example awesomePassword123!@#
    */
   password_confirm: string;
+
+  /** system language */
+  language?: ELanguages;
 }
 
 export interface ResponseCreateUser {
@@ -147,17 +162,6 @@ export interface ResponseCreateUser {
   statusCode: number;
 }
 
-export enum EGender {
-  MALE = "MALE",
-  FEMALE = "FEMALE",
-  OTHER = "OTHER",
-}
-
-export enum EDominantHand {
-  RIGHT = "RIGHT",
-  LEFT = "LEFT",
-}
-
 export interface UpdateUserProfileDto {
   /**
    * user`s uniq id
@@ -169,7 +173,7 @@ export interface UpdateUserProfileDto {
    * user`s gender
    * @example 2
    */
-  gender: EGender;
+  gender?: number;
 
   /**
    * user`s height
@@ -177,7 +181,7 @@ export interface UpdateUserProfileDto {
    * @max 250
    * @example 178
    */
-  height: number;
+  height?: number;
 
   /**
    * user`s weight
@@ -185,19 +189,32 @@ export interface UpdateUserProfileDto {
    * @max 300
    * @example 78
    */
-  weight: number;
+  weight?: number;
+
+  /**
+   * user`s goal
+   * @example 2
+   */
+  goal?: number;
 
   /**
    * user`s age
-   * @example 78
+   * @format date-time
+   * @example "1916-07-15T21:28:41.000Z"
    */
-  age: number;
+  birthday?: string | null;
 
   /**
-   * user`s dominant hand (left or right)
-   * @example 1
+   * user status
+   * @example 0
    */
-  dominant_hand: EDominantHand;
+  status?: number;
+
+  /** user chosen language */
+  language?: ELanguages;
+
+  /** user activities  */
+  activities?: Activity[];
 }
 
 export interface UserCredsDto {
@@ -273,17 +290,17 @@ export namespace User {
   /**
    * No description
    * @tags User
-   * @name UpdateUserProfile
+   * @name Update
    * @request PUT:/user/update-profile
    * @secure
-   * @response `200` `void`
+   * @response `default` `User` returns updated user info
    */
-  export namespace UpdateUserProfile {
+  export namespace Update {
     export type RequestParams = {};
     export type RequestQuery = {};
     export type RequestBody = UpdateUserProfileDto;
     export type RequestHeaders = {};
-    export type ResponseBody = void;
+    export type ResponseBody = any;
   }
   /**
    * No description
@@ -607,13 +624,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags User
-     * @name UpdateUserProfile
+     * @name Update
      * @request PUT:/user/update-profile
      * @secure
-     * @response `200` `void`
+     * @response `default` `User` returns updated user info
      */
-    updateUserProfile: (data: UpdateUserProfileDto, params: RequestParams = {}) =>
-      this.request<void, any>({
+    update: (data: UpdateUserProfileDto, params: RequestParams = {}) =>
+      this.request<any, User>({
         path: `/user/update-profile`,
         method: "PUT",
         body: data,
