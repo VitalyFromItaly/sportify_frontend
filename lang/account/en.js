@@ -52,6 +52,16 @@ export default {
     submitButton: 'Send'
   },
   notices: {
+    leaveFeedback: {
+      success: {
+        title: 'Feedback sent',
+        content: 'Thank you! We’ll come back with an answer shortly.'
+      },
+      error: {
+        title: 'Sending failed',
+        content: 'Please try again later.'
+      }
+    },
     updateProfile: {
       error: {
         title: 'Error',

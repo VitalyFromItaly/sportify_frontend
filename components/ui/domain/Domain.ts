@@ -5,9 +5,9 @@ import type { TButtonClass } from './@types';
   ******************************* BUTTON *******************************
 */
 export const buttonClasses: TButtonClass = {
-  [EButtonAppearance.PRIMARY]: 'bg-gradient-to-r from-lightTeal to-middleTeal text-cyan-50 focus:bg-gradient-to-r focus:to-cyan-900 focus:from-middleTeal hover:bg-gradient-to-r hover:to-cyan-900 hover:from-middleTeal',
-  [EButtonAppearance.SECONDARY]: 'border-2 border-lightTeal bg-clip-text text-transparent bg-gradient-to-r from-lightTeal to-middleTeal hover:to-cyan-900 hover:from-middleTeal focus:to-cyan-900 focus:from-middleTeal focus:border-middleTeal hover:border-middleTeal',
-  [EButtonAppearance.TRANSPARENT]: 'bg-transparent bg-clip-text text-transparent bg-gradient-to-r from-lightTeal to-middleTeal hover:to-cyan-900 hover:from-middleTeal focus:to-cyan-900 focus:from-middleTeal'
+  [EButtonAppearance.PRIMARY]: 'py-1 bg-gradient-to-r from-lightTeal to-middleTeal text-cyan-50 focus:bg-gradient-to-r focus:to-cyan-900 focus:from-middleTeal hover:bg-gradient-to-r hover:to-cyan-900 hover:from-middleTeal',
+  [EButtonAppearance.SECONDARY]: 'py-0.5 border-2 border-lightTeal bg-clip-text text-transparent bg-gradient-to-r from-lightTeal to-middleTeal hover:to-cyan-900 hover:from-middleTeal focus:to-cyan-900 focus:from-middleTeal focus:border-middleTeal hover:border-middleTeal',
+  [EButtonAppearance.TRANSPARENT]: 'py-1 bg-transparent bg-clip-text text-transparent bg-gradient-to-r from-lightTeal to-middleTeal hover:to-cyan-900 hover:from-middleTeal focus:to-cyan-900 focus:from-middleTeal'
 };
 
 export const disabledButtonClasses: TButtonClass = {

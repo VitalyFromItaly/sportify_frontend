@@ -38,6 +38,6 @@ export default class UIButton extends Vue {
 
 <style scoped lang="postcss">
   .button {
-    @apply px-5 py-1 my-1 transform active:scale-95 active:translate-y-0.5 active:translate-x-0.5;
+    @apply px-5 my-1 transform active:scale-95 active:translate-y-0.5 active:translate-x-0.5;
   }
 </style>

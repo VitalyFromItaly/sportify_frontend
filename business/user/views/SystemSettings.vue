@@ -7,6 +7,21 @@
       :options="languageOptions"
       @change="onLanguageChange"
     />
+    <div class="mt-20 w-96">
+      <p>{{ $t('account.settings.suggestionText') }}</p>
+      <ui-textarea v-model="suggestMessage" :limit="500" :label="$t('account.settings.commentLabel')" :placeholder="$t('account.settings.suggestionPlaceholder')" />
+      <div class="flex justify-between">
+        <div></div>
+        <transition-bounce>
+          <div v-if="suggestMessage.length" class="flex">
+            <ui-button class="mr-3" appearance="secondary" @click="onCancel">
+              {{ $t('account.settings.cancelButton') }}
+            </ui-button>
+            <ui-button>{{ $t('account.settings.submitButton') }}</ui-button>
+          </div>
+        </transition-bounce>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -18,6 +33,7 @@ import type { TRadioButtonOption } from '~/components/ui/domain/@types';
 @Component
 export default class SystemSettings extends Vue {
   language = ELanguages.En;
+  suggestMessage = '';
 
   private get languageOptions(): TRadioButtonOption[] {
     return [
@@ -30,8 +46,12 @@ export default class SystemSettings extends Vue {
     return this.$store.getters[`${USER_STORE_NS}/language`];
   }
 
-  mounted(): void {
+  private mounted(): void {
     this.language = this.userLanguage || ELanguages.En;
+  }
+
+  private onCancel(): void {
+    this.suggestMessage = '';
   }
 
   private async onLanguageChange(value: TRadioButtonOption['value']): Promise<void> {
