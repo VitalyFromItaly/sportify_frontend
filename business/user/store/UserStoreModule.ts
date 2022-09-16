@@ -1,6 +1,7 @@
 import { Module } from 'vuex-module-decorators';
 import { EUserStatus, initUserState, TState, TUserInfo } from '../Domain';
 import { BaseVuexModule } from '~/business/core/store/BaseVuexModule';
+import { ELanguages } from '~/Api/Api';
 
 @Module({
   namespaced: true,
@@ -27,5 +28,9 @@ export default class UserStoreModule extends BaseVuexModule<TState> {
 
   public get hasUser(): boolean {
     return !!this.internalState?.user;
+  }
+
+  public get language(): ELanguages {
+    return this.internalState.user?.language;
   }
 }

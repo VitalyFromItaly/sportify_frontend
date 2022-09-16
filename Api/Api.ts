@@ -9,6 +9,11 @@
  * ---------------------------------------------------------------
  */
 
+export enum ELanguages {
+  En = "en",
+  Ru = "ru",
+}
+
 export interface Activity {
   /** uniq id */
   id: number;
@@ -99,15 +104,19 @@ export interface User {
 
   /**
    * user`s age
-   * @example 78
+   * @format date-time
+   * @example "1916-07-15T21:28:41.000Z"
    */
-  age: number | null;
+  birthday: string | null;
 
   /**
    * user status
    * @example 0
    */
   status: number;
+
+  /** user chosen language */
+  language: ELanguages;
 
   /** user activities  */
   activities: Activity[];
@@ -131,31 +140,28 @@ export interface CreateUserDto {
    * @example awesomePassword123!@#
    */
   password_confirm: string;
+
+  /** system language */
+  language?: ELanguages;
 }
 
-export interface ResponseCreateUser {
+export enum EHttpStatus {
+  Success = "success",
+  Error = "error",
+}
+
+export interface CreateResponse {
   /**
    * response status: success | error
    * @example success
    */
-  status: string;
+  status: EHttpStatus;
 
   /**
    * status code
    * @example 201
    */
   statusCode: number;
-}
-
-export enum EGender {
-  MALE = "MALE",
-  FEMALE = "FEMALE",
-  OTHER = "OTHER",
-}
-
-export enum EDominantHand {
-  RIGHT = "RIGHT",
-  LEFT = "LEFT",
 }
 
 export interface UpdateUserProfileDto {
@@ -169,7 +175,7 @@ export interface UpdateUserProfileDto {
    * user`s gender
    * @example 2
    */
-  gender: EGender;
+  gender?: number;
 
   /**
    * user`s height
@@ -177,7 +183,7 @@ export interface UpdateUserProfileDto {
    * @max 250
    * @example 178
    */
-  height: number;
+  height?: number;
 
   /**
    * user`s weight
@@ -185,19 +191,40 @@ export interface UpdateUserProfileDto {
    * @max 300
    * @example 78
    */
-  weight: number;
+  weight?: number;
+
+  /**
+   * user`s goal
+   * @example 2
+   */
+  goal?: number;
 
   /**
    * user`s age
-   * @example 78
+   * @format date-time
+   * @example "1916-07-15T21:28:41.000Z"
    */
-  age: number;
+  birthday?: string | null;
 
   /**
-   * user`s dominant hand (left or right)
-   * @example 1
+   * user status
+   * @example 0
    */
-  dominant_hand: EDominantHand;
+  status?: number;
+
+  /** user chosen language */
+  language?: ELanguages;
+
+  /** user activities  */
+  activities?: Activity[];
+}
+
+export interface CommentDto {
+  /**
+   * user comment in user profile settings
+   * @example your app is awesome
+   */
+  comment: string;
 }
 
 export interface UserCredsDto {
@@ -260,7 +287,7 @@ export namespace User {
    * @tags User
    * @name Create
    * @request POST:/user/create
-   * @response `201` `ResponseCreateUser` create user
+   * @response `201` `CreateResponse` create user
    * @response `400` `void` user can not register
    */
   export namespace Create {
@@ -268,22 +295,22 @@ export namespace User {
     export type RequestQuery = {};
     export type RequestBody = CreateUserDto;
     export type RequestHeaders = {};
-    export type ResponseBody = ResponseCreateUser;
+    export type ResponseBody = CreateResponse;
   }
   /**
    * No description
    * @tags User
-   * @name UpdateUserProfile
+   * @name Update
    * @request PUT:/user/update-profile
    * @secure
-   * @response `200` `void`
+   * @response `default` `User` returns updated user info
    */
-  export namespace UpdateUserProfile {
+  export namespace Update {
     export type RequestParams = {};
     export type RequestQuery = {};
     export type RequestBody = UpdateUserProfileDto;
     export type RequestHeaders = {};
-    export type ResponseBody = void;
+    export type ResponseBody = any;
   }
   /**
    * No description
@@ -297,6 +324,21 @@ export namespace User {
     export type RequestParams = {};
     export type RequestQuery = {};
     export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = any;
+  }
+  /**
+   * No description
+   * @tags User
+   * @name LeaveComment
+   * @request POST:/user/leave-comment
+   * @secure
+   * @response `default` `CreateResponse` user suggestion/comment
+   */
+  export namespace LeaveComment {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = CommentDto;
     export type RequestHeaders = {};
     export type ResponseBody = any;
   }
@@ -590,11 +632,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags User
      * @name Create
      * @request POST:/user/create
-     * @response `201` `ResponseCreateUser` create user
+     * @response `201` `CreateResponse` create user
      * @response `400` `void` user can not register
      */
     create: (data: CreateUserDto, params: RequestParams = {}) =>
-      this.request<ResponseCreateUser, void>({
+      this.request<CreateResponse, void>({
         path: `/user/create`,
         method: "POST",
         body: data,
@@ -607,13 +649,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags User
-     * @name UpdateUserProfile
+     * @name Update
      * @request PUT:/user/update-profile
      * @secure
-     * @response `200` `void`
+     * @response `default` `User` returns updated user info
      */
-    updateUserProfile: (data: UpdateUserProfileDto, params: RequestParams = {}) =>
-      this.request<void, any>({
+    update: (data: UpdateUserProfileDto, params: RequestParams = {}) =>
+      this.request<any, User>({
         path: `/user/update-profile`,
         method: "PUT",
         body: data,
@@ -636,6 +678,25 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/user`,
         method: "GET",
         secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User
+     * @name LeaveComment
+     * @request POST:/user/leave-comment
+     * @secure
+     * @response `default` `CreateResponse` user suggestion/comment
+     */
+    leaveComment: (data: CommentDto, params: RequestParams = {}) =>
+      this.request<any, CreateResponse>({
+        path: `/user/leave-comment`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         ...params,
       }),
   };

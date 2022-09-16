@@ -42,6 +42,7 @@ export default class UINumberInput extends Vue {
   @Prop({ type: Boolean, default: false }) dark: false;
   @Prop({ type: Number, default: -Infinity }) min: number;
   @Prop({ type: Number, default: +Infinity }) max: number;
+  @Prop({ type: Number, default: 1 }) step: number;
   @Model('input') readonly value!: number;
 
   private readonly id = uuidv4();
@@ -74,13 +75,13 @@ export default class UINumberInput extends Vue {
   }
 
   private onMinus(): void {
-    if (this.value <= this.min) { return; }
-    this.$emit('input', this.value - 1);
+    if (this.value - this.step < this.min) { return; }
+    this.$emit('input', this.value - this.step);
   }
 
   private onPlus(): void {
-    if (this.value >= this.max) { return; }
-    this.$emit('input', this.value + 1);
+    if (this.value + this.step > this.max) { return; }
+    this.$emit('input', this.value + this.step);
   }
 
   private clickOutside() {

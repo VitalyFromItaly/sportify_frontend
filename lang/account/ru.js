@@ -40,5 +40,37 @@ export default {
     weightMaintenance: 'Поддержание веса',
     weightReduction: 'Снижение веса'
   },
-  aboutMe
+  aboutMe,
+  settings: {
+    language: 'Язык',
+    russian: 'Русский',
+    english: 'Английский',
+    suggestionText: 'Есть предложения? Свяжитесь с нами.',
+    commentLabel: 'Предложение',
+    suggestionPlaceholder: 'Введите текст',
+    cancelButton: 'Отменить',
+    submitButton: 'Отправить'
+  },
+  notices: {
+    leaveFeedback: {
+      success: {
+        title: 'Отзыв отправлен',
+        content: 'Спасибо! Мы скоро вернёмся с ответом.'
+      },
+      error: {
+        title: 'Ошибка при отправке отзыва',
+        content: 'Попробуйте отправить позже'
+      }
+    },
+    updateProfile: {
+      error: {
+        title: 'Ошибка',
+        content: 'Возникла ошибка при обновлении профиля. Попробуйте позже.'
+      },
+      success: {
+        title: 'Успешно',
+        content: 'Профиль обновлен.'
+      }
+    }
+  }
 };

@@ -1,5 +1,5 @@
 <template>
-  <div v-if="user" v-click-outside="outside" class="relative">
+  <div v-if="user" v-click-outside="onClickOutside" class="relative">
     <div class="flex items-center cursor-pointer" @click="onShowUserMenu">
       <user-icon />
       <div class="mr-3">
@@ -52,13 +52,7 @@ export default class user extends Vue {
     this.isUserMenuShown = !this.isUserMenuShown;
   }
 
-  // public async mounted(): Promise<void> {
-  //   this.presenter = this.$presenter.userInstance;
-
-  //   await this.presenter.onMounted();
-  // }
-
-  outside(): void {
+  onClickOutside(): void {
     this.isUserMenuShown = false;
   }
 

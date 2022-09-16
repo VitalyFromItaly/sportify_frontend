@@ -1,14 +1,18 @@
 <template>
-  <div class="fixed top-0 left-0 right-0 z-20 h-12 bg-gradient-to-r from-lightTeal to-middleTeal text-white global-padding py-2 text-sm font-extralight">
+  <header class="global-padding header">
     <div class="flex justify-between items-baseline">
-      <sportify-logo color="white" />
-      <ui-link v-if="$config.environment === 'dev'" :to="({ name: 'ui-stand' })">ui-stend</ui-link>
+      <button @click="$router.push({ name: 'account' })">
+        <sportify-logo color="white" />
+      </button>
+      <ui-link v-if="$config.environment === 'dev'" :to="({ name: 'ui-stand' })">
+        ui-stend
+      </ui-link>
       <div class="flex space-x-10">
         <theme-switcher />
         <user-info-header />
       </div>
     </div>
-  </div>
+  </header>
 </template>
 <script lang='ts'>
 
@@ -24,3 +28,8 @@ export default class Header extends Vue {
   }
 }
 </script>
+<style lang="postcss" scoped>
+  .header {
+    @apply fixed top-0 left-0 right-0 z-20 h-12 bg-gradient-to-r from-lightTeal to-middleTeal text-white py-2 text-sm font-extralight;
+  }
+</style>

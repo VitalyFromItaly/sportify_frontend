@@ -40,5 +40,37 @@ export default {
     weightMaintenance: 'Weight maintenance',
     weightReduction: 'Weight reduction'
   },
-  aboutMe
+  aboutMe,
+  settings: {
+    language: 'Language',
+    russian: 'Russian',
+    english: 'English',
+    suggestionText: 'Got any thoughts on Sportify? Feel free to contact us.',
+    commentLabel: 'A place for suggestions',
+    suggestionPlaceholder: 'Type here',
+    cancelButton: 'Cancel',
+    submitButton: 'Send'
+  },
+  notices: {
+    leaveFeedback: {
+      success: {
+        title: 'Feedback sent',
+        content: 'Thank you! We’ll come back with an answer shortly.'
+      },
+      error: {
+        title: 'Sending failed',
+        content: 'Please try again later.'
+      }
+    },
+    updateProfile: {
+      error: {
+        title: 'Error',
+        content: 'An Error during updating user profile. Try again later.'
+      },
+      success: {
+        title: 'Success',
+        content: 'Profile updated.'
+      }
+    }
+  }
 };
