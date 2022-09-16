@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { ELanguages, UpdateUserProfileDto, User } from '~/Api/Api';
+import { CommentDto, CreateResponse, EHttpStatus, ELanguages, UpdateUserProfileDto, User } from '~/Api/Api';
 import { TFetchState } from '~/business/core/Domain';
 import { IVuexObservable } from '~/business/core/store/Domain';
 
@@ -33,8 +33,10 @@ export type TAccountTabConfig = {
 };
 
 export type TUser = User;
+export type TComment = CommentDto;
 export type TUpdateUser = UpdateUserProfileDto;
 export type TRawUpdateUser = Omit<TUpdateUser, 'id'>;
+export type TCreateResponse = CreateResponse;
 
 export type TUserInfo = Partial<TUser>;
 
@@ -45,12 +47,14 @@ export type TState = TFetchState & {
 export interface IService {
   read(): Promise<TUser>;
   update(payload: TUpdateUser): Promise<User>;
+  postComment(payload: TComment): Promise<TCreateResponse>;
 }
 
 export interface IPresenter extends IVuexObservable<TState> {
   onLoad(): Promise<void>;
   onUpdate(payload: TRawUpdateUser): Promise<void>;
   onSetLocale(locale: ELanguages): void;
+  onCreateComment(comment: string): Promise<EHttpStatus>;
 }
 
 export const initUserState = (): TState => ({

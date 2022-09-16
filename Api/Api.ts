@@ -115,9 +115,6 @@ export interface User {
    */
   status: number;
 
-  /** user comments */
-  comments: string[];
-
   /** user chosen language */
   language: ELanguages;
 
@@ -148,12 +145,17 @@ export interface CreateUserDto {
   language?: ELanguages;
 }
 
-export interface ResponseCreateUser {
+export enum EHttpStatus {
+  Success = "success",
+  Error = "error",
+}
+
+export interface CreateResponse {
   /**
    * response status: success | error
    * @example success
    */
-  status: string;
+  status: EHttpStatus;
 
   /**
    * status code
@@ -217,6 +219,14 @@ export interface UpdateUserProfileDto {
   activities?: Activity[];
 }
 
+export interface CommentDto {
+  /**
+   * user comment in user profile settings
+   * @example your app is awesome
+   */
+  comment: string;
+}
+
 export interface UserCredsDto {
   /**
    * user`s email
@@ -277,7 +287,7 @@ export namespace User {
    * @tags User
    * @name Create
    * @request POST:/user/create
-   * @response `201` `ResponseCreateUser` create user
+   * @response `201` `CreateResponse` create user
    * @response `400` `void` user can not register
    */
   export namespace Create {
@@ -285,7 +295,7 @@ export namespace User {
     export type RequestQuery = {};
     export type RequestBody = CreateUserDto;
     export type RequestHeaders = {};
-    export type ResponseBody = ResponseCreateUser;
+    export type ResponseBody = CreateResponse;
   }
   /**
    * No description
@@ -314,6 +324,21 @@ export namespace User {
     export type RequestParams = {};
     export type RequestQuery = {};
     export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = any;
+  }
+  /**
+   * No description
+   * @tags User
+   * @name LeaveComment
+   * @request POST:/user/leave-comment
+   * @secure
+   * @response `default` `CreateResponse` user suggestion/comment
+   */
+  export namespace LeaveComment {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = CommentDto;
     export type RequestHeaders = {};
     export type ResponseBody = any;
   }
@@ -607,11 +632,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @tags User
      * @name Create
      * @request POST:/user/create
-     * @response `201` `ResponseCreateUser` create user
+     * @response `201` `CreateResponse` create user
      * @response `400` `void` user can not register
      */
     create: (data: CreateUserDto, params: RequestParams = {}) =>
-      this.request<ResponseCreateUser, void>({
+      this.request<CreateResponse, void>({
         path: `/user/create`,
         method: "POST",
         body: data,
@@ -653,6 +678,25 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/user`,
         method: "GET",
         secure: true,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags User
+     * @name LeaveComment
+     * @request POST:/user/leave-comment
+     * @secure
+     * @response `default` `CreateResponse` user suggestion/comment
+     */
+    leaveComment: (data: CommentDto, params: RequestParams = {}) =>
+      this.request<any, CreateResponse>({
+        path: `/user/leave-comment`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
         ...params,
       }),
   };

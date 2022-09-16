@@ -9,15 +9,15 @@
     />
     <div class="mt-20 w-96">
       <p>{{ $t('account.settings.suggestionText') }}</p>
-      <ui-textarea v-model="suggestMessage" :limit="500" :label="$t('account.settings.commentLabel')" :placeholder="$t('account.settings.suggestionPlaceholder')" />
+      <ui-textarea v-model="comment" :limit="500" :label="$t('account.settings.commentLabel')" :placeholder="$t('account.settings.suggestionPlaceholder')" />
       <div class="flex justify-between">
         <div></div>
         <transition-bounce>
-          <div v-if="suggestMessage.length" class="flex">
+          <div v-if="comment.length" class="flex">
             <ui-button class="mr-3" appearance="secondary" @click="onCancel">
               {{ $t('account.settings.cancelButton') }}
             </ui-button>
-            <ui-button>{{ $t('account.settings.submitButton') }}</ui-button>
+            <ui-button @click="onAddComment">{{ $t('account.settings.submitButton') }}</ui-button>
           </div>
         </transition-bounce>
       </div>
@@ -30,10 +30,11 @@ import { Vue, Component } from 'nuxt-property-decorator';
 import { USER_STORE_NS } from '../store';
 import { ELanguages } from '~/@types/domain';
 import type { TRadioButtonOption } from '~/components/ui/domain/@types';
+import { EHttpStatus } from '~/Api/Api';
 @Component
 export default class SystemSettings extends Vue {
   language = ELanguages.En;
-  suggestMessage = '';
+  comment = '';
 
   private get languageOptions(): TRadioButtonOption[] {
     return [
@@ -51,7 +52,14 @@ export default class SystemSettings extends Vue {
   }
 
   private onCancel(): void {
-    this.suggestMessage = '';
+    this.comment = '';
+  }
+
+  private async onAddComment(): Promise<void> {
+    const status = await this.$presenter.userInstance.onCreateComment(this.comment);
+    if (status === EHttpStatus.Success) {
+      this.comment = '';
+    }
   }
 
   private async onLanguageChange(value: TRadioButtonOption['value']): Promise<void> {

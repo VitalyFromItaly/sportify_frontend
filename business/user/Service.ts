@@ -1,4 +1,4 @@
-import { IService, TUpdateUser, TUser } from './Domain';
+import { IService, TComment, TCreateResponse, TUpdateUser, TUser } from './Domain';
 import { EHttpCodes } from '~/@types/http';
 import cache from '~/core/cache/cache';
 import { IBrowserStorage } from '~/core/cache/Domain';
@@ -28,6 +28,12 @@ export default class Service implements IService {
       return null;
     }
 
+    return await response.json();
+  }
+
+  public async postComment(payload: TComment): Promise<TCreateResponse> {
+    const response = await this.swagger.user.leaveComment(payload);
+    console.log({ response });
     return await response.json();
   }
 }

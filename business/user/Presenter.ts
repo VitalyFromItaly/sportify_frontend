@@ -8,7 +8,7 @@ import { EEventBusName, IEventBus } from '~/core/bus/Domain';
 import PresenterCatcher from '~/core/decorators/PresenterCatcher';
 import { context } from '~/core/context';
 import { TNotificationPayload } from '~/@types/domain';
-import { ELanguages } from '~/Api/Api';
+import { EHttpStatus, ELanguages } from '~/Api/Api';
 
 export default class Presenter extends VuexObservable<TState> implements IPresenter {
   private readonly service: IService;
@@ -39,6 +39,7 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
     if (has(payload, 'language')) {
       this.onSetLocale(payload.language);
     }
+
     this.onSuccessUpdateProfile();
     this.onChangeState({ user });
   }
@@ -62,5 +63,23 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
   public onSetLocale(locale: ELanguages): void {
     context.i18n.setLocale(locale as string);
     localeChanged();
+  }
+
+  public async onCreateComment(comment: string): Promise<EHttpStatus> {
+    const { status } = await this.service.postComment({ comment });
+    if (status === EHttpStatus.Success) {
+      this.bus.emit<TNotificationPayload>(EEventBusName.NOTIFICATION, {
+        type: 'success',
+        title: context.i18n.tc('account.notices.leaveFeedback.success.title'),
+        content: context.i18n.tc('account.notices.leaveFeedback.success.content')
+      });
+    } else {
+      this.bus.emit<TNotificationPayload>(EEventBusName.NOTIFICATION, {
+        type: 'error',
+        title: context.i18n.tc('account.notices.leaveFeedback.error.title'),
+        content: context.i18n.tc('account.notices.leaveFeedback.error.content')
+      });
+    }
+    return status;
   }
 }
