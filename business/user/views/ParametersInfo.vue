@@ -24,10 +24,10 @@ export default class ParametersInfo extends Vue {
   private get rows(): TDataListRow[] {
     const rows: TDataListRow[] = [];
     const { user } = this;
-    const { height, weight, age, activities, gender, goal } = user;
+    const { height, weight, birthday, activities, gender, goal } = user;
     rows.push({ left: this.$tc('account.knownUser.height'), right: height ? `${height} ${this.$t('measurementStandards.centimetersShort')}` : '—' });
     rows.push({ left: this.$tc('account.knownUser.weight'), right: weight ? `${weight} ${this.$t('measurementStandards.kilogramShort')}` : '—' });
-    rows.push({ left: this.$tc('account.knownUser.age'), right: age || '—' });
+    rows.push({ left: this.$tc('account.knownUser.age'), right: birthday || '—' });
     // @ts-ignore
     const activitiesToSting = !!activities && activities.length ? activities.map(activity => activity[`name_${this.$i18n.localeProperties.code}`]).join(', ') : '—';
     rows.push({ left: this.$tc('account.knownUser.activities'), right: activitiesToSting });
