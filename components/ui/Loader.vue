@@ -1,7 +1,6 @@
 <template>
-  <transition name="fade">
+  <transition v-if="overlay" name="fade">
     <div
-      v-if="overlay"
       class="overscroll-none h-screen overflow-hidden fixed z-50 overflow-x-hidden inset-0"
       @wheel.prevent
       @touchmove.prevent
@@ -11,10 +10,10 @@
         <large-loader class="animate-spin" />
       </div>
     </div>
-    <div v-else>
-      <component :is="loader" class="animate-spin" />
-    </div>
   </transition>
+  <div v-else>
+    <component :is="loader" :color="color" class="animate-spin" />
+  </div>
 </template>
 
 <script lang='ts'>
@@ -25,6 +24,7 @@ const MiniLoader = () => import('~/components/svg/SmallLoader.vue');
 export default class UILoader extends Vue {
   @Prop({ type: Boolean, default: false }) overlay: boolean;
   @Prop({ type: Boolean, default: false }) small: boolean;
+  @Prop({ type: String, default: '#469BA2' }) color: string;
 
   private get loader(): any {
     if (this.small) {
