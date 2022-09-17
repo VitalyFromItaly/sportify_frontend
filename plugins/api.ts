@@ -1,5 +1,5 @@
 import { Plugin } from '@nuxt/types';
-import { Api } from '~/api/Api';
+import { Api } from '~/Api/Api';
 import customFetch from '~/core/http/customFetch';
 // import customFetch from '~/core/http/customFetch';
 type TApiConfig = {

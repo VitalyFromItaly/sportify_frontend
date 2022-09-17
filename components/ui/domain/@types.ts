@@ -62,3 +62,16 @@ export type TRadioButtonOption = {
 };
 
 export type TCheckboxValue = string | number | boolean | [] | object | any;
+
+export enum ETooltipDirection {
+  TOP = 'top',
+  RIGHT = 'right',
+  BOTTOM = 'bottom',
+  LEFT = 'left'
+}
+
+export enum ETooltipAlign {
+  CENTER = 'center',
+  START = 'start',
+  END = 'end',
+}
