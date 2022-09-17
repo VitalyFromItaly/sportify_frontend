@@ -16,6 +16,7 @@
 </template>
 <script lang='ts'>
 import { Vue, Component, Watch } from 'nuxt-property-decorator';
+const ExampleSteps = () => import('~/components/ui-stand/ExampleSteps.vue');
 const ExampleTooltip = () => import('~/components/ui-stand/ExampleTooltip.vue');
 const ExampleTextarea = () => import('~/components/ui-stand/ExampleTextarea.vue');
 const ExampleNumberInput = () => import('~/components/ui-stand/ExampleNumberInput.vue');
@@ -32,6 +33,7 @@ const ExampleContainer = () => import('~/components/ui-stand/ExampleContainer.vu
 const ExampleNotification = () => import('~/components/ui-stand/ExampleNotification.vue');
 @Component({
   components: {
+    ExampleSteps,
     ExampleTooltip,
     ExampleTextarea,
     ExampleNumberInput,
@@ -61,6 +63,7 @@ export default class UIStand extends Vue {
 
   private get components(): { component: any; name: string; }[] {
     return [
+      // { component: ExampleSteps, name: 'steps' },
       { component: ExampleTooltip, name: 'tooltip' },
       { component: ExampleTextarea, name: 'textarea' },
       { component: ExampleNumberInput, name: 'number-input' },
