@@ -1,37 +1,39 @@
 <template>
-  <main v-if="isAppLoaded" class="flex flex-col min-h-screen text-base text-darkText dark:bg-dark dark:text-lightGray font-sans">
-    <portal-target multiple name="main" />
-    <layout-header />
-    <!-- <ui-button @click="changeLocale('ru')">
-      Russian
-    </ui-button>
-    <ui-button @click="changeLocale('en')">
-      English
-    </ui-button> -->
-    <div class="body">
-      <nuxt />
+  <main class="flex flex-col min-h-screen text-base text-darkText dark:bg-dark dark:text-lightGray font-sans">
+    <div v-if="isAppLoaded">
+      <portal-target multiple name="main" />
+      <layout-header />
+      <div class="body">
+        <nuxt />
+      </div>
+      <portal-target class="notifications" name="notifications" multiple />
+      <portal to="notifications">
+        <layout-notification />
+      </portal>
     </div>
-    <portal-target class="notifications" name="notifications" multiple />
-    <portal to="notifications">
-      <layout-notification />
-    </portal>
+    <layout-global-loader />
   </main>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'nuxt-property-decorator';
+import { Vue, Component, namespace } from 'nuxt-property-decorator';
 import { localeChanged } from 'vee-validate';
-import { TRouteEventPayload, TNotificationPayload, EAppLanguages } from '~/@types/domain';
+import { TRouteEventPayload, TNotificationPayload, EAppLanguages, EVuexNamespaces } from '~/@types/domain';
 import AuthLogo from '~/components/svg/AuthLogo.vue';
 import { EEventBusName } from '~/core/bus/Domain';
 
-// @Component({ components: { AuthLogo } })
+const stateCore = namespace(EVuexNamespaces.CORE);
+
 @Component({ components: { AuthLogo }, middleware: ['route-guard'] })
 export default class DefaultLayout extends Vue {
+  @stateCore.Mutation setIsLoading: () => void;
+  @stateCore.Mutation removeIsLoading: () => void;
+
   isAppLoaded = false;
+
   async mounted(): Promise<void> {
-    this.onRouterEvent();
-    this.onNotificationEvent();
+    this.setIsLoading();
+    this.setListeners();
     if (!this.$auth.isAuth()) {
       console.warn('[auth] not auth');
       this.$router.replace({ name: 'sign-in' });
@@ -39,10 +41,23 @@ export default class DefaultLayout extends Vue {
     }
     console.log('[auth] success');
     await this.initApp();
+    console.log('after init App');
     this.isAppLoaded = true;
+    this.removeIsLoading();
+  }
+
+  private setListeners(): void {
+    this.onRouterEvent();
+    this.onNotificationEvent();
   }
 
   private async initApp(): Promise<void> {
+    // const asyncTimeout = (ms: number) => {
+    //   return new Promise((resolve) => {
+    //     setTimeout(resolve, ms);
+    //   });
+    // };
+    // await asyncTimeout(5000);
     await Promise.all([
       this.$presenter.userInstance.onLoad()
     ]);
