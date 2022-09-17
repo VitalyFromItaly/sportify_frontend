@@ -28,11 +28,13 @@ export default class Core extends VuexModule {
 
   @Mutation
   setIsLoading(): void {
+    console.log('isLoading');
     this.isLoading = true;
   }
 
   @Mutation
   removeIsLoading(): void {
+    console.log('removeLoading');
     this.isLoading = false;
   }
 }
