@@ -1,5 +1,5 @@
 <template>
-  <main v-if="isAppLoaded" class="flex flex-col min-h-screen text-base text-darkText dark:bg-dark dark:text-white font-sans">
+  <main v-if="isAppLoaded" class="flex flex-col min-h-screen text-base text-darkText dark:bg-dark dark:text-lightGray font-sans">
     <portal-target multiple name="main" />
     <layout-header />
     <!-- <ui-button @click="changeLocale('ru')">

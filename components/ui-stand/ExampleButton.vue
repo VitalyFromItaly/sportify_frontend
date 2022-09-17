@@ -5,7 +5,7 @@
     </template>
     <template #component>
       <div class="flex flex-col items-center justify-center h-52">
-        <ui-button class="text-center" :appearance="chosenMode" :disabled="disabled">
+        <ui-button class="text-center" :appearance="chosenMode" :disabled="disabled" @click="onClick">
           {{ text }}
         </ui-button>
       </div>
@@ -35,6 +35,10 @@ export default class ButtonExample extends Vue {
 
   private get buttonOptions(): { value: string, text: string }[] {
     return Object.values(EButtonAppearance).map(appearance => ({ value: appearance, text: appearance }));
+  }
+
+  private onClick(): void {
+    this.$notification.success('Clicked!', 'the button was clicked');
   }
 }
 </script>

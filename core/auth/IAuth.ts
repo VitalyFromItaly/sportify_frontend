@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { CreateUserDto, User, ResponseCreateUser, UserCredsDto, TokenDto } from '~/Api/Api';
-export type TResponseUserCreate = ResponseCreateUser;
+import { CreateUserDto, User, CreateResponse, UserCredsDto, TokenDto } from '~/Api/Api';
+export type TResponseUserCreate = CreateResponse;
 export type TRegisterPayload = CreateUserDto;
 export type TTokensInfo = TokenDto;
 export type TLogin = UserCredsDto;
