@@ -5,7 +5,12 @@
     :disabled="disabled"
     @click="$emit('click')"
   >
-    <slot></slot>
+    <template v-if="loading">
+      <ui-loader class="px-3 py-1" color="#F2F2F2" small />
+    </template>
+    <template v-else>
+      <slot></slot>
+    </template>
   </button>
 </template>
 
@@ -20,10 +25,11 @@ export default class UIButton extends Vue {
   @Prop({ type: Boolean, default: false }) fullWidth: boolean;
   @Prop({ type: String, default: EButtonAppearance.PRIMARY }) appearance: TButtonType;
   @Prop({ type: Boolean, default: false }) disabled: boolean;
+  @Prop({ type: Boolean, default: false }) loading: boolean;
 
   private get disabledClasses(): string {
     const classes = disabledButtonClasses[this.appearance];
-    return classes + ' cursor-not-allowed';
+    return classes + ' cursor-not-allowed py-1';
   }
 
   private get classes(): string {

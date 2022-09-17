@@ -43,7 +43,7 @@ import { EVuexNamespaces } from '~/@types/domain';
 
 @Component({ components: { AbstractUiExample } })
 export default class ExampleDatePicker extends Vue {
-  private date = null;
+  private date: Date = null;
   private label = 'label';
   private isDark = false;
   private required = false;
