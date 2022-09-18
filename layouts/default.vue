@@ -41,7 +41,6 @@ export default class DefaultLayout extends Vue {
     }
     console.log('[auth] success');
     await this.initApp();
-    console.log('after init App');
     this.isAppLoaded = true;
     this.removeIsLoading();
   }
@@ -59,7 +58,8 @@ export default class DefaultLayout extends Vue {
     // };
     // await asyncTimeout(5000);
     await Promise.all([
-      this.$presenter.userInstance.onLoad()
+      this.$presenter.userInstance.onLoad(),
+      this.$presenter.contextInstance.onLoad()
     ]);
   }
 

@@ -2,14 +2,11 @@ import { IService, TComment, TCreateResponse, TUpdateUser, TUser } from './Domai
 import { EHttpCodes } from '~/@types/http';
 import cache from '~/core/cache/cache';
 import { IBrowserStorage } from '~/core/cache/Domain';
-
-import { Api } from '~/Api/Api';
+import { ISwagger } from '~/@types/plugins';
 
 export default class Service implements IService {
-  private readonly cache: IBrowserStorage;
-  private readonly swagger: Api<unknown>;
-  constructor(swagger: Api<unknown>) {
-    this.cache = cache;
+  private readonly cache: IBrowserStorage = cache;
+  constructor(private swagger: ISwagger) {
     this.swagger = swagger;
   }
 
@@ -33,7 +30,6 @@ export default class Service implements IService {
 
   public async postComment(payload: TComment): Promise<TCreateResponse> {
     const response = await this.swagger.user.leaveComment(payload);
-    console.log({ response });
     return await response.json();
   }
 }

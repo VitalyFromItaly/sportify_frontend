@@ -9,7 +9,6 @@ export enum EButtonAppearance {
 
 export type TButtonClass = { [x: string]: string };
 
-export type TInputTypeValue = string | number;
 export type TInputType = 'text' | 'number' | 'password' | 'email';
 
 export type TInputSize = 'sm' | 'm';
@@ -26,6 +25,7 @@ export enum EInputTypes {
   EMAIL = 'email'
 }
 
+export type TInputTypeValue = string | number;
 export type TSelectOption = { value: TInputTypeValue; text: string; };
 
 export enum EContainer {

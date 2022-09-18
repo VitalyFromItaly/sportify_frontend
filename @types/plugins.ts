@@ -11,6 +11,8 @@ export interface IApi {
   swagger: Api<unknown>
 }
 
+export type ISwagger = IApi['swagger'];
+
 declare module 'vue/types/vue' {
   // this.$api inside Vue components
   interface Vue {
