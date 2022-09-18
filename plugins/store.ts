@@ -2,8 +2,11 @@ import { Context } from '@nuxt/types';
 
 import { AUTHORIZATION_STORE_NS, AuthorizationStoreModule } from '~/business/authorization/store/index';
 import { USER_STORE_NS, UserStoreModule } from '~/business/user/store/index';
+import { CONTEXT_STORE_NS, ContextStoreModule } from '~/business/context/store/index';
 
 export default ({ store }: Context) => {
+  // @ts-ignore
+  store.registerModule(CONTEXT_STORE_NS, ContextStoreModule);
   // @ts-ignore
   store.registerModule(USER_STORE_NS, UserStoreModule);
   // @ts-ignore

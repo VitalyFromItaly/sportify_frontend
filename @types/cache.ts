@@ -9,9 +9,12 @@ export enum EAuthKeys {
 }
 
 export enum ECacheTags {
-  SYSTEM = 'system'
+  SYSTEM = 'system',
+  DICTIONARY = 'dictionary'
 }
 
 export enum ECacheKeys {
-  THEME = 'theme'
+  THEME = 'theme',
+  DICTIONARY_ALL = 'all'
+
 }

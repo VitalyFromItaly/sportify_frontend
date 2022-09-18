@@ -266,6 +266,23 @@ export interface RefreshTokenDto {
   refresh_token: string;
 }
 
+export interface AbstractSelectDto {
+  value: object;
+  text_en: string;
+  text_ru: string;
+}
+
+export interface DictionaryDto {
+  /** goals */
+  goals: AbstractSelectDto[];
+
+  /** activities */
+  activities: Activity[];
+
+  /** activity types */
+  activity_types: AbstractSelectDto[];
+}
+
 export namespace User {
   /**
    * No description
@@ -386,6 +403,23 @@ export namespace Auth {
     export type RequestParams = {};
     export type RequestQuery = {};
     export type RequestBody = RefreshTokenDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = any;
+  }
+}
+
+export namespace Dictionary {
+  /**
+   * No description
+   * @name Read
+   * @request GET:/dictionary
+   * @secure
+   * @response `default` `DictionaryDto` user suggestion/comment
+   */
+  export namespace Read {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
     export type RequestHeaders = {};
     export type ResponseBody = any;
   }
@@ -754,6 +788,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         secure: true,
         type: ContentType.Json,
+        ...params,
+      }),
+  };
+  dictionary = {
+    /**
+     * No description
+     *
+     * @name Read
+     * @request GET:/dictionary
+     * @secure
+     * @response `default` `DictionaryDto` user suggestion/comment
+     */
+    read: (params: RequestParams = {}) =>
+      this.request<any, DictionaryDto>({
+        path: `/dictionary`,
+        method: "GET",
+        secure: true,
         ...params,
       }),
   };

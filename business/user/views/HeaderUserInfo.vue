@@ -57,7 +57,7 @@ export default class user extends Vue {
   }
 
   private onLogout(): void {
-    this.$presenter.loginInstance.onLogout();
+    this.$presenter.authInstance.onLogout();
   }
 }
 </script>

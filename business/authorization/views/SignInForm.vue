@@ -56,7 +56,7 @@ export default class SignInForm extends Vue {
   private presenter: IPresenter;
 
   private mounted(): void {
-    this.presenter = this.$presenter.loginInstance;
+    this.presenter = this.$presenter.authInstance;
   }
 
   private async login(): Promise<void> {
