@@ -7,6 +7,9 @@
       </ui-tabs-item>
     </ui-tabs>
   </div>
+  <div v-else>
+    <ui-loader />
+  </div>
 </template>
 
 <script lang='ts'>

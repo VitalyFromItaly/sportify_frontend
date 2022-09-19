@@ -11,25 +11,29 @@ export default class Service implements IService {
   }
 
   public async read(): Promise<TUser> {
-    const response = await this.swagger.user.get();
-    if (response.status !== EHttpCodes.SUCCESS) {
+    const { data, status } = await this.swagger.user.read();
+    if (status !== EHttpCodes.SUCCESS) {
       return null;
     }
 
-    return await response.json();
+    return data;
   }
 
   public async update(payload: TUpdateUser): Promise<TUser> {
-    const response = await this.swagger.user.update(payload);
-    if (response.status !== EHttpCodes.SUCCESS) {
+    const { data, status } = await this.swagger.user.update(payload);
+    if (status !== EHttpCodes.SUCCESS) {
       return null;
     }
 
-    return await response.json();
+    return data;
   }
 
-  public async postComment(payload: TComment): Promise<TCreateResponse> {
-    const response = await this.swagger.user.leaveComment(payload);
-    return await response.json();
+  public async postComment(payload: TComment): Promise<TCreateResponse['status']> {
+    const { status, data } = await this.swagger.user.leaveComment(payload);
+    if (status !== EHttpCodes.CREATED) {
+      return null;
+    }
+
+    return data.status;
   }
 }

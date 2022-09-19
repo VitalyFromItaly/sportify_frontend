@@ -2,26 +2,29 @@
   <div>
     <ui-radio-button
       v-model="language"
+      :all-disabled="isLoading"
       horizontal
       :label="$t('account.settings.language')"
       :options="languageOptions"
       @change="onLanguageChange"
     />
-    <div class="mt-20 w-96">
+    <form class="mt-20 w-96" @submit.prevent="onAddComment">
       <p>{{ $t('account.settings.suggestionText') }}</p>
       <ui-textarea v-model="comment" :limit="500" :label="$t('account.settings.commentLabel')" :placeholder="$t('account.settings.suggestionPlaceholder')" />
       <div class="flex justify-between">
         <div></div>
         <transition-bounce>
           <div v-if="comment.length" class="flex">
-            <ui-button class="mr-3" appearance="secondary" @click="onCancel">
+            <ui-button :disabled="isLoading" class="mr-3" appearance="secondary" @click="onCancel">
               {{ $t('account.settings.cancelButton') }}
             </ui-button>
-            <ui-button @click="onAddComment">{{ $t('account.settings.submitButton') }}</ui-button>
+            <ui-button :loading="isLoading" type="submit">
+              {{ $t('account.settings.submitButton') }}
+            </ui-button>
           </div>
         </transition-bounce>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -35,6 +38,8 @@ import { EHttpStatus } from '~/Api/Api';
 export default class SystemSettings extends Vue {
   language = ELanguages.En;
   comment = '';
+
+  isLoading = false;
 
   private get languageOptions(): TRadioButtonOption[] {
     return [
@@ -56,10 +61,13 @@ export default class SystemSettings extends Vue {
   }
 
   private async onAddComment(): Promise<void> {
+    this.isLoading = true;
     const status = await this.$presenter.userInstance.onCreateComment(this.comment);
     if (status === EHttpStatus.Success) {
       this.comment = '';
     }
+
+    this.isLoading = false;
   }
 
   private async onLanguageChange(value: TRadioButtonOption['value']): Promise<void> {

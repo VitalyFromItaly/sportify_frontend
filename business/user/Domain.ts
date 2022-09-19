@@ -47,7 +47,7 @@ export type TState = TFetchState & {
 export interface IService {
   read(): Promise<TUser>;
   update(payload: TUpdateUser): Promise<User>;
-  postComment(payload: TComment): Promise<TCreateResponse>;
+  postComment(payload: TComment): Promise<TCreateResponse['status']>;
 }
 
 export interface IPresenter extends IVuexObservable<TState> {
