@@ -1,21 +1,21 @@
 <template>
   <div>
-    <ui-label v-if="label" :label="label" />
-    <ui-label v-if="description" :label="description" class="text-sm block" />
-    <div v-if="options.length" :class="[ horizontal ? 'flex space-x-8' : '' ]">
+    <ui-label v-if="label" :label="label" :disabled="allDisabled" />
+    <ui-label v-if="description" :label="description" :disabled="allDisabled" class="text-sm block" />
+    <div v-if="options.length" :class="[ horizontal ? 'flex space-x-8' : '']">
       <div v-for="(option, index) in options" :key="index" class="flex items-center space-x-1" :class="[ horizontal ? '' : '' ]">
         <input
           :id="getId(index, option.label)"
           :value="option.value"
           type="radio"
           class="w-4 h-4"
-          :class="[option.disabled ? 'disabled' : '']"
+          :class="[allDisabled || option.disabled ? 'disabled' : '']"
           :name="option.label + index"
-          :disabled="!!option.disabled"
+          :disabled="allDisabled || !!option.disabled"
           :checked="isOptionChecked(option)"
           v-on="inputListeners(option.value)"
         />
-        <ui-label :label="option.label" :for-id="getId(index, option.label)" :class="[option.disabled ? 'disabled' : '']" />
+        <ui-label :disabled="allDisabled" :label="option.label" :for-id="getId(index, option.label)" :class="[option.disabled ? 'disabled' : '']" />
       </div>
     </div>
   </div>
