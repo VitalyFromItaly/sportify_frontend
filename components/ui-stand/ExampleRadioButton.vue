@@ -10,12 +10,14 @@
         :label="label"
         :horizontal="isHorizontal"
         :description="description"
+        :all-disabled="disabledAll"
       />
     </template>
     <template #settings>
       <ui-input v-model="label" label="label" />
       <ui-input v-model="description" label="description" placeholder="add description" />
       <ui-toggle v-model="isHorizontal" label="horizontal" />
+      <ui-toggle v-model="disabledAll" label="disabled All" />
       <p>value: { {{ value }} }</p>
     </template>
   </abstract-ui-example>
@@ -32,6 +34,8 @@ export default class ExampleRadioButton extends Vue {
   isHorizontal = true;
   label = 'label';
   description = '';
+  disabledAll = false;
+
   private get options(): TRadioButtonOption[] {
     return [
       { value: 'one', label: 'one', checked: true },
