@@ -66,7 +66,7 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
   }
 
   public async onCreateComment(comment: string): Promise<EHttpStatus> {
-    const { status } = await this.service.postComment({ comment });
+    const status = await this.service.postComment({ comment });
     if (status === EHttpStatus.Success) {
       this.bus.emit<TNotificationPayload>(EEventBusName.NOTIFICATION, {
         type: 'success',

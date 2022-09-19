@@ -290,7 +290,7 @@ export namespace User {
    * @name FetchUserById
    * @request GET:/user/{id}
    * @secure
-   * @response `201` `User` create user
+   * @response `201` `User` get user by id
    */
   export namespace FetchUserById {
     export type RequestParams = { id: string };
@@ -320,6 +320,7 @@ export namespace User {
    * @name Update
    * @request PUT:/user/update-profile
    * @secure
+   * @response `201` `User`
    * @response `default` `User` returns updated user info
    */
   export namespace Update {
@@ -327,22 +328,23 @@ export namespace User {
     export type RequestQuery = {};
     export type RequestBody = UpdateUserProfileDto;
     export type RequestHeaders = {};
-    export type ResponseBody = any;
+    export type ResponseBody = User;
   }
   /**
    * No description
    * @tags User
-   * @name Get
+   * @name Read
    * @request GET:/user
    * @secure
+   * @response `201` `User`
    * @response `default` `User` get user info by token
    */
-  export namespace Get {
+  export namespace Read {
     export type RequestParams = {};
     export type RequestQuery = {};
     export type RequestBody = never;
     export type RequestHeaders = {};
-    export type ResponseBody = any;
+    export type ResponseBody = User;
   }
   /**
    * No description
@@ -350,6 +352,7 @@ export namespace User {
    * @name LeaveComment
    * @request POST:/user/leave-comment
    * @secure
+   * @response `201` `CreateResponse`
    * @response `default` `CreateResponse` user suggestion/comment
    */
   export namespace LeaveComment {
@@ -357,7 +360,7 @@ export namespace User {
     export type RequestQuery = {};
     export type RequestBody = CommentDto;
     export type RequestHeaders = {};
-    export type ResponseBody = any;
+    export type ResponseBody = CreateResponse;
   }
 }
 
@@ -414,14 +417,15 @@ export namespace Dictionary {
    * @name Read
    * @request GET:/dictionary
    * @secure
-   * @response `default` `DictionaryDto` user suggestion/comment
+   * @response `201` `DictionaryDto`
+   * @response `default` `DictionaryDto` project dictionary
    */
   export namespace Read {
     export type RequestParams = {};
     export type RequestQuery = {};
     export type RequestBody = never;
     export type RequestHeaders = {};
-    export type ResponseBody = any;
+    export type ResponseBody = DictionaryDto;
   }
 }
 
@@ -649,7 +653,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name FetchUserById
      * @request GET:/user/{id}
      * @secure
-     * @response `201` `User` create user
+     * @response `201` `User` get user by id
      */
     fetchUserById: (id: string, params: RequestParams = {}) =>
       this.request<User, any>({
@@ -686,15 +690,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name Update
      * @request PUT:/user/update-profile
      * @secure
+     * @response `201` `User`
      * @response `default` `User` returns updated user info
      */
     update: (data: UpdateUserProfileDto, params: RequestParams = {}) =>
-      this.request<any, User>({
+      this.request<User, User>({
         path: `/user/update-profile`,
         method: "PUT",
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
 
@@ -702,16 +708,18 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * No description
      *
      * @tags User
-     * @name Get
+     * @name Read
      * @request GET:/user
      * @secure
+     * @response `201` `User`
      * @response `default` `User` get user info by token
      */
-    get: (params: RequestParams = {}) =>
-      this.request<any, User>({
+    read: (params: RequestParams = {}) =>
+      this.request<User, User>({
         path: `/user`,
         method: "GET",
         secure: true,
+        format: "json",
         ...params,
       }),
 
@@ -722,15 +730,17 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name LeaveComment
      * @request POST:/user/leave-comment
      * @secure
+     * @response `201` `CreateResponse`
      * @response `default` `CreateResponse` user suggestion/comment
      */
     leaveComment: (data: CommentDto, params: RequestParams = {}) =>
-      this.request<any, CreateResponse>({
+      this.request<CreateResponse, CreateResponse>({
         path: `/user/leave-comment`,
         method: "POST",
         body: data,
         secure: true,
         type: ContentType.Json,
+        format: "json",
         ...params,
       }),
   };
@@ -798,13 +808,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name Read
      * @request GET:/dictionary
      * @secure
-     * @response `default` `DictionaryDto` user suggestion/comment
+     * @response `201` `DictionaryDto`
+     * @response `default` `DictionaryDto` project dictionary
      */
     read: (params: RequestParams = {}) =>
-      this.request<any, DictionaryDto>({
+      this.request<DictionaryDto, DictionaryDto>({
         path: `/dictionary`,
         method: "GET",
         secure: true,
+        format: "json",
         ...params,
       }),
   };
