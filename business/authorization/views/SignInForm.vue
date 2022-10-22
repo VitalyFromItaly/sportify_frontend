@@ -12,7 +12,7 @@
           :error-message="errors[0]"
         />
       </validation-provider>
-      <validation-provider ref="field.password" v-slot="{ errors, failed }" name="password" rules="password|required">
+      <validation-provider ref="field.password" v-slot="{ errors, failed }" name="password" rules="required">
         <ui-input
           v-model="form.password"
           required

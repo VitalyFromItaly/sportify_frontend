@@ -1,20 +1,28 @@
+import { readFileSync } from 'fs';
+import path from 'path';
+
 export default () => {
   const fullEnvName = process.env.NODE_ENV || 'dev';
-  const url = process.env.BASE_URL || 'http://localhost';
-  const port = process.env.PORT || 3000;
+  const url = process.env.BASE_URL || 'https://localhost.ru.test';
+  const apiUrl = process.env.API_URL || 'https://localhost.ru.test/api';
+  const port = process.env.PORT || 443;
   const authPort = process.env.AUTH_PORT || 3000;
   const baseUrl = port ? `${url}:${port}` : url;
+
+  const isDev = process.env.NODE_ENV === 'dev';
+
   const config = {
     publicRuntimeConfig: {
       environment: fullEnvName,
       baseUrl,
+      apiUrl,
       port,
       authPort
     },
     // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
     ssr: false,
     server: {
-      port: 3001,
+      port,
       host: '0.0.0.0'
     },
     // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -69,14 +77,11 @@ export default () => {
         path: '~/components',
         extensions: ['vue'],
         ignore: ['~components/pages', '**/_**']
-      },
-      {
-        path: '~/business',
-        extensions: ['vue']
       }
     ],
     // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
     buildModules: [
+      '@nuxtjs/dotenv',
       // https://go.nuxtjs.dev/typescript
       '@nuxt/typescript-build',
       // https://go.nuxtjs.dev/tailwindcss
@@ -136,5 +141,18 @@ export default () => {
     //   middleware: 'route-guard'
     // }
   };
+
+  if (isDev) {
+    const cert = {
+      key: readFileSync(path.resolve(__dirname, process.env.SSL_KEY_PATH)),
+      cert: readFileSync(path.resolve(__dirname, process.env.SSL_CERT_PATH))
+    };
+
+    config.server = {
+      ...config.server,
+      https: cert
+    };
+  }
+
   return config;
 };

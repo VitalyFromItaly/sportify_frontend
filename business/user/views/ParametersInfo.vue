@@ -16,8 +16,9 @@ import { userStoreModule } from '../store';
 
 import FillOutFormButton from '~/business/user/views/FillOutFormButton.vue';
 import { TDataListRow } from '~/@types/component';
+import TableList from '~/components/TableList.vue';
 
-@Component({ components: { FillOutFormButton } })
+@Component({ components: { FillOutFormButton, TableList } })
 export default class ParametersInfo extends Vue {
   @userStoreModule.Getter user: TUser;
 
