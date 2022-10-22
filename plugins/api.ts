@@ -19,7 +19,7 @@ const apiPlugin: Plugin = ({ $config, $auth }, inject) => {
   // }
 
   const swaggerResultConfig: TApiConfig = {
-    baseUrl: $config.baseUrl,
+    baseUrl: $config.apiUrl,
     customFetch: customFetch(),
     baseApiParams: { headers: { Authorization: `Bearer ${accessToken || ''}` } }
   };
