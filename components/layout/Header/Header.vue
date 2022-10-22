@@ -1,6 +1,6 @@
 <template>
   <header class="global-padding header">
-    <div class="flex justify-between items-baseline">
+    <div class="flex justify-between items-center">
       <button @click="$router.push({ name: 'account' })">
         <sportify-logo color="white" />
       </button>

@@ -100,4 +100,19 @@ export enum EActivityType {
 
 export type TResponseStatus = 'error' | 'success';
 
-export type TBreakpoints = any;
+export type TBreakpoints = {
+  current: string;
+  height: number;
+  lLg: boolean;
+  lMd: boolean;
+  lSm: boolean;
+  lg: boolean;
+  md: boolean;
+  sLg: boolean;
+  sMd: boolean;
+  sSm: boolean;
+  sm: boolean;
+  width: number;
+  xl: boolean;
+  xs: boolean;
+};

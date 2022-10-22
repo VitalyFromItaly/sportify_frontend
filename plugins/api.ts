@@ -14,8 +14,6 @@ const apiPlugin: Plugin = ({ $config, $auth }, inject) => {
     accessToken = token.access_token;
   }
 
-  console.log({ $config });
-
   const swaggerResultConfig: TApiConfig = {
     baseUrl: $config.apiUrl,
     customFetch: customFetch(),

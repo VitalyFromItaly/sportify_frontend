@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <new-user-icon class="w-1/2 tablet:w-full" />
+    <new-user-icon class="w-full" />
   </div>
 </template>
 

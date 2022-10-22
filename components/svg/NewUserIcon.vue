@@ -1,6 +1,4 @@
 <template>
-    <!-- width="568"
-    height="575" -->
   <svg
     v-if="!isDarkTheme"
     viewBox="0 0 568 575"
@@ -38,8 +36,7 @@
   </svg>
   <svg
     v-else
-    width="568"
-    height="575"
+    class="icon"
     viewBox="0 0 568 575"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

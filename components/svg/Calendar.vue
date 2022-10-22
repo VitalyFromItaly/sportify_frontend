@@ -19,9 +19,13 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
+import { EVuexNamespaces } from '~/@types/domain';
+
 @Component
 export default class CalendarIcon extends Vue {
-  @Prop({ type: String, default: 'black' }) color: string;
+  private get color(): string {
+    return this.$store.state[EVuexNamespaces.CORE].isDarkTheme ? 'white' : 'black';
+  }
 }
 </script>

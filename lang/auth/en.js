@@ -12,8 +12,13 @@ export default {
   forgotPassword: 'Forgot your password?',
   alternativeHint: `Don't have an account?`,
   signUpAlternativeHint: 'Already have an account?',
-  loginTooltipHeader: 'Password requires',
-  loginTooltipContent: ['8 symbols minimum', '1 capital letter', '1 special symbol'],
+  signUpTooltipHeader: 'Password requires',
+  signUpRules: {
+    passwordLength: '8 symbols minimum',
+    capitalLetters: '1 capital letter',
+    specialSymbols: '1 special symbol',
+    digital: '1 digital'
+  },
   errorSignUp: {
     title: 'Error',
     content: 'Error during signing up, please try again'

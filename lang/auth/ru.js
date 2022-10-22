@@ -12,8 +12,13 @@ export default {
   forgotPassword: 'Забыли пароль?',
   alternativeHint: 'Нет аккаунта?',
   signUpAlternativeHint: 'Есть аккаунт?',
-  loginTooltipHeader: 'Требования к паролю',
-  loginTooltipContent: ['Минимум 8 символов', '1 заглавная буква', '1 специальный символ'],
+  signUpTooltipHeader: 'Требования к паролю',
+  signUpRules: {
+    passwordLength: 'Минимум 8 символов',
+    capitalLetters: '1 заглавная буква',
+    specialSymbols: '1 специальный символ',
+    digital: '1 цифра'
+  },
   errorSignUp: {
     title: 'Ошибка',
     content: 'Ошибка при попытке регистрации, попробуйте еще раз.'

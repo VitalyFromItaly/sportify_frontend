@@ -15,7 +15,7 @@
         :placeholder="placeholder"
         :value="value"
         :class="internalClasses"
-        class="inline border-2 pl-3 py-1 focus:outline-none text-black dark:placeholder-gray-400 w-20 dark:text-gray-200"
+        class="inline border-2 pl-3 py-1 focus:outline-none text-black w-20 bg-transparent dark:text-lightGray"
         :disabled="disabled"
         type="number"
         v-on="events"
@@ -36,6 +36,7 @@ import { v4 as uuidv4 } from 'uuid';
 import Plus from '../svg/Plus.vue';
 import Minus from '../svg/Minus.vue';
 import { inputClasses, keyCodes } from './domain/Domain';
+import { EVuexNamespaces } from '~/@types/domain';
 
 @Component({ components: { Plus, Minus } })
 export default class UINumberInput extends Vue {
@@ -44,7 +45,6 @@ export default class UINumberInput extends Vue {
   @Prop({ type: String, default: '' }) label: string | number;
   @Prop({ type: String, default: '' }) errorMessage: string | number;
   @Prop({ type: Boolean, default: false }) error: boolean;
-  @Prop({ type: Boolean, default: false }) dark: false;
   @Prop({ type: Number, default: -Infinity }) min: number;
   @Prop({ type: Number, default: +Infinity }) max: number;
   @Prop({ type: Number, default: 1 }) step: number;
@@ -56,7 +56,7 @@ export default class UINumberInput extends Vue {
   private internalValue = 0;
 
   private get color(): string {
-    return this.dark ? 'white' : 'black';
+    return this.$store.state[EVuexNamespaces.CORE].isDarkTheme ? 'white' : 'black';
   }
 
   private get internalClasses(): string {

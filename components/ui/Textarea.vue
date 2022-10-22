@@ -15,7 +15,7 @@
         ref="textarea"
         :value="value"
         :maxlength="limit"
-        class="inline border-2 h-28 pl-3 py-1 focus:outline-none dark:placeholder-gray-400 dark:text-gray-400"
+        class="inline border-2 h-28 pl-3 py-1 bg-transparent focus:outline-none dark:placeholder-gray-400 dark:text-gray-400"
         :class="internalClasses"
         :placeholder="placeholder"
         v-on="events"

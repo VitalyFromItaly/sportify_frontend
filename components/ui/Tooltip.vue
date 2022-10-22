@@ -14,19 +14,26 @@
       role="tooltip"
       :aria-hidden="[!isVisible]"
       style="max-width: 200px; width: max-content"
-      class="absolute z-50 bg-lightGray dark:bg-lightDark dark:text-lightGray shadow-2xl py-0.5  px-3 overflow-hidden"
-    ><span class="z-0">{{ tip }}</span></span>
+      class="absolute z-50 bg-lightGray dark:bg-lightDark dark:text-lightGray shadow-xl py-3  px-5 overflow-hidden"
+    >
+      <span v-if="tip" class="z-0">
+        {{ tip }}
+      </span>
+      <span v-else class="z-0"><slot name="tip"></slot></span>
+    </span>
   </span>
 </template>
 
 <script lang='ts'>
 import { Vue, Component, Prop, Watch, Ref } from 'vue-property-decorator';
+import has from 'lodash/has';
 import { ETooltipAlign, ETooltipDirection } from './domain/@types';
+
 @Component
 export default class UITooltip extends Vue {
   @Ref() trigger: any;
   @Ref() content: any;
-  @Prop({ type: String, required: true }) tip: string;
+  @Prop({ type: String, required: false }) tip: string;
   @Prop({ type: Boolean, default: false }) disabled: boolean;
   @Prop({ type: Boolean, default: false }) visible: boolean;
   @Prop({
@@ -65,10 +72,16 @@ export default class UITooltip extends Vue {
     value ? this.show() : this.hide();
   }
 
+  isTipExist(): boolean {
+    return !!this.tip || has(this.$slots, 'tip');
+  }
+
   private mounted(): void {
-    if (!this.tip || !window || !document) {
+    if (!this.isTipExist || !window || !document) {
       return;
     }
+    console.log(this.content);
+
     this.tooltipContent = document.body.appendChild(this.content);
     if (this.visible) {
       this.show();
@@ -79,7 +92,7 @@ export default class UITooltip extends Vue {
 
   private show() {
     if (this.disabled) { return; }
-    if (!this.tip) { return; }
+    if (!this.isTipExist) { return; }
 
     this.isVisible = true;
     this._positionListen(true);

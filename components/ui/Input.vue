@@ -10,7 +10,7 @@
         ref="input"
         v-click-outside="clickOutside"
         :value="value"
-        class="inline border-2 pl-3 py-1 focus:outline-none dark:placeholder-gray-400 dark:text-gray-400"
+        class="inline border-2 pl-3 py-1 bg-transparent  focus:outline-none dark:placeholder-gray-400 dark:text-lightGray"
         :class="[internalSize, internalClasses]"
         :type="internalType"
         :placeholder="placeholder"
