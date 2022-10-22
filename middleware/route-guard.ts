@@ -1,5 +1,5 @@
 import { Context } from '@nuxt/types';
-import { ENotificationType, TNotificationPayload } from '~/@types/domain';
+import { ENotificationType, TNotificationEvent } from '~/@types/domain';
 import { EEventBusName } from '~/core/bus/Domain';
 import { context } from '~/core/context';
 
@@ -10,16 +10,11 @@ export default async function({ app }: Context) {
     return;
   }
   setTimeout(() => {
-    context.$bus.emit<TNotificationPayload>(EEventBusName.AUTH_NOTIFICATION, {
+    context.$bus.emit<TNotificationEvent>(EEventBusName.AUTH_NOTIFICATION, {
       type: ENotificationType.ERROR,
       title: 'Access Denied',
       content: 'Please, log in the system'
     });
   }, 100);
   app.router.replace({ name: 'sign-in' });
-  // app.router.afterEach(async(to, from) => {
-  //   console.log({ router: app.router });
-  //   console.log({ to, from });
-
-  // });
 }

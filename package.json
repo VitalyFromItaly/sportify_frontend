@@ -12,7 +12,7 @@
     "lint": "npm run lint:js && npm run lint:prettier",
     "lintfix": "prettier --write --list-different . && npm run lint:js -- --fix",
     "test": "jest",
-    "api": "swagger-typescript-api -p http://localhost:3000/api-yaml -o ./Api -n Api.ts --responses --route-types --extract-request-params --extract-request-body",
+    "api": "swagger-typescript-api -p https://localhost:3000/api/swagger-yaml -o ./Api -n Api.ts --responses --route-types --extract-request-params --extract-request-body --disableStrictSSL --module-name-first-tag",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

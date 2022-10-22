@@ -3,14 +3,14 @@
     <ui-label v-if="label" for-id="id" :label="label" :disabled="disabled">
       <span v-if="required" class=" text-lightTeal font-semibold">*</span>
     </ui-label>
-    <div class="relative">
+    <div class="relative flex">
       <input
         v-bind="$attrs"
         :id="id"
         ref="input"
         v-click-outside="clickOutside"
         :value="value"
-        class="inline border-2 pl-3 py-1 focus:outline-none dark:placeholder-gray-400 dark:text-gray-400"
+        class="inline border-2 pl-3 py-1 bg-transparent  focus:outline-none dark:placeholder-gray-400 dark:text-lightGray"
         :class="[internalSize, internalClasses]"
         :type="internalType"
         :placeholder="placeholder"
@@ -21,7 +21,7 @@
         <eye-crossed v-if="type === EInputTypes.PASSWORD && internalType !== EInputTypes.PASSWORD" class="eye-icon" />
       </button>
     </div>
-    <p v-if="isFocusLost && isError" class="text-rose-600">
+    <p v-if="isError && isFocusLost" class="text-rose-600">
       {{ errorMessage }}
     </p>
   </div>

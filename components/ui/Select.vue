@@ -5,7 +5,7 @@
       :id="id"
       :disabled="disabled"
       :value="value"
-      class="w-52 h-8 border-2 focus:outline-none"
+      class="w-52 h-8 border-2 focus:outline-none bg-transparent"
       :class="[classes, internalSize]"
       @change="onChange($event.target.value)"
     >

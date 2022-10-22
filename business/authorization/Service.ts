@@ -1,5 +1,5 @@
-import { IService, TLoginForm } from './Domain';
-import { Api, CreateUserDto } from '~/Api/Api';
+import { IService, TLoginForm, TRegisterForm } from './Domain';
+import { Api } from '~/Api/Api';
 import { EHttpCodes } from '~/@types/http';
 import { TTokensInfo } from '~/core/auth/IAuth';
 import { EAuthKeys, EAuthTags } from '~/@types/cache';
@@ -25,11 +25,12 @@ export default class Service implements IService {
     return data;
   }
 
-  register(payload: CreateUserDto): Promise<any> {
-    throw new Error('Method not implemented.');
+  public async register(payload: TRegisterForm): Promise<any> {
+    const { data: { status } } = await this.swagger.user.create(payload);
+    return status;
   }
 
-  logout(): void {
+  public logout(): void {
     this.cache.remove(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH);
   }
 }

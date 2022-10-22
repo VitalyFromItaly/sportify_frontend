@@ -16,7 +16,7 @@
             <span v-if="required" class="text-lightTeal font-semibold">*</span>
           </ui-label>
           <input
-            class="inline border-2 pl-3 h-8 focus:outline-none cursor-pointer"
+            class="inline border-2 pl-3 h-8 bg-transparent focus:outline-none cursor-pointer"
             :placeholder="internalPlaceholder"
             :class="internalClasses"
             :value="inputValue"

@@ -1,23 +1,23 @@
 <template>
   <form @submit.prevent="login">
     <validation-observer ref="validator">
-      <validation-provider ref="field.email" v-slot="{ errors, failed }" name="email" rules="email|required">
+      <validation-provider ref="email" v-slot="{ errors, failed }" name="email" rules="email|required">
         <ui-input
           v-model="form.email"
           required
           type="email"
-          :placeholder="$t('login.common.loginPlaceholder')"
-          :label="$t('login.common.loginLabel')"
+          :placeholder="$t('auth.common.loginPlaceholder')"
+          :label="$t('auth.common.loginLabel')"
           :is-error="failed"
           :error-message="errors[0]"
         />
       </validation-provider>
-      <validation-provider ref="field.password" v-slot="{ errors, failed }" name="password" rules="required">
+      <validation-provider ref="password" v-slot="{ errors, failed }" name="password" rules="required">
         <ui-input
           v-model="form.password"
           required
-          :placeholder="$t('login.common.passwordPlaceholder')"
-          :label="$t('login.common.passwordLabel')"
+          :placeholder="$t('auth.common.passwordPlaceholder')"
+          :label="$t('auth.common.passwordLabel')"
           :is-error="failed"
           :error-message="errors[0]"
           type="password"
@@ -26,16 +26,16 @@
 
       <div class="text-right">
         <ui-link :to="{ name: 'sign-up' }">
-          {{ $t('login.forgotPassword') }}
+          {{ $t('auth.forgotPassword') }}
         </ui-link>
       </div>
-      <ui-button :loading="state.isLoading" full-width class="mt-8">
-        {{ $t('login.loginButton') }}
+      <ui-button type="submit" :loading="state.isLoading" full-width class="mt-8">
+        {{ $t('auth.login') }}
       </ui-button>
       <p class="text-center mt-5">
-        {{ $t('login.loginAlternativeHint') }}
+        {{ $t('auth.alternativeHint') }}
         <ui-link :to="{ name: 'sign-up' }">
-          {{ $t('login.loginAlternativeHintLink') }}
+          {{ $t('auth.signUp') }}
         </ui-link>
       </p>
     </validation-observer>

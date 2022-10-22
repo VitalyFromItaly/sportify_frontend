@@ -57,6 +57,7 @@ export default class user extends Vue {
   }
 
   private onLogout(): void {
+    console.log('on logout');
     this.$presenter.authInstance.onLogout();
   }
 }
@@ -65,7 +66,7 @@ export default class user extends Vue {
 <style scoped>
 
 .li {
-  @apply hover:bg-lightGray px-3 py-2;
+  @apply hover:bg-lightGray dark:hover:bg-gray-800 px-3 py-2;
 }
 
 .rotate-180 {

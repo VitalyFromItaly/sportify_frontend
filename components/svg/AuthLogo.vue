@@ -1,7 +1,6 @@
 <template>
   <svg
-    width="503"
-    height="599"
+    class="icon"
     viewBox="0 0 503 599"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -144,3 +143,11 @@ import NuxtLogo from '~/assets/auth.svg?inline';
 @Component({ components: { NuxtLogo } })
 export default class AuthLogo extends Vue {}
 </script>
+<style>
+.icon {
+  max-width: 568px;
+  min-width: 320px;
+  min-height: 320px;
+  max-height: 575px;
+}
+</style>

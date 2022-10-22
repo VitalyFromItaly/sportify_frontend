@@ -2,7 +2,7 @@ import { Context, Plugin } from '@nuxt/types';
 import Auth from '~/core/auth/Auth';
 
 const auth: Plugin = ({ $config }: Context, inject: any) => {
-  const auth = new Auth($config.baseUrl);
+  const auth = new Auth($config.apiUrl);
 
   inject('auth', auth);
 };

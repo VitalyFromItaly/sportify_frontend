@@ -49,7 +49,7 @@ export type TNotificationParams = {
   alive?: number;
 };
 
-export type TNotificationPayload = Omit<TNotification, 'id'> & { params?: TNotificationParams };
+export type TNotificationEvent = Omit<TNotification, 'id'> & { params?: TNotificationParams };
 
 export interface IRawNotifications {
   success: (title: string, content: string, params: TNotificationParams) => void;
@@ -100,4 +100,19 @@ export enum EActivityType {
 
 export type TResponseStatus = 'error' | 'success';
 
-export type TBreakpoints = any;
+export type TBreakpoints = {
+  current: string;
+  height: number;
+  lLg: boolean;
+  lMd: boolean;
+  lSm: boolean;
+  lg: boolean;
+  md: boolean;
+  sLg: boolean;
+  sMd: boolean;
+  sSm: boolean;
+  sm: boolean;
+  width: number;
+  xl: boolean;
+  xs: boolean;
+};

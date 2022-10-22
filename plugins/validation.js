@@ -9,13 +9,14 @@
 /* eslint-disable */
 import Vue from "vue";
 import { ValidationObserver, ValidationProvider, extend, configure } from 'vee-validate';
-import ru from 'vee-validate/dist/locale/ru.json';
-import en from 'vee-validate/dist/locale/en.json';
 import * as rules from 'vee-validate/dist/rules';
 import { context } from '~/core/context';
 configure({
   defaultMessage: (field, values) => {
-    return context.i18n.t(`validation.${field}`);
+    // override the field name.
+    values._field_ = context.i18n.t(`fields.${field}`);
+
+    return context.i18n.t(`validation.${values._rule_}`, values);
   }
 });
 
@@ -24,10 +25,10 @@ Object.keys(rules).forEach((rule) => {
   extend(rule, rules[rule]);
 });
 
-
 extend('password', {
+  getMessage: field => `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number, and one special character (E.g. , . _ & ? etc)`,
   validate: value => {
-      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=.*[a-zA-Z]).{8,}$/;
       return passwordRegex.test(value);
   }
 });
