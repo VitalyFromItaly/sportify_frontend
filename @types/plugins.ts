@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/named
-import { INotifications } from './domain';
+import { INotifications, TBreakpoints } from './domain';
 // import { IPresenterPlugin } from '~/plugins/presenter';
 import { IBrowserStorage } from '~/core/cache/Domain';
 import { IEventBus } from '~/core/bus/Domain';
@@ -23,6 +23,7 @@ declare module 'vue/types/vue' {
     $cache: IBrowserStorage;
     $bus: IEventBus;
     $notification: INotifications;
+    $breakpoints: TBreakpoints;
   }
 }
 
@@ -34,6 +35,7 @@ declare module '@nuxt/types' {
     $auth: IAuth;
     $bus: IEventBus;
     $notification: INotifications;
+    $breakpoints: TBreakpoints;
   }
   interface Context {
     $presenter: IPresenterPlugin;
@@ -42,6 +44,7 @@ declare module '@nuxt/types' {
     $cache: IBrowserStorage;
     $notification: INotifications;
     $bus: IEventBus;
+    $breakpoints: TBreakpoints;
   }
 }
 
@@ -55,5 +58,6 @@ declare module 'vuex/types/index' {
     $auth: IAuth;
     $bus: IEventBus;
     $notification: INotifications;
+    $breakpoints: TBreakpoints;
   }
 }

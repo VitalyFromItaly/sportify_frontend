@@ -13,7 +13,6 @@ import * as rules from 'vee-validate/dist/rules';
 import { context } from '~/core/context';
 configure({
   defaultMessage: (field, values) => {
-    console.log({ field, values });
     // override the field name.
     values._field_ = context.i18n.t(`fields.${field}`);
 
@@ -33,64 +32,6 @@ extend('password', {
       return passwordRegex.test(value);
   }
 });
-
-// localize({
-//   en: {
-//     messages: {
-//       email: 'Invalid e-mail',
-//       required: 'The field is required',
-//       password: 'Incorrect password',
-//       passwordConfirmed: `Passwords don't match`
-//     }
-//   },
-//   ru: {
-//     messages: {
-//       required: 'Поле обязательно для заполнения',
-//       password: 'Пароль не удовлетворяет требованиям',
-//       passwordConfirmed: 'Пароли не совпадают',
-//       email: 'Проверьте написание email-адреса'
-//     }
-//   }
-// });
-
-// extend('required', {
-//   ...required,
-//   message: 'Поле обязательно к заполнению'
-// });
-
-// extend('email', {
-//   ...email,
-//   message: 'Проверьте написание email-адреса'
-// });
-
-// extend('check-forbidden-symbols',  text => {
-//   const forbiddenSymbols = /[[\]{}<>]/;
-//   if (forbiddenSymbols.test(text)) {
-//     return 'Комментарий содержит запрещённые символы.'
-//   }
-
-//   return true;
-// });
-
-// extend('password', {
-//   ...password,
-//   message: 'Пароль не удовлетворяет требованиям'
-// });
-
-// extend('confirmed', {
-//   ...confirmed,
-//   message: 'Пароли не совпадают'
-// });
-
-// extend('max', {
-//   ...max,
-//   message: (_, { length}) => `Количество символов не может быть больше ${length}`
-// });
-
-// extend('max_value', {
-//   ...max_value,
-//   message: (_, { max}) => `Значение не может быть больше ${max}`
-// });
 
 // Install components globally
 Vue.component('ValidationObserver', ValidationObserver);

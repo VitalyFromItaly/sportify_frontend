@@ -5,7 +5,7 @@
     </template>
     <template #component>
       <div class="flex flex-col items-center justify-center h-52">
-        <ui-button class="text-center" :appearance="chosenMode" :disabled="disabled" :loading="isLoading" @click="onClick">
+        <ui-button class="text-center" :full-width="fullWidth" :appearance="chosenMode" :disabled="disabled" :loading="isLoading" @click="onClick">
           {{ text }}
         </ui-button>
       </div>
@@ -18,6 +18,7 @@
       <div>
         <ui-toggle v-model="disabled" label="Disable state" />
         <ui-toggle v-model="isLoading" label="Loading state" />
+        <ui-toggle v-model="fullWidth" label="full width" />
       </div>
     </template>
   </abstract-ui-example>
@@ -34,6 +35,7 @@ export default class ButtonExample extends Vue {
   chosenMode: TButtonType = EButtonAppearance.PRIMARY;
   disabled: boolean = false;
   isLoading = false;
+  fullWidth = false;
 
   private get buttonOptions(): { value: string, text: string }[] {
     return Object.values(EButtonAppearance).map(appearance => ({ value: appearance, text: appearance }));

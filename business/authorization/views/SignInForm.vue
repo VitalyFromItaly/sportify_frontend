@@ -29,7 +29,7 @@
           {{ $t('auth.forgotPassword') }}
         </ui-link>
       </div>
-      <ui-button type="submit" full-width class="mt-8">
+      <ui-button type="submit" :loading="state.isLoading" full-width class="mt-8">
         {{ $t('auth.login') }}
       </ui-button>
       <p class="text-center mt-5">

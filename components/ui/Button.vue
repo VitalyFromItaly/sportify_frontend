@@ -3,10 +3,10 @@
     class="button"
     :class="[classes, fullWidth ? 'w-full': '' ]"
     :disabled="disabled"
-    @click="$emit('click')"
+    @click="onClick"
   >
     <template v-if="loading">
-      <ui-loader class="px-3 py-1" color="#F2F2F2" small />
+      <ui-loader :class="[ fullWidth ? 'flex justify-center': '' ]" class="px-3 py-1" color="#F2F2F2" small />
     </template>
     <template v-else>
       <slot></slot>
@@ -38,6 +38,11 @@ export default class UIButton extends Vue {
 
   private get classesByAppearance(): string {
     return buttonClasses[this.appearance];
+  }
+
+  private onClick(): void {
+    if (this.loading) { return; }
+    this.$emit('click');
   }
 }
 </script>

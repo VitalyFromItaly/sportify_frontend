@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div class="my-3">
     <ui-label v-if="label" :label="label" :disabled="allDisabled" />
     <ui-label v-if="description" :label="description" :disabled="allDisabled" class="text-sm block" />
-    <div v-if="options.length" :class="[ horizontal ? 'flex space-x-8' : '']">
-      <div v-for="(option, index) in options" :key="index" class="flex items-center space-x-1" :class="[ horizontal ? '' : '' ]">
+    <div v-if="options.length" :class="[ horizontal ? 'flex space-x-4 laptop:space-x-8' : '']">
+      <div v-for="(option, index) in options" :key="index" class="flex items-center space-x-1">
         <input
           :id="getId(index, option.label)"
           :value="option.value"

@@ -99,3 +99,5 @@ export enum EActivityType {
 }
 
 export type TResponseStatus = 'error' | 'success';
+
+export type TBreakpoints = any;

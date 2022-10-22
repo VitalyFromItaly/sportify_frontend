@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div class="my-3">
     <ui-label v-if="label" :label="label" :for-id="id" :disabled="disabled">
       <span v-if="required" class=" text-lightTeal font-semibold">*</span>
     </ui-label>
     <div class="flex items-center">
-      <button @click="onMinus">
+      <button type="button" @click="onMinus">
         <minus :color="color" class="mr-1 action" />
       </button>
       <input
@@ -12,6 +12,7 @@
         ref="input"
         :min="min"
         :max="max"
+        :placeholder="placeholder"
         :value="value"
         :class="internalClasses"
         class="inline border-2 pl-3 py-1 focus:outline-none text-black dark:placeholder-gray-400 w-20 dark:text-gray-200"
@@ -19,10 +20,13 @@
         type="number"
         v-on="events"
       />
-      <button @click="onPlus">
+      <button type="button" @click="onPlus">
         <plus :color="color" class="ml-1 action" />
       </button>
     </div>
+    <p v-if="error" class="text-rose-600">
+      {{ errorMessage }}
+    </p>
   </div>
 </template>
 
@@ -38,11 +42,13 @@ export default class UINumberInput extends Vue {
   @Prop({ type: Boolean, default: false }) disabled: boolean;
   @Prop({ type: Boolean, default: false }) required: boolean;
   @Prop({ type: String, default: '' }) label: string | number;
-  @Prop({ type: Boolean, default: false }) isError: boolean;
+  @Prop({ type: String, default: '' }) errorMessage: string | number;
+  @Prop({ type: Boolean, default: false }) error: boolean;
   @Prop({ type: Boolean, default: false }) dark: false;
   @Prop({ type: Number, default: -Infinity }) min: number;
   @Prop({ type: Number, default: +Infinity }) max: number;
   @Prop({ type: Number, default: 1 }) step: number;
+  @Prop({ type: [String, Number], default: '' }) placeholder: string | number;
   @Model('input') readonly value!: number;
 
   private readonly id = uuidv4();
@@ -54,7 +60,7 @@ export default class UINumberInput extends Vue {
   }
 
   private get internalClasses(): string {
-    if (this.isError) { return inputClasses.isError; }
+    if (this.error) { return inputClasses.isError; }
     if (this.disabled) { return inputClasses.disabled; }
     return inputClasses.default;
   }
