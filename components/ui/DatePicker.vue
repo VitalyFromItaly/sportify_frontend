@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my-3">
     <v-date-picker
       :popover="{ visibility: 'click' }"
       :value="value"
@@ -11,21 +11,24 @@
       @input="onChangeValue"
     >
       <template #default="{ inputValue, inputEvents }">
-        <div class="relative inline-block">
+        <div class="relative inline-block" v-on="inputEvents">
           <ui-label v-if="label" :label="label" class="block" :disabled="disabled">
             <span v-if="required" class="text-lightTeal font-semibold">*</span>
           </ui-label>
           <input
-            class="inline border-2 pl-3 h-8 focus:outline-none"
+            class="inline border-2 pl-3 h-8 focus:outline-none cursor-pointer"
             :placeholder="internalPlaceholder"
             :class="internalClasses"
             :value="inputValue"
             v-on="inputEvents"
           />
-          <calendar :color="iconColor" class="absolute inline right-2 top-6" />
+          <button><calendar :color="iconColor" class="absolute inline right-2 bottom-0.5" /></button>
         </div>
       </template>
     </v-date-picker>
+    <p v-if="error" class="text-rose-600">
+      {{ errorMessage }}
+    </p>
   </div>
 </template>
 
@@ -43,6 +46,8 @@ export default class DatePicker extends Vue {
   @Prop({ type: Boolean, default: false }) disabled: boolean;
   @Prop({ type: Boolean, default: false }) isDark: boolean;
   @Prop({ type: String, default: 'black' }) iconColor: string;
+  @Prop({ type: Boolean, default: false }) error: boolean;
+  @Prop({ type: String, default: '' }) errorMessage: string;
   @Prop({ type: String, default: 'dd / mm / yyyy' }) placeholder: string;
   @Prop({
     type: String,
@@ -51,7 +56,6 @@ export default class DatePicker extends Vue {
       return Object.values(POSSIBLE_LOCALES).includes(value);
     }
   }) locale: string;
-
 
   color = DATE_PICKER_COLOR;
 
@@ -68,9 +72,8 @@ export default class DatePicker extends Vue {
   }
 
   private get internalClasses(): string {
-    if (this.disabled) {
-      return inputClasses.disabled;
-    }
+    if (this.error) { return inputClasses.isError; }
+    if (this.disabled) { return inputClasses.disabled; }
 
     return inputClasses.default;
   }

@@ -17,13 +17,12 @@ export default class Service implements IService {
     const cacheDictionary = this.cache.get<TDictionary>(ECacheKeys.DICTIONARY_ALL, ECacheTags.DICTIONARY);
     if (cacheDictionary) { return cacheDictionary; }
 
-    const response = await this.swagger.dictionary.read();
-    if (response.status !== EHttpCodes.SUCCESS) {
+    const { data, status } = await this.swagger.dictionary.read();
+    if (status !== EHttpCodes.SUCCESS) {
       return null;
     }
-    const dictionary = await response.json();
 
-    this.cache.set<TDictionary>(ECacheKeys.DICTIONARY_ALL, ECacheTags.DICTIONARY, dictionary, ONE_DAY);
-    return dictionary;
+    this.cache.set<TDictionary>(ECacheKeys.DICTIONARY_ALL, ECacheTags.DICTIONARY, data, ONE_DAY);
+    return data;
   }
 }

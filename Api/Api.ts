@@ -290,7 +290,7 @@ export namespace User {
    * @name FetchUserById
    * @request GET:/user/{id}
    * @secure
-   * @response `201` `User` get user by id
+   * @response `201` `User` create user
    */
   export namespace FetchUserById {
     export type RequestParams = { id: string };
@@ -653,7 +653,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name FetchUserById
      * @request GET:/user/{id}
      * @secure
-     * @response `201` `User` get user by id
+     * @response `201` `User` create user
      */
     fetchUserById: (id: string, params: RequestParams = {}) =>
       this.request<User, any>({

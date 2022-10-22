@@ -7,5 +7,5 @@ import { BaseVuexModule } from '~/business/core/store/BaseVuexModule';
   stateFactory: true
 })
 export default class ContextStoreModule extends BaseVuexModule<TState> {
-  internalState: TState = initContextState();
+  public internalState: TState = initContextState();
 }
