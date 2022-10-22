@@ -92,6 +92,19 @@ export default () => {
     modules: [
       'portal-vue/nuxt',
       [
+        'nuxt-breakpoints',
+        {
+          sm: 640,
+          md: 768,
+          lg: 1024,
+          xl: 1280,
+          options: {
+            polyfill: true,
+            throttle: 200
+          }
+        }
+      ],
+      [
         '@nuxtjs/i18n',
         {
           locales: [

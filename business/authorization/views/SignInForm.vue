@@ -29,7 +29,7 @@
           {{ $t('login.forgotPassword') }}
         </ui-link>
       </div>
-      <ui-button full-width class="mt-8">
+      <ui-button :loading="state.isLoading" full-width class="mt-8">
         {{ $t('login.loginButton') }}
       </ui-button>
       <p class="text-center mt-5">
@@ -67,7 +67,6 @@ export default class SignInForm extends Vue {
       return;
     }
     await this.presenter.onLogin(this.form);
-    // await this.$auth.updateAccessToken();
   }
 }
 </script>

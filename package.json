@@ -30,6 +30,7 @@
     "hygen": "^6.2.8",
     "lodash": "4.17.21",
     "nuxt": "^2.12.2",
+    "nuxt-breakpoints": "^1.1.9",
     "nuxt-property-decorator": "^2.9.1",
     "portal-vue": "2.1.7",
     "postcss-import": "^13.0.0",

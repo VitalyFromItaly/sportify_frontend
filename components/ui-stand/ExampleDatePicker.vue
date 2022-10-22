@@ -12,6 +12,8 @@
         :disabled="disabled"
         :icon-color="iconColor"
         :locale="locale"
+        :error="isError"
+        :error-message="errorMessage"
       />
     </template>
     <template #settings>
@@ -21,7 +23,7 @@
         v-model="iconColor"
         label="Icon color"
         horizontal
-        :options="[{ value: 'black', label: 'black' }, { value: 'white', label: 'white' }]"
+        :options="[{ value: 'black', label: 'black', checked: true }, { value: 'white', label: 'white' }]"
       />
       <ui-radio-button
         v-model="locale"
@@ -32,6 +34,8 @@
       <ui-toggle v-model="isDark" label="Theme" text-on="dark theme" text-off="light theme" />
       <ui-toggle v-model="required" label="Required" text-on="on" text-off="off" />
       <ui-toggle v-model="disabled" label="Disabled" text-on="on" text-off="off" />
+      <ui-toggle v-model="isError" label="Error" text-on="on" text-off="off" />
+      <ui-input v-model="errorMessage" label="Error message" />
     </template>
   </abstract-ui-example>
 </template>
@@ -50,10 +54,12 @@ export default class ExampleDatePicker extends Vue {
   private disabled = false;
   private iconColor = 'black';
   private locale = 'en-US';
+  private errorMessage = '';
+  private isError = false;
 
   mounted(): void {
     const { isThemeDark } = this.$store.state[EVuexNamespaces.CORE];
-    this.iconColor = isThemeDark ? 'black' : 'white';
+    this.iconColor = isThemeDark ? 'white' : 'black';
   }
 }
 </script>
