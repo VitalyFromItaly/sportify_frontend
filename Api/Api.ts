@@ -105,7 +105,7 @@ export interface User {
   /**
    * user`s age
    * @format date-time
-   * @example "1916-07-15T21:28:41.000Z"
+   * @example "1916-07-15T19:22:49.000Z"
    */
   birthday: string | null;
 
@@ -202,7 +202,7 @@ export interface UpdateUserProfileDto {
   /**
    * user`s age
    * @format date-time
-   * @example "1916-07-15T21:28:41.000Z"
+   * @example "1916-07-15T19:22:49.000Z"
    */
   birthday?: string | null;
 
@@ -288,9 +288,9 @@ export namespace User {
    * No description
    * @tags User
    * @name FetchUserById
-   * @request GET:/user/{id}
+   * @request GET:/api/user/{id}
    * @secure
-   * @response `201` `User` get user by id
+   * @response `201` `User` create user
    */
   export namespace FetchUserById {
     export type RequestParams = { id: string };
@@ -303,7 +303,7 @@ export namespace User {
    * No description
    * @tags User
    * @name Create
-   * @request POST:/user/create
+   * @request POST:/api/user/create
    * @response `201` `CreateResponse` create user
    * @response `400` `void` user can not register
    */
@@ -318,7 +318,7 @@ export namespace User {
    * No description
    * @tags User
    * @name Update
-   * @request PUT:/user/update-profile
+   * @request PUT:/api/user/update-profile
    * @secure
    * @response `201` `User`
    * @response `default` `User` returns updated user info
@@ -334,7 +334,7 @@ export namespace User {
    * No description
    * @tags User
    * @name Read
-   * @request GET:/user
+   * @request GET:/api/user
    * @secure
    * @response `201` `User`
    * @response `default` `User` get user info by token
@@ -350,7 +350,7 @@ export namespace User {
    * No description
    * @tags User
    * @name LeaveComment
-   * @request POST:/user/leave-comment
+   * @request POST:/api/user/leave-comment
    * @secure
    * @response `201` `CreateResponse`
    * @response `default` `CreateResponse` user suggestion/comment
@@ -369,7 +369,7 @@ export namespace Auth {
    * No description
    * @tags Auth
    * @name Login
-   * @request POST:/auth/login
+   * @request POST:/api/auth/login
    * @response `201` `TokenDto` login
    */
   export namespace Login {
@@ -383,7 +383,7 @@ export namespace Auth {
    * No description
    * @tags Auth
    * @name RefreshAccessToken
-   * @request POST:/auth/refresh-access-token
+   * @request POST:/api/auth/refresh-access-token
    * @secure
    * @response `default` `TokenDto` refresh tokens
    */
@@ -398,7 +398,7 @@ export namespace Auth {
    * No description
    * @tags Auth
    * @name RefreshTokens
-   * @request POST:/auth/refresh-tokens
+   * @request POST:/api/auth/refresh-tokens
    * @secure
    * @response `default` `TokenDto` refresh tokens
    */
@@ -414,8 +414,9 @@ export namespace Auth {
 export namespace Dictionary {
   /**
    * No description
+   * @tags Dictionary
    * @name Read
-   * @request GET:/dictionary
+   * @request GET:/api/dictionary
    * @secure
    * @response `201` `DictionaryDto`
    * @response `default` `DictionaryDto` project dictionary
@@ -651,13 +652,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags User
      * @name FetchUserById
-     * @request GET:/user/{id}
+     * @request GET:/api/user/{id}
      * @secure
-     * @response `201` `User` get user by id
+     * @response `201` `User` create user
      */
     fetchUserById: (id: string, params: RequestParams = {}) =>
       this.request<User, any>({
-        path: `/user/${id}`,
+        path: `/api/user/${id}`,
         method: "GET",
         secure: true,
         format: "json",
@@ -669,13 +670,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags User
      * @name Create
-     * @request POST:/user/create
+     * @request POST:/api/user/create
      * @response `201` `CreateResponse` create user
      * @response `400` `void` user can not register
      */
     create: (data: CreateUserDto, params: RequestParams = {}) =>
       this.request<CreateResponse, void>({
-        path: `/user/create`,
+        path: `/api/user/create`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -688,14 +689,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags User
      * @name Update
-     * @request PUT:/user/update-profile
+     * @request PUT:/api/user/update-profile
      * @secure
      * @response `201` `User`
      * @response `default` `User` returns updated user info
      */
     update: (data: UpdateUserProfileDto, params: RequestParams = {}) =>
       this.request<User, User>({
-        path: `/user/update-profile`,
+        path: `/api/user/update-profile`,
         method: "PUT",
         body: data,
         secure: true,
@@ -709,14 +710,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags User
      * @name Read
-     * @request GET:/user
+     * @request GET:/api/user
      * @secure
      * @response `201` `User`
      * @response `default` `User` get user info by token
      */
     read: (params: RequestParams = {}) =>
       this.request<User, User>({
-        path: `/user`,
+        path: `/api/user`,
         method: "GET",
         secure: true,
         format: "json",
@@ -728,14 +729,14 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags User
      * @name LeaveComment
-     * @request POST:/user/leave-comment
+     * @request POST:/api/user/leave-comment
      * @secure
      * @response `201` `CreateResponse`
      * @response `default` `CreateResponse` user suggestion/comment
      */
     leaveComment: (data: CommentDto, params: RequestParams = {}) =>
       this.request<CreateResponse, CreateResponse>({
-        path: `/user/leave-comment`,
+        path: `/api/user/leave-comment`,
         method: "POST",
         body: data,
         secure: true,
@@ -750,12 +751,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Auth
      * @name Login
-     * @request POST:/auth/login
+     * @request POST:/api/auth/login
      * @response `201` `TokenDto` login
      */
     login: (data: UserCredsDto, params: RequestParams = {}) =>
       this.request<TokenDto, any>({
-        path: `/auth/login`,
+        path: `/api/auth/login`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -768,13 +769,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Auth
      * @name RefreshAccessToken
-     * @request POST:/auth/refresh-access-token
+     * @request POST:/api/auth/refresh-access-token
      * @secure
      * @response `default` `TokenDto` refresh tokens
      */
     refreshAccessToken: (data: RefreshTokenDto, params: RequestParams = {}) =>
       this.request<any, TokenDto>({
-        path: `/auth/refresh-access-token`,
+        path: `/api/auth/refresh-access-token`,
         method: "POST",
         body: data,
         secure: true,
@@ -787,13 +788,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      *
      * @tags Auth
      * @name RefreshTokens
-     * @request POST:/auth/refresh-tokens
+     * @request POST:/api/auth/refresh-tokens
      * @secure
      * @response `default` `TokenDto` refresh tokens
      */
     refreshTokens: (data: RefreshTokenDto, params: RequestParams = {}) =>
       this.request<any, TokenDto>({
-        path: `/auth/refresh-tokens`,
+        path: `/api/auth/refresh-tokens`,
         method: "POST",
         body: data,
         secure: true,
@@ -805,15 +806,16 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags Dictionary
      * @name Read
-     * @request GET:/dictionary
+     * @request GET:/api/dictionary
      * @secure
      * @response `201` `DictionaryDto`
      * @response `default` `DictionaryDto` project dictionary
      */
     read: (params: RequestParams = {}) =>
       this.request<DictionaryDto, DictionaryDto>({
-        path: `/dictionary`,
+        path: `/api/dictionary`,
         method: "GET",
         secure: true,
         format: "json",

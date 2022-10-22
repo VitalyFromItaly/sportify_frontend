@@ -18,7 +18,7 @@
 <script lang="ts">
 import { Vue, Component, namespace } from 'nuxt-property-decorator';
 import { localeChanged } from 'vee-validate';
-import { TRouteEventPayload, TNotificationPayload, EAppLanguages, EVuexNamespaces } from '~/@types/domain';
+import { TRouteEventPayload, TNotificationEvent, EAppLanguages, EVuexNamespaces } from '~/@types/domain';
 import AuthLogo from '~/components/svg/AuthLogo.vue';
 import { EEventBusName } from '~/core/bus/Domain';
 
@@ -51,12 +51,6 @@ export default class DefaultLayout extends Vue {
   }
 
   private async initApp(): Promise<void> {
-    // const asyncTimeout = (ms: number) => {
-    //   return new Promise((resolve) => {
-    //     setTimeout(resolve, ms);
-    //   });
-    // };
-    // await asyncTimeout(5000);
     await Promise.all([
       this.$presenter.userInstance.onLoad(),
       this.$presenter.contextInstance.onLoad()
@@ -74,7 +68,7 @@ export default class DefaultLayout extends Vue {
   }
 
   private onNotificationEvent(): void {
-    this.$bus.on(EEventBusName.NOTIFICATION, (payload: TNotificationPayload) => {
+    this.$bus.on(EEventBusName.NOTIFICATION, (payload: TNotificationEvent) => {
       const { type, content, title, params } = payload;
       this.$notification[type](title, content, params);
     });

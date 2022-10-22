@@ -4,7 +4,7 @@ import path from 'path';
 export default () => {
   const fullEnvName = process.env.NODE_ENV || 'dev';
   const url = process.env.BASE_URL || 'https://localhost.ru.test';
-  const apiUrl = process.env.API_URL || 'https://localhost.ru.test/api';
+  const apiUrl = process.env.API_URL || 'https://localhost:3000';
   const port = process.env.PORT || 443;
   const authPort = process.env.AUTH_PORT || 3000;
   const baseUrl = port ? `${url}:${port}` : url;
@@ -62,14 +62,12 @@ export default () => {
       '~/plugins/auth',
       '~/plugins/api',
       '~/plugins/validation',
-      '~/plugins/i18n',
       '~/plugins/store',
       '~/plugins/presenter',
       '~/plugins/cache',
       '~/plugins/bus',
       '~/plugins/notification',
       '~/plugins/context'
-      // '~/plugins/directives'
     ],
     // Auto import components: https://go.nuxtjs.dev/config-components
     components: [
@@ -111,7 +109,8 @@ export default () => {
           strategy: 'no_prefix',
           langDir: 'lang/',
           defaultLocale: 'en',
-          silentTranslationWarn: true
+          silentTranslationWarn: true,
+          isSilentFallback: true
         }
       ]
     ],

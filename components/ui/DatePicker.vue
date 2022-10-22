@@ -52,7 +52,6 @@ export default class DatePicker extends Vue {
     }
   }) locale: string;
 
-
   color = DATE_PICKER_COLOR;
 
   onChangeValue(date: Date) {

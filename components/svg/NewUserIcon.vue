@@ -1,9 +1,10 @@
 <template>
+    <!-- width="568"
+    height="575" -->
   <svg
     v-if="!isDarkTheme"
-    width="568"
-    height="575"
     viewBox="0 0 568 575"
+    class="icon"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -83,3 +84,11 @@ export default class NewUserIcon extends Vue {
   @coreState.State isDarkTheme: boolean;
 }
 </script>
+<style>
+.icon {
+  max-width: 568px;
+  min-width: 320px;
+  min-height: 320px;
+  max-height: 575px;
+}
+</style>

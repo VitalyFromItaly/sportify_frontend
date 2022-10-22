@@ -13,10 +13,8 @@ const apiPlugin: Plugin = ({ $config, $auth }, inject) => {
   if (token) {
     accessToken = token.access_token;
   }
-  // if (!token) {
-  //   await $auth.checkTokens();
-  //   token = $auth.getAccessToken();
-  // }
+
+  console.log({ $config });
 
   const swaggerResultConfig: TApiConfig = {
     baseUrl: $config.apiUrl,

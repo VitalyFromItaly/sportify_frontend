@@ -49,7 +49,7 @@ export type TNotificationParams = {
   alive?: number;
 };
 
-export type TNotificationPayload = Omit<TNotification, 'id'> & { params?: TNotificationParams };
+export type TNotificationEvent = Omit<TNotification, 'id'> & { params?: TNotificationParams };
 
 export interface IRawNotifications {
   success: (title: string, content: string, params: TNotificationParams) => void;

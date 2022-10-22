@@ -20,6 +20,7 @@ import { userStoreModule } from '~/business/user/store/index';
 const NewUserTemplate = () => import('~/business/user/views/NewUserTemplate.vue');
 const ParametersInfo = () => import('~/business/user/views/ParametersInfo.vue');
 const SystemSettings = () => import('~/business/user/views/SystemSettings.vue');
+
 @Component({ components: { NewUserTemplate, ParametersInfo } })
 export default class AccountPage extends Vue {
   @userStoreModule.Getter status: EUserStatus;
@@ -36,6 +37,3 @@ export default class AccountPage extends Vue {
   }
 }
 </script>
-<style scoped>
-
-</style>

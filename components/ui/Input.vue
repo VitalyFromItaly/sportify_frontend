@@ -3,7 +3,7 @@
     <ui-label v-if="label" for-id="id" :label="label" :disabled="disabled">
       <span v-if="required" class=" text-lightTeal font-semibold">*</span>
     </ui-label>
-    <div class="relative">
+    <div class="relative flex">
       <input
         v-bind="$attrs"
         :id="id"
@@ -21,7 +21,7 @@
         <eye-crossed v-if="type === EInputTypes.PASSWORD && internalType !== EInputTypes.PASSWORD" class="eye-icon" />
       </button>
     </div>
-    <p v-if="isFocusLost && isError" class="text-rose-600">
+    <p v-if="isError && isFocusLost" class="text-rose-600">
       {{ errorMessage }}
     </p>
   </div>

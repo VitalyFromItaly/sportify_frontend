@@ -7,7 +7,7 @@ import { IVuexStateHolder } from '~/business/core/store/Domain';
 import { EEventBusName, IEventBus } from '~/core/bus/Domain';
 import PresenterCatcher from '~/core/decorators/PresenterCatcher';
 import { context } from '~/core/context';
-import { TNotificationPayload } from '~/@types/domain';
+import { TNotificationEvent } from '~/@types/domain';
 import { EHttpStatus, ELanguages } from '~/Api/Api';
 
 export default class Presenter extends VuexObservable<TState> implements IPresenter {
@@ -45,7 +45,7 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
   }
 
   private onErrorUpdateProfile(): void {
-    this.bus.emit<TNotificationPayload>(EEventBusName.NOTIFICATION, {
+    this.bus.emit<TNotificationEvent>(EEventBusName.NOTIFICATION, {
       type: 'error',
       title: context.i18n.tc('account.notices.updateProfile.error.title'),
       content: context.i18n.tc('account.notices.updateProfile.error.content')
@@ -53,7 +53,7 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
   }
 
   private onSuccessUpdateProfile(): void {
-    this.bus.emit<TNotificationPayload>(EEventBusName.NOTIFICATION, {
+    this.bus.emit<TNotificationEvent>(EEventBusName.NOTIFICATION, {
       type: 'success',
       title: context.i18n.tc('account.notices.updateProfile.success.title'),
       content: context.i18n.tc('account.notices.updateProfile.success.content')
@@ -68,13 +68,13 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
   public async onCreateComment(comment: string): Promise<EHttpStatus> {
     const status = await this.service.postComment({ comment });
     if (status === EHttpStatus.Success) {
-      this.bus.emit<TNotificationPayload>(EEventBusName.NOTIFICATION, {
+      this.bus.emit<TNotificationEvent>(EEventBusName.NOTIFICATION, {
         type: 'success',
         title: context.i18n.tc('account.notices.leaveFeedback.success.title'),
         content: context.i18n.tc('account.notices.leaveFeedback.success.content')
       });
     } else {
-      this.bus.emit<TNotificationPayload>(EEventBusName.NOTIFICATION, {
+      this.bus.emit<TNotificationEvent>(EEventBusName.NOTIFICATION, {
         type: 'error',
         title: context.i18n.tc('account.notices.leaveFeedback.error.title'),
         content: context.i18n.tc('account.notices.leaveFeedback.error.content')

@@ -8,9 +8,14 @@ export default {
   repeatPasswordLabel: 'Введите пароль еще раз',
   repeatPasswordPlaceholder: 'Введите пароль',
   loginButton: 'Войти',
+  signUp: 'Зарегистрироваться',
   forgotPassword: 'Забыли пароль?',
-  loginAlternativeHint: 'Нет аккаунта?',
-  loginAlternativeHintLink: 'Зарегистрироваться',
+  alternativeHint: 'Нет аккаунта?',
+  signUpAlternativeHint: 'Есть аккаунт?',
   loginTooltipHeader: 'Требования к паролю',
-  loginTooltipContent: ['Минимум 8 символов', '1 заглавная буква', '1 специальный символ']
+  loginTooltipContent: ['Минимум 8 символов', '1 заглавная буква', '1 специальный символ'],
+  errorSignUp: {
+    title: 'Ошибка',
+    content: 'Ошибка при попытке регистрации, попробуйте еще раз.'
+  }
 };
