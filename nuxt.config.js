@@ -15,6 +15,7 @@ export default () => {
     publicRuntimeConfig: {
       environment: fullEnvName,
       baseUrl,
+      wsUrl: process.env.WS_URL,
       apiUrl,
       port,
       authPort

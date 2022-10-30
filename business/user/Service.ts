@@ -3,6 +3,7 @@ import { EHttpCodes } from '~/@types/http';
 import cache from '~/core/cache/cache';
 import { IBrowserStorage } from '~/core/cache/Domain';
 import { ISwagger } from '~/@types/plugins';
+import webSocket from '~/core/ws/WebSocket';
 
 export default class Service implements IService {
   private readonly cache: IBrowserStorage = cache;
@@ -11,12 +12,12 @@ export default class Service implements IService {
   }
 
   public async read(): Promise<TUser> {
-    const { data, status } = await this.swagger.user.read();
-    if (status !== EHttpCodes.SUCCESS) {
+    try {
+      return await webSocket.emit<TUser>('user:getUser');
+    } catch (e) {
+      console.log('error load user', e);
       return null;
     }
-
-    return data;
   }
 
   public async update(payload: TUpdateUser): Promise<TUser> {

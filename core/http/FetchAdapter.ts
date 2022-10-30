@@ -26,7 +26,7 @@
 //   }
 
 //   async request(url: string, method: string, body = {}, isSilent = false, config: any): Promise<Response | null> {
-//     const token = this.$auth.getToken();
+//     const token = this.$auth.getTokens();
 //     if (!isSilent) {
 //       this.store.commit('Core/setIsLoading', null, { root: true });
 //     }
