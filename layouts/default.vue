@@ -16,11 +16,13 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, namespace } from 'nuxt-property-decorator';
+import { Vue, Component, namespace, Watch } from 'nuxt-property-decorator';
 import { localeChanged } from 'vee-validate';
 import { TRouteEventPayload, TNotificationEvent, EAppLanguages, EVuexNamespaces } from '~/@types/domain';
 import AuthLogo from '~/components/svg/AuthLogo.vue';
 import { EEventBusName } from '~/core/bus/Domain';
+import webSocket from '~/core/ws/WebSocket';
+import { ETransportStatus } from '~/core/ws/domain';
 
 const stateCore = namespace(EVuexNamespaces.CORE);
 
@@ -31,7 +33,14 @@ export default class DefaultLayout extends Vue {
 
   isAppLoaded = false;
 
-  async mounted(): Promise<void> {
+  @Watch('isAppLoaded')
+  onAppLoaded(flag: boolean) {
+    if (flag) {
+      this.initApp();
+    }
+  }
+
+  mounted(): Promise<void> {
     this.setIsLoading();
     this.setListeners();
     if (!this.$auth.isAuth()) {
@@ -40,9 +49,7 @@ export default class DefaultLayout extends Vue {
       return;
     }
     console.log('[auth] success');
-    await this.initApp();
-    this.isAppLoaded = true;
-    this.removeIsLoading();
+    this.initWs();
   }
 
   private setListeners(): void {
@@ -77,6 +84,23 @@ export default class DefaultLayout extends Vue {
   changeLocale(lang: EAppLanguages): void {
     this.$i18n.setLocale(lang);
     localeChanged();
+  }
+
+  private initWs() {
+    webSocket.setToken(this.$auth.getTokens().access_token);
+    webSocket.connect();
+
+    // тут ваша логика по нотификациям пользоватя о состоянии приложения
+    webSocket.subject$.subscribe((status: ETransportStatus) => {
+      if (status === ETransportStatus.CONNECTED) {
+        console.log('[server config]', webSocket.serverConfig);
+        this.isAppLoaded = true;
+        this.removeIsLoading();
+      } else {
+        this.setIsLoading();
+        console.log('[net status]', status);
+      }
+    });
   }
 }
 </script>

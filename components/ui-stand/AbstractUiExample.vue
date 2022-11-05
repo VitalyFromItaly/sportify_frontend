@@ -4,7 +4,7 @@
       <slot name="header"></slot>
     </div>
     <div class="laptop:flex">
-      <div class="laptop:w-1/2 laptop:border-r border-b laptop:border-b-0">
+      <div class="laptop:w-1/2 laptop:border-r border-b laptop:border-b-0" :class="{'laptop:w-full' : isFullWidth}">
         <p class="text-center bg-lightTeal text-white">
           UI Component
         </p>
@@ -25,7 +25,9 @@
 </template>
 
 <script lang='ts'>
-import { Vue, Component } from 'nuxt-property-decorator';
+import { Vue, Component, Prop } from 'nuxt-property-decorator';
 @Component
-export default class AbstractUiExample extends Vue {}
+export default class AbstractUiExample extends Vue {
+  @Prop({ default: true }) isFullWidth: boolean;
+}
 </script>

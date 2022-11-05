@@ -2,6 +2,9 @@ import { Plugin } from '@nuxt/types';
 import { Api } from '~/Api/Api';
 import customFetch from '~/core/http/customFetch';
 // import customFetch from '~/core/http/customFetch';
+
+import webSocket from '~/core/ws/WebSocket';
+
 type TApiConfig = {
   baseUrl: string;
   customFetch?: typeof fetch;
@@ -21,6 +24,8 @@ const apiPlugin: Plugin = ({ $config, $auth }, inject) => {
   };
 
   const swagger = new Api(swaggerResultConfig);
+
+  webSocket.create($config.wsUrl);
 
   inject('api', {
     swagger

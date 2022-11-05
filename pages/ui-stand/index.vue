@@ -31,6 +31,8 @@ const ExampleToggle = () => import('~/components/ui-stand/ExampleToggle.vue');
 const ExampleSelect = () => import('~/components/ui-stand/ExampleSelect.vue');
 const ExampleContainer = () => import('~/components/ui-stand/ExampleContainer.vue');
 const ExampleNotification = () => import('~/components/ui-stand/ExampleNotification.vue');
+const ExampleCalendar = () => import('~/components/ui-stand/ExampleCalendar.vue');
+
 @Component({
   components: {
     ExampleSteps,
@@ -47,7 +49,8 @@ const ExampleNotification = () => import('~/components/ui-stand/ExampleNotificat
     ExampleTabs,
     ExampleRadioButton,
     ExampleDatePicker,
-    ExampleLoader
+    ExampleLoader,
+    ExampleCalendar
   }
 })
 export default class UIStand extends Vue {
@@ -77,7 +80,8 @@ export default class UIStand extends Vue {
       { component: ExampleToggle, name: 'toggle' },
       { component: ExampleSelect, name: 'select' },
       { component: ExampleContainer, name: 'container' },
-      { component: ExampleNotification, name: 'notification' }
+      { component: ExampleNotification, name: 'notification' },
+      { component: ExampleCalendar, name: 'calendar' }
     ];
   }
 
