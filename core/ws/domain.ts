@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import type { Observable } from 'rxjs';
 
 export type TServerConfig = {

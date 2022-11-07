@@ -283,10 +283,122 @@ export interface DictionaryDto {
   activity_types: AbstractSelectDto[];
 }
 
+export interface CreateTrainingPlanDto {
+  /**
+   * user`s training goal
+   * @min 0
+   * @max 3
+   * @example 0
+   */
+  goal: number;
+
+  /**
+   * date user start the plan
+   * @format date-time
+   */
+  start_date: string;
+
+  /**
+   * durations of the plan
+   * @min 1
+   * @max 6
+   */
+  duration: number;
+}
+
+export interface CommandResult {
+  /** id of created object */
+  id: number;
+
+  /**
+   * response status: success | error
+   * @example success
+   */
+  status: EHttpStatus;
+}
+
+export interface ReadTrainingPlanDto {
+  /**
+   * plan`s uniq id
+   * @example 45
+   */
+  id: number;
+
+  /**
+   * user`s training goal
+   * @min 0
+   * @max 3
+   * @example 0
+   */
+  goal: number;
+
+  /**
+   * date user start the plan
+   * @format date-time
+   */
+  start_date: string;
+
+  /**
+   * durations of the plan
+   * @min 1
+   * @max 6
+   */
+  duration: number;
+
+  /** user plan activities */
+  activities: Activity[];
+
+  /**
+   * date user was created
+   * @format date-time
+   * @example 2022-07-31 22:13:20.794424
+   */
+  created_at: string;
+
+  /**
+   * date user was created
+   * @format date-time
+   * @example 2022-07-31 22:13:20.794424
+   */
+  updated_at: string;
+}
+
+export interface UpdateTrainingPlanDto {
+  /**
+   * plan`s uniq id
+   * @example 45
+   */
+  id?: number;
+
+  /**
+   * user`s training goal
+   * @min 0
+   * @max 3
+   * @example 0
+   */
+  goal?: number;
+
+  /**
+   * date user start the plan
+   * @format date-time
+   */
+  start_date?: string;
+
+  /**
+   * durations of the plan
+   * @min 1
+   * @max 6
+   */
+  duration?: number;
+
+  /** user plan activities */
+  activities?: Activity[];
+}
+
 export namespace User {
   /**
    * No description
-   * @tags User
+   * @tags user
    * @name FetchUserById
    * @request GET:/api/user/{id}
    * @secure
@@ -301,7 +413,7 @@ export namespace User {
   }
   /**
    * No description
-   * @tags User
+   * @tags user
    * @name Create
    * @request POST:/api/user/create
    * @response `201` `CreateResponse` create user
@@ -316,7 +428,7 @@ export namespace User {
   }
   /**
    * No description
-   * @tags User
+   * @tags user
    * @name Update
    * @request PUT:/api/user/update-profile
    * @secure
@@ -332,7 +444,7 @@ export namespace User {
   }
   /**
    * No description
-   * @tags User
+   * @tags user
    * @name Read
    * @request GET:/api/user
    * @secure
@@ -348,7 +460,7 @@ export namespace User {
   }
   /**
    * No description
-   * @tags User
+   * @tags user
    * @name LeaveComment
    * @request POST:/api/user/leave-comment
    * @secure
@@ -427,6 +539,87 @@ export namespace Dictionary {
     export type RequestBody = never;
     export type RequestHeaders = {};
     export type ResponseBody = DictionaryDto;
+  }
+}
+
+export namespace TrainingPlan {
+  /**
+   * No description
+   * @tags TrainingPlan
+   * @name Create
+   * @request POST:/api/training-plan/create
+   * @secure
+   * @response `201` `CommandResult`
+   * @response `default` `CommandResult` new training plan create
+   */
+  export namespace Create {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = CreateTrainingPlanDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = CommandResult;
+  }
+  /**
+   * No description
+   * @tags TrainingPlan
+   * @name ReadOne
+   * @request GET:/api/training-plan/{id}
+   * @secure
+   * @response `201` `ReadTrainingPlanDto`
+   * @response `default` `ReadTrainingPlanDto` get training plan by id
+   */
+  export namespace ReadOne {
+    export type RequestParams = { id: number };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = ReadTrainingPlanDto;
+  }
+  /**
+   * No description
+   * @tags TrainingPlan
+   * @name Update
+   * @request PUT:/api/training-plan/{id}
+   * @secure
+   * @response `201` `CommandResult`
+   */
+  export namespace Update {
+    export type RequestParams = { id: number };
+    export type RequestQuery = {};
+    export type RequestBody = UpdateTrainingPlanDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = CommandResult;
+  }
+  /**
+   * No description
+   * @tags TrainingPlan
+   * @name Delete
+   * @request DELETE:/api/training-plan/{id}
+   * @secure
+   * @response `201` `CommandResult`
+   */
+  export namespace Delete {
+    export type RequestParams = { id: number };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = CommandResult;
+  }
+  /**
+   * No description
+   * @tags TrainingPlan
+   * @name ReadAll
+   * @request GET:/api/training-plan
+   * @secure
+   * @response `201` `(any)[]`
+   * @response `default` `(ReadTrainingPlanDto)[]` get all user training plans
+   */
+  export namespace ReadAll {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = any[];
   }
 }
 
@@ -650,7 +843,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags User
+     * @tags user
      * @name FetchUserById
      * @request GET:/api/user/{id}
      * @secure
@@ -668,7 +861,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags User
+     * @tags user
      * @name Create
      * @request POST:/api/user/create
      * @response `201` `CreateResponse` create user
@@ -687,7 +880,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags User
+     * @tags user
      * @name Update
      * @request PUT:/api/user/update-profile
      * @secure
@@ -708,7 +901,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags User
+     * @tags user
      * @name Read
      * @request GET:/api/user
      * @secure
@@ -727,7 +920,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
-     * @tags User
+     * @tags user
      * @name LeaveComment
      * @request POST:/api/user/leave-comment
      * @secure
@@ -816,6 +1009,104 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     read: (params: RequestParams = {}) =>
       this.request<DictionaryDto, DictionaryDto>({
         path: `/api/dictionary`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+  };
+  trainingPlan = {
+    /**
+     * No description
+     *
+     * @tags TrainingPlan
+     * @name Create
+     * @request POST:/api/training-plan/create
+     * @secure
+     * @response `201` `CommandResult`
+     * @response `default` `CommandResult` new training plan create
+     */
+    create: (data: CreateTrainingPlanDto, params: RequestParams = {}) =>
+      this.request<CommandResult, CommandResult>({
+        path: `/api/training-plan/create`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags TrainingPlan
+     * @name ReadOne
+     * @request GET:/api/training-plan/{id}
+     * @secure
+     * @response `201` `ReadTrainingPlanDto`
+     * @response `default` `ReadTrainingPlanDto` get training plan by id
+     */
+    readOne: (id: number, params: RequestParams = {}) =>
+      this.request<ReadTrainingPlanDto, ReadTrainingPlanDto>({
+        path: `/api/training-plan/${id}`,
+        method: "GET",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags TrainingPlan
+     * @name Update
+     * @request PUT:/api/training-plan/{id}
+     * @secure
+     * @response `201` `CommandResult`
+     */
+    update: (id: number, data: UpdateTrainingPlanDto, params: RequestParams = {}) =>
+      this.request<CommandResult, any>({
+        path: `/api/training-plan/${id}`,
+        method: "PUT",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags TrainingPlan
+     * @name Delete
+     * @request DELETE:/api/training-plan/{id}
+     * @secure
+     * @response `201` `CommandResult`
+     */
+    delete: (id: number, params: RequestParams = {}) =>
+      this.request<CommandResult, any>({
+        path: `/api/training-plan/${id}`,
+        method: "DELETE",
+        secure: true,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags TrainingPlan
+     * @name ReadAll
+     * @request GET:/api/training-plan
+     * @secure
+     * @response `201` `(any)[]`
+     * @response `default` `(ReadTrainingPlanDto)[]` get all user training plans
+     */
+    readAll: (params: RequestParams = {}) =>
+      this.request<any[], ReadTrainingPlanDto[]>({
+        path: `/api/training-plan`,
         method: "GET",
         secure: true,
         format: "json",

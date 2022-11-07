@@ -82,4 +82,8 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
     }
     return status;
   }
+
+  public onSetCurrentStep(step: number): void {
+    this.onChangeState({ currentStep: step === -1 ? 1 : step });
+  }
 }

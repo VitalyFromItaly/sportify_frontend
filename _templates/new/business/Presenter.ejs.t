@@ -1,3 +1,6 @@
+---
+to: business/<%= section %>/<%= name %>/Presenter.ts
+---
 import Service from './Service';
 import { IPresenter, TState, IService } from './Domain';
 import { VuexObservable } from '~/business/core/store/VuexObservable';

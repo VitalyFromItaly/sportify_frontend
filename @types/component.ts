@@ -3,3 +3,7 @@ export type TDataListRow = {
   right: string | number;
   type?: any;
 };
+
+export interface IForm {
+  onSubmit(): Promise<boolean>;
+}

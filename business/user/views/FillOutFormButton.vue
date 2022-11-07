@@ -9,7 +9,7 @@ import { Vue, Component } from 'nuxt-property-decorator';
 @Component
 export default class FillOutFormButton extends Vue {
   private onFillOutForm(): void {
-    this.$router.push({ name: 'account-about-me' });
+    this.$router.push({ name: 'account-about-me-form' });
   }
 
   private get isTablet(): boolean {

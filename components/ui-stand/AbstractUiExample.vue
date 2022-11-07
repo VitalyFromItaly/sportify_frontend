@@ -28,6 +28,6 @@
 import { Vue, Component, Prop } from 'nuxt-property-decorator';
 @Component
 export default class AbstractUiExample extends Vue {
-  @Prop({ default: true }) isFullWidth: boolean;
+  @Prop({ type: Boolean, default: true }) isFullWidth: boolean;
 }
 </script>

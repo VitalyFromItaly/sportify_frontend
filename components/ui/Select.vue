@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col">
     <ui-label :for-id="id" :label="label" :disabled="disabled" />
+    <ui-label class=" text-sm my-0.5" v-if="description">{{ description }}</ui-label>
     <select
       :id="id"
       :disabled="disabled"
@@ -31,6 +32,7 @@ import { EInputSize } from './domain/@types';
 export default class Select extends Vue {
   @Prop({ type: String, required: true }) label: string;
   @Prop({ type: String, default: 'Choose value...' }) placeholder: string;
+  @Prop({ type: String, default: '' }) description: string;
   @Prop({ type: Boolean, default: false }) disabled: boolean;
   @Prop({ required: true }) value: TInputTypeValue;
     @Prop({
