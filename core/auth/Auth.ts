@@ -1,4 +1,3 @@
-// import PermissionDenied from '../errors/PermissionDenied';
 import { EEventBusName } from '../bus/Domain';
 import { context } from '../context';
 import IAuth, { ETokens, TAccessToken, TRefreshToken, TTokensInfo, TTokenType } from './IAuth';
@@ -92,15 +91,6 @@ export default class Auth implements IAuth {
       return null;
     }
     const response = await context.$api.swagger.auth.refreshAccessToken({ refresh_token: refreshToken });
-    // const response = await fetch(this.baseUrl + '/auth/refresh-access-token', {
-    //   method: 'POST',
-    //   headers: {
-    //     Authorization: `Token ${this.getAccessToken().access_token}`,
-    //     credentials: 'include',
-    //     'Content-Type': 'application/json'
-    //   },
-    //   body: JSON.stringify({ refresh_token: refreshToken })
-    // });
 
     if (response.status !== 200) {
       throw new Error('Ошибка при обновлении токена');
@@ -152,16 +142,6 @@ export default class Auth implements IAuth {
     }
 
     return { refresh_token, refresh_token_expires_in };
-  }
-
-  private hasTokens(): boolean {
-    const cacheTokens = cache.get<TTokensInfo>(EAuthKeys.FULL_TOKEN_INFO, EAuthTags.AUTH);
-    if (cacheTokens) {
-      this.setTokenInfo(cacheTokens);
-      return true;
-    }
-
-    return false;
   }
 
   public getAccessToken(): TAccessToken {

@@ -1,6 +1,6 @@
 <template>
-  <div class=" bg-lightGray dark:bg-lightDark dark:text-gray-300 p-4 inline-block">
-    <div v-if="type === EContainer.EXPANDABLE" class="flex justify-between items-center">
+  <div class="bg-lightGray dark:bg-lightDark dark:text-gray-300 p-4 w-full block">
+    <div v-if="type === EContainer.EXPANDABLE" class="flex justify-between items-center ">
       <slot name="header"></slot>
       <button @click="isExpanded = !isExpanded">
         <chevron-down class="ml-5" />
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'nuxt-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { EContainer } from './domain/@types';
 import ChevronDown from '~/components/svg/ChevronDown.vue';
 
@@ -22,13 +22,12 @@ export default class Container extends Vue {
   @Prop({
     type: String,
     default: EContainer.STANDARD,
-    validator(value) {
-      // @ts-ignore
+    validator(value: EContainer) {
       return Object.values(EContainer).includes(value);
     }
   }) type: EContainer;
 
-  isExpanded = false;
+  public isExpanded = false;
   EContainer = EContainer;
 
   private get isExpandable(): boolean {
@@ -38,9 +37,6 @@ export default class Container extends Vue {
   private get isDefaultSlotShown(): boolean {
     if (!this.isExpandable) { return true; }
     return this.isExpandable && this.isExpanded;
-  }
-
-  mounted(): void {
   }
 }
 </script>

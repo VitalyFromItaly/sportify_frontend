@@ -22,7 +22,9 @@
             :value="inputValue"
             v-on="inputEvents"
           />
-          <button><calendar :color="iconColor" class="absolute inline right-2 bottom-0.5" /></button>
+          <button type="button">
+            <calendar :color="iconColor" class="absolute inline right-2 bottom-0.5" />
+          </button>
         </div>
       </template>
     </v-date-picker>
@@ -37,6 +39,7 @@ import { Vue, Component, Model, Prop } from 'vue-property-decorator';
 import { DATE_PICKER_COLOR, inputClasses, POSSIBLE_LOCALES } from './domain/Domain';
 import { clickOutside } from '~/helpers/directives';
 import Calendar from '~/components/svg/Calendar.vue';
+import { EVuexNamespaces } from '~/@types/domain';
 
 @Component({ directives: { clickOutside }, components: { Calendar } })
 export default class DatePicker extends Vue {
@@ -44,7 +47,7 @@ export default class DatePicker extends Vue {
   @Prop({ type: [String, Number], default: '' }) label: string | number;
   @Prop({ type: Boolean, default: false }) required: boolean;
   @Prop({ type: Boolean, default: false }) disabled: boolean;
-  @Prop({ type: Boolean, default: false }) isDark: boolean;
+  // @Prop({ type: Boolean, default: false }) isDark: boolean;
   @Prop({ type: String, default: 'black' }) iconColor: string;
   @Prop({ type: Boolean, default: false }) error: boolean;
   @Prop({ type: String, default: '' }) errorMessage: string;
@@ -58,6 +61,10 @@ export default class DatePicker extends Vue {
   }) locale: string;
 
   color = DATE_PICKER_COLOR;
+
+  private get isDark(): boolean {
+    return this.$store.state[EVuexNamespaces.CORE].isDarkTheme;
+  }
 
   onChangeValue(date: Date) {
     this.$emit('input', date);

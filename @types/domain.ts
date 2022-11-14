@@ -1,5 +1,7 @@
 /* eslint-disable no-unused-vars */
 
+import { EHttpStatus } from "~/Api/Api";
+
 export enum ESystemDefaultLanguage {
   RU = 'ru-RU',
   EN = 'en-EN'
@@ -38,7 +40,7 @@ export enum ENotificationType {
 export type TNotificationType = 'success' | 'info' | 'error';
 
 export type TNotification = {
-  title: string | null;
+  title?: string | null;
   content: string;
   type: TNotificationType;
   id: string;
@@ -116,3 +118,12 @@ export type TBreakpoints = {
   xl: boolean;
   xs: boolean;
 };
+
+export type TResponseResult = {
+  id: number;
+  status?: EHttpStatus;
+};
+
+export interface IValidate {
+  validate(): Promise<boolean>;
+}

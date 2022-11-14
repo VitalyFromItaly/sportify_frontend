@@ -1,5 +1,5 @@
 <template>
-  <abstract-ui-example :is-full-width="true">
+  <abstract-ui-example is-full-width>
     <template #header>
       header
     </template>

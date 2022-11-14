@@ -80,7 +80,6 @@ export default class UITooltip extends Vue {
     if (!this.isTipExist || !window || !document) {
       return;
     }
-    console.log(this.content);
 
     this.tooltipContent = document.body.appendChild(this.content);
     if (this.visible) {

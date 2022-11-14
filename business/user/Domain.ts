@@ -42,6 +42,7 @@ export type TUserInfo = Partial<TUser>;
 
 export type TState = TFetchState & {
   user: TUser;
+  currentStep: number;
 };
 
 export interface IService {
@@ -55,12 +56,14 @@ export interface IPresenter extends IVuexObservable<TState> {
   onUpdate(payload: TRawUpdateUser): Promise<void>;
   onSetLocale(locale: ELanguages): void;
   onCreateComment(comment: string): Promise<EHttpStatus>;
+  onSetCurrentStep(step: number): void;
 }
 
 export const initUserState = (): TState => ({
   isLoading: false,
   isError: false,
-  user: null
+  user: null,
+  currentStep: 1
 });
 
 export const genderDictionary: { [EGender: number]: string } = {

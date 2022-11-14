@@ -33,4 +33,8 @@ export default class UserStoreModule extends BaseVuexModule<TState> {
   public get language(): ELanguages {
     return this.internalState.user?.language;
   }
+
+  public get isError(): boolean {
+    return this.internalState.isError;
+  }
 }

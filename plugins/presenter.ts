@@ -13,10 +13,15 @@ import { IPresenter as IContextPresenter, initContextState } from '~/business/co
 import ContextPresenter from '~/business/context/Presenter';
 import { CONTEXT_STORE_NS } from '~/business/context/store/index';
 
+import { IPresenter as IPlanPresenter, initTrainingPlanState } from '~/business/trainingPlan/Domain';
+import PlanPresenter from '~/business/trainingPlan/Presenter';
+import { TRAINING_PLAN_STORE_NS } from '~/business/trainingPlan/store/index';
+
 export interface IPresenterPlugin {
   authInstance: IAuthPresenter;
   userInstance: IUserPresenter;
   contextInstance: IContextPresenter;
+  trainingPlanInstance: IPlanPresenter;
 }
 
 const presenter = (context: Context, inject: any) => {
@@ -25,8 +30,19 @@ const presenter = (context: Context, inject: any) => {
   let presenterAuth: IAuthPresenter;
   let presenterUser: IUserPresenter;
   let presenterContext: IContextPresenter;
+  let presenterPlan: IPlanPresenter;
 
   inject('presenter', {
+    get trainingPlanInstance(): IPlanPresenter {
+      if (presenterPlan) {
+        return presenterPlan;
+      }
+
+      const planAdapter = new BaseVuexStateHolder(store, initTrainingPlanState(), TRAINING_PLAN_STORE_NS);
+      presenterPlan = new PlanPresenter(planAdapter);
+      return presenterPlan;
+    },
+
     get contextInstance(): IContextPresenter {
       if (presenterContext) {
         return presenterContext;

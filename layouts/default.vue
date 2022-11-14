@@ -90,7 +90,7 @@ export default class DefaultLayout extends Vue {
     webSocket.setToken(this.$auth.getTokens().access_token);
     webSocket.connect();
 
-    // тут ваша логика по нотификациям пользоватя о состоянии приложения
+    // тут ваша логика по нотификациям пользователя о состоянии приложения
     webSocket.subject$.subscribe((status: ETransportStatus) => {
       if (status === ETransportStatus.CONNECTED) {
         console.log('[server config]', webSocket.serverConfig);
