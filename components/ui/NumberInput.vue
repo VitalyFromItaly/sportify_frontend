@@ -82,11 +82,19 @@ export default class UINumberInput extends Vue {
 
   private onMinus(): void {
     if (this.value - this.step < this.min) { return; }
+    if (isNaN(this.value) || this.value === undefined) {
+      this.$emit('input', this.min || this.step + 1);
+      return;
+    }
     this.$emit('input', this.value - this.step);
   }
 
   private onPlus(): void {
     if (this.value + this.step > this.max) { return; }
+    if (isNaN(this.value) || this.value === undefined) {
+      this.$emit('input', this.min || this.step + 1);
+      return;
+    }
     this.$emit('input', this.value + this.step);
   }
 

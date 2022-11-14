@@ -8,7 +8,7 @@
       <validation-observer ref="validator">
         <validation-provider ref="field.goal" v-slot="{ errors, failed }" name="goal" rules="required|between:0,3">
           <ui-select
-            v-model="form.goal"
+            v-model.number="form.goal"
             :label="goalLabel"
             :options="goalOptions"
             :placeholder="goalPlaceholder"
@@ -18,24 +18,26 @@
             required
           />
         </validation-provider>
-        <div class="tablet:flex tablet:space-x-5">
+        <div class="laptop:flex laptop:space-x-5">
           <validation-provider ref="field.start_date" v-slot="{ errors, failed }" name="start_date" rules="required">
             <ui-date-picker
               v-model="form.start_date"
               required
               :label="dateLabel"
-              :is-error="failed"
+              :error="failed"
               :error-message="errors[0]"
             />
           </validation-provider>
-          <validation-provider ref="field.start_date" v-slot="{ errors, failed }" name="start_date" rules="required|between:1,6">
+          <validation-provider ref="field.duration" v-slot="{ errors, failed }" name="duration" rules="required|between:1,6">
             <ui-number-input
               v-model="form.duration"
               :label="durationInput"
-              required
+              :min="1"
+              :max="6"
               placeholder="1"
-              :is-error="failed"
+              :error="failed"
               :error-message="errors[0]"
+              required
             />
           </validation-provider>
         </div>
@@ -53,9 +55,10 @@ import type { IValidate } from '~/@types/domain';
 import { TSelectOption } from '~/components/ui/domain/@types';
 
 @Component
-export default class TrainingPlan extends Vue {
+export default class TrainingPlanForm extends Vue {
   @Ref() validator: IValidate;
   @trainingPlanStoreModule.State('internalState') state: TState;
+
   form = {} as TCreatePayload;
   private presenter: IPresenter;
 
@@ -92,13 +95,15 @@ export default class TrainingPlan extends Vue {
     this.presenter = this.$presenter.trainingPlanInstance;
   }
 
-  public async onSubmit(): Promise<boolean> {
-    const isFormValid = await this.validator.validate();
-    if (!isFormValid) { return false; }
+  public async onValidate(): Promise<boolean> {
+    return await this.validator.validate();
+  }
+
+  public async onSubmit(): Promise<void> {
+    const isFormValid = await this.onValidate();
+    if (!isFormValid) { return; }
 
     await this.presenter.onCreatePlan(this.form);
-    if (this.state.isError) { return false; }
-    return true;
   }
 }
 </script>

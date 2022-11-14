@@ -8,6 +8,7 @@ export type TTrainingPlan = ReadTrainingPlanDto;
 export type TUpdatePlanPayload = UpdateTrainingPlanDto;
 
 export type TState = TFetchState & {
+  id: number;
   trainingPlan: TTrainingPlan;
   trainingPlans: TTrainingPlan[];
 };
@@ -35,6 +36,7 @@ export interface IPresenter extends IVuexObservable<TState> {
 export const initTrainingPlanState = (): TState => ({
   isLoading: false,
   isError: false,
+  id: null,
   trainingPlan: null,
   trainingPlans: []
 });

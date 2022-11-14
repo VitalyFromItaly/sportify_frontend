@@ -26,8 +26,8 @@ export const inputNumberSizes = {
 };
 
 export const inputTextSizes = {
-  sm: 'w-80',
-  m: 'w-96'
+  sm: 'max-w-xs',
+  m: 'max-w-s'
 };
 
 export const inputClasses = {

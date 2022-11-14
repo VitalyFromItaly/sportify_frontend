@@ -2,26 +2,57 @@
   <div>
     <heading>{{ $t('account.aboutMe.header') }}</heading>
     <nuxt-child />
-    <!-- <div class="laptop:flex laptop:items-start laptop:space-x-10 space-y-5 laptop:space-y-0 mt-10">
-      <biometrics ref="biometrics" class="laptop:w-1/2 container" />
-      <create-training-plan-form ref="planForm" class="laptop:w-1/2 container" />
-    </div> -->
   </div>
 </template>
 
 <script lang='ts'>
-import { Vue, Component, Ref } from 'nuxt-property-decorator';
-import type { IForm } from '~/@types/component';
-// import Biometrics from '~/business/user/views/Biometrics.vue';
-// const CreateTrainingPlanForm = () => import('~/business/trainingPlan/views/CreateTrainingPlanForm.vue');
+import { Vue, Component, Ref, namespace, Watch } from 'nuxt-property-decorator';
+import type { IForm, TStep } from '~/@types/component';
+import { EVuexNamespaces } from '~/@types/domain';
+
+const coreStore = namespace(EVuexNamespaces.CORE);
 
 @Component
 export default class AboutMePage extends Vue {
   @Ref() biometrics: IForm;
   @Ref() planForm: IForm;
 
-  mounted() {
-    console.log('AboutMePage');
+  @coreStore.State currentFormStep: number;
+  @coreStore.Mutation('setCurrentFormStep') setCurrentFormStep!: (step: number) => void;
+
+  @Watch('currentFormStep', { immediate: true })
+  onStepChange(step: number): void {
+    if (step === -1) {
+      step = 0;
+    }
+
+    const name = this.steps[step].routeName;
+    this.$router.push({ name });
+  }
+
+  @Watch('$route.name', { immediate: true })
+  onRouteChange(name: string): void {
+    if (!this.routeNames.includes(name as string)) {
+      return;
+    }
+
+    this.$router.push({ name });
+  }
+
+  private get steps(): TStep[] {
+    return [
+      { routeName: 'account-about-me-general-info', name: 'General info' },
+      { routeName: 'account-about-me-schedule-form', name: 'Schedule' }
+    ];
+  }
+
+  private get routeNames(): string[] {
+    return this.steps.map(step => step.routeName);
+  }
+
+  private mounted(): void {
+    const stepIndex = this.steps.findIndex((element: any) => this.$route.name === element.routeName);
+    this.setCurrentFormStep(stepIndex === -1 ? 0 : stepIndex);
   }
 }
 </script>

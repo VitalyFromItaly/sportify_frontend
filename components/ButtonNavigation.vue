@@ -1,30 +1,28 @@
 <template>
-  <div :class="$style.buttons">
-    <div>
-      <cds-button v-if="isCanceled" appearance="transparent" text="Отменить" @click="$emit('cancel')" />
-    </div>
-    <div>
+  <div class="ml-auto">
+    <div class="flex items-center justify-end space-x-2">
       <ui-button
-        v-if="nextStep !== 1"
         appearance="secondary"
         @click="onPrevStep(prevStep)"
       >
-      {{  }}
+        {{ buttonPrevText }}
       </ui-button>
-      <cds-button
-        :text="buttonNextText"
+      <ui-button
         :disabled="disableNextButton"
         icon-after
         @click="onSubmit"
       >
-      {{ buttonNextText }}
-      </cds-button>
+        {{ buttonNextText }}
+      </ui-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'nuxt-property-decorator';
+import { Component, Prop, Vue, namespace } from 'nuxt-property-decorator';
+import { EVuexNamespaces } from '~/@types/domain';
+
+const coreStore = namespace(EVuexNamespaces.CORE);
 
 @Component
 export default class BottomNavigation extends Vue {
@@ -35,23 +33,27 @@ export default class BottomNavigation extends Vue {
   @Prop({ default: false }) disableNextButton!: boolean;
   @Prop({ default: true }) isCanceled!: boolean;
 
-  // @storeDocument.Mutation('setCurrentStep') setCurrentStep!: (step: number) => void;
+  @coreStore.Mutation('setCurrentFormStep') setCurrentFormStep!: (step: number) => void;
 
-  get buttonNextText(): string {
+  public get buttonNextText(): string {
     if (this.buttonText) { return this.buttonText; }
     const finishButtonText = this.$tc('ui.buttonNavigation.finish');
-    const nextButtonText = this.$tc('ui.buttonNavigation.finish');
+    const nextButtonText = this.$tc('ui.buttonNavigation.next');
     return this.isFinish ? finishButtonText : nextButtonText;
+  }
+
+  public get buttonPrevText(): string {
+    return this.$tc('ui.buttonNavigation.back');
   }
 
   onSubmit(): void {
     this.$emit('submit', () => {
-      // this.setCurrentStep(this.nextStep);
+      this.setCurrentFormStep(this.nextStep);
     });
   }
 
   onPrevStep(step: number): void {
-    // this.setCurrentStep(step);
+    this.setCurrentFormStep(step);
   }
 }
 </script>

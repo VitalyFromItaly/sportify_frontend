@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col">
     <ui-label :for-id="id" :label="label" :disabled="disabled" />
-    <ui-label class=" text-sm my-0.5" v-if="description">{{ description }}</ui-label>
+    <ui-label class="text-sm my-0.5" v-if="description">{{ description }}</ui-label>
     <select
       :id="id"
       :disabled="disabled"
@@ -17,6 +17,9 @@
         {{ text }}
       </option>
     </select>
+    <p v-if="error && errorMessage" class="text-rose-600">
+      {{ errorMessage }}
+    </p>
   </div>
 </template>
 
@@ -34,6 +37,8 @@ export default class Select extends Vue {
   @Prop({ type: String, default: 'Choose value...' }) placeholder: string;
   @Prop({ type: String, default: '' }) description: string;
   @Prop({ type: Boolean, default: false }) disabled: boolean;
+  @Prop({ type: Boolean, default: false }) error: boolean;
+  @Prop({ type: String, default: '' }) errorMessage: string;
   @Prop({ required: true }) value: TInputTypeValue;
     @Prop({
       default: EInputSize.SM,
@@ -56,6 +61,7 @@ export default class Select extends Vue {
 
   private get classes(): string {
     if (this.disabled) { return inputClasses.disabled; }
+    if (this.error) { return inputClasses.isError; }
     return inputClasses.default;
   }
 

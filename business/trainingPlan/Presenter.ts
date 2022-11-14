@@ -28,6 +28,7 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
     }
 
     this.onSuccessNotice(context.i18n.tc('trainingPlan.successCreated'));
+    this.onChangeState({ id: response.id });
     return response;
   }
 
@@ -82,7 +83,7 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
     this.bus.emit<TNotificationEvent>(EEventBusName.NOTIFICATION, {
       type: 'success',
       content,
-      title
+      title: title || context.i18n.tc('ui.notice.success')
     });
   }
 
@@ -90,7 +91,7 @@ export default class Presenter extends VuexObservable<TState> implements IPresen
     this.bus.emit<TNotificationEvent>(EEventBusName.NOTIFICATION, {
       type: 'error',
       content,
-      title
+      title: title || context.i18n.tc('ui.notice.error')
     });
   }
 }

@@ -5,5 +5,11 @@ export type TDataListRow = {
 };
 
 export interface IForm {
-  onSubmit(): Promise<boolean>;
+  onValidate(): Promise<boolean>;
+  onSubmit(): Promise<void>;
 }
+
+export type TStep = {
+  routeName: string;
+  name: string;
+};

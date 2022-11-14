@@ -9,6 +9,13 @@ export default class Core extends VuexModule {
   isLoading = false;
   isDarkTheme = false;
   notifications: TNotification[] = [];
+  currentFormStep: number = 0;
+
+  @Mutation
+  setCurrentFormStep(step: number): void {
+    console.log({ step });
+    this.currentFormStep = step === -1 ? 0 : step;
+  }
 
   @Mutation
   addNotification(payload: TNotification): void {
