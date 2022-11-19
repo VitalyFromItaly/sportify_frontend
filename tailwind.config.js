@@ -79,6 +79,7 @@ module.exports = {
         disabled: '#DFE0D8',
         mainGray: '#BEBEBC',
         dark: '#393939',
+        darkContainer: '#525252',
         lightDark: '#585959',
         lightGray: '#F2F2F2',
         darkGray: '#BEBEBC',

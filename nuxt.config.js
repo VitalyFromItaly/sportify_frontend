@@ -45,7 +45,8 @@ export default () => {
     },
 
     // Global CSS: https://go.nuxtjs.dev/config-css
-    css: [],
+    css: ['animate.css/animate.min.css'],
+
     colorMode: {
       preference: 'system', // default value of $colorMode.preference
       fallback: 'light', // fallback value if not system preference found

@@ -1,8 +1,9 @@
 <template>
   <header class="global-padding header">
-    <div class="flex justify-between items-center">
+    <div class="flex w-full justify-between items-center">
       <button @click="$router.push({ name: 'account' })">
-        <sportify-logo color="white" />
+        <athletick-logo-light class="w-1/2" />
+        <!-- <sportify-logo color="white" /> -->
       </button>
       <ui-link v-if="$config.environment === 'dev'" :to="({ name: 'ui-stand' })">
         ui-stend
@@ -21,7 +22,9 @@ import ThemeSwitcher from './ThemeSwitcher.vue';
 import UserInfoHeader from '~/business/user/views/HeaderUserInfo.vue';
 import SportifyLogo from '~/components/svg/MainLogo.vue';
 import { USER_STORE_NS } from '~/business/user/store';
-@Component({ components: { SportifyLogo, ThemeSwitcher, UserInfoHeader } })
+import AthletickLogoLight from '~/components/svg/AthletickLogoLight.vue';
+
+@Component({ components: { SportifyLogo, ThemeSwitcher, UserInfoHeader, AthletickLogoLight } })
 export default class Header extends Vue {
   private get hasUser(): boolean {
     return this.$store.getters[`${USER_STORE_NS}/hasUser`];

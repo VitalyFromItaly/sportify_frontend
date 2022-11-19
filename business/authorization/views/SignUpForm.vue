@@ -72,12 +72,12 @@ import { authorizationStoreModule } from '../store';
 export default class SignUpForm extends Vue {
   @authorizationStoreModule.State('internalState') state: TState;
 
-  private form = {} as TRegisterForm;
-  private isPasswordFocused = false;
+  public form = {} as TRegisterForm;
+  public isPasswordFocused = false;
 
   private presenter: IPresenter;
 
-  private get passwordRules(): { rule: string, isMatched: boolean }[] {
+  public get passwordRules(): { rule: string, isMatched: boolean }[] {
     const { password } = this.form;
     return [
       { rule: this.$tc('auth.signUpRules.passwordLength'), isMatched: /^.{8,}$/.test(password) },
@@ -91,7 +91,7 @@ export default class SignUpForm extends Vue {
     this.presenter = this.$presenter.authInstance;
   }
 
-  private async onRegister(): Promise<void> {
+  public async onRegister(): Promise<void> {
     // @ts-ignore
     const isFromValid = await this.$refs.validator.validate();
     if (!isFromValid) {

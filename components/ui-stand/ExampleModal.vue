@@ -4,7 +4,7 @@
       Modal
     </template>
     <template #component>
-      <modal v-model="isShowModal">
+      <modal v-if="isShowModal" @hide="isShowModal = false">
         <template #title>
           <h3 class="text-2xl font-semibold text-gray-900 dark:text-white">
             Terms of Service

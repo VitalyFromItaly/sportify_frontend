@@ -13,7 +13,6 @@ export default class Core extends VuexModule {
 
   @Mutation
   setCurrentFormStep(step: number): void {
-    console.log({ step });
     this.currentFormStep = step === -1 ? 0 : step;
   }
 
