@@ -57,6 +57,7 @@ export default class ExampleCheckbox extends Vue {
   ];
 
   get calendarInstance(): Calendar {
+    // @ts-ignore
     return this.$refs.calendar.getInstance();
   }
 

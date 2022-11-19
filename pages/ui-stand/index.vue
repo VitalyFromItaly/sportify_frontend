@@ -32,6 +32,8 @@ const ExampleSelect = () => import('~/components/ui-stand/ExampleSelect.vue');
 const ExampleContainer = () => import('~/components/ui-stand/ExampleContainer.vue');
 const ExampleNotification = () => import('~/components/ui-stand/ExampleNotification.vue');
 const ExampleCalendar = () => import('~/components/ui-stand/ExampleCalendar.vue');
+const ExampleModal = () => import('~/components/ui-stand/ExampleModal.vue');
+const ExampleSidebar = () => import('~/components/ui-stand/ExampleSidebar.vue');
 
 @Component({
   components: {
@@ -50,7 +52,8 @@ const ExampleCalendar = () => import('~/components/ui-stand/ExampleCalendar.vue'
     ExampleRadioButton,
     ExampleDatePicker,
     ExampleLoader,
-    ExampleCalendar
+    ExampleCalendar,
+    ExampleModal
   }
 })
 export default class UIStand extends Vue {
@@ -81,7 +84,9 @@ export default class UIStand extends Vue {
       { component: ExampleSelect, name: 'select' },
       { component: ExampleContainer, name: 'container' },
       { component: ExampleNotification, name: 'notification' },
-      { component: ExampleCalendar, name: 'calendar' }
+      { component: ExampleCalendar, name: 'calendar' },
+      { component: ExampleModal, name: 'modal' },
+      { component: ExampleSidebar, name: 'sidebar' }
     ];
   }
 
