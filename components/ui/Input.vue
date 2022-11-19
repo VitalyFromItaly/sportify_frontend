@@ -62,13 +62,13 @@ export default class UIInput extends Vue {
 
   @Model('input') readonly value!: TInputTypeValue;
 
-  private id: string = uuidv4();
-  private EInputTypes = EInputTypes;
-  private internalType: TInputType = EInputTypes.TEXT;
-  private isFocusLost = false;
-  private hasMouseDown = false;
+  public id: string = uuidv4();
+  public EInputTypes = EInputTypes;
+  public internalType: TInputType = EInputTypes.TEXT;
+  public isFocusLost = false;
+  public hasMouseDown = false;
 
-  private get events() {
+  public get events() {
     return {
       ...this.$listeners,
       click: this._onClick,
@@ -83,29 +83,29 @@ export default class UIInput extends Vue {
     };
   }
 
-  private clickOutside() {
+  public clickOutside() {
     this.$emit('clickOutside');
   }
 
-  private _onClick(e: any) {
+  public _onClick(e: any) {
     this.$emit('click', e);
     this.setFocus();
   }
 
-  private _onFocus(e: any) {
+  public _onFocus(e: any) {
     this.$emit('focus', e);
   }
 
-  private _onKeyDown(e: any) {
+  public _onKeyDown(e: any) {
     if (e.keyCode === keyCodes.enter) { this.$emit('change', e.target.value); }
     this.$emit('keydown', e);
   }
 
-  private _onKeyUp(e: any) {
+  public _onKeyUp(e: any) {
     this.$emit('keyup', e);
   }
 
-  private _onMouseDown(e: any) {
+  public _onMouseDown(e: any) {
     if (e.target !== this.$refs.input) {
       e.preventDefault();
       e.stopPropagation();
@@ -114,17 +114,17 @@ export default class UIInput extends Vue {
     this.$emit('mousedown', e);
   }
 
-  private _onMouseUp(e: any) {
+  public _onMouseUp(e: any) {
     if (this.hasMouseDown) { this.setFocus(); }
     this.hasMouseDown = false;
     this.$emit('mouseup', e);
   }
 
-  private _onMouseOver(e: any) {
+  public _onMouseOver(e: any) {
     this.$emit('mouseover', e);
   }
 
-  private _onMouseOut(e: any) {
+  public _onMouseOut(e: any) {
     this.$emit('mouseout', e);
   }
 
@@ -138,22 +138,22 @@ export default class UIInput extends Vue {
     this.$refs.input.focus();
   }
 
-  private mounted(): void {
+  public mounted(): void {
     this.internalType = this.type;
   }
 
-  private onUpdateValue(event: any): void {
+  public onUpdateValue(event: any): void {
     const { value } = event.target;
     this.$emit('input', this.type === EInputTypes.NUMBER ? +value : value);
   }
 
-  private get internalClasses(): string {
+  public get internalClasses(): string {
     if (this.isFocusLost && this.isError) { return inputClasses.isError; }
     if (this.disabled) { return inputClasses.disabled; }
     return inputClasses.default;
   }
 
-  private get internalSize(): string {
+  public get internalSize(): string {
     const isTextInput = [EInputTypes.TEXT, EInputTypes.EMAIL, EInputTypes.PASSWORD].includes(this.type);
     if (isTextInput) {
       return inputTextSizes[this.size];
@@ -162,7 +162,7 @@ export default class UIInput extends Vue {
     return inputNumberSizes[this.size];
   }
 
-  private onTogglePasswordVisibility(): void {
+  public onTogglePasswordVisibility(): void {
     if (this.internalType === EInputTypes.PASSWORD) {
       this.internalType = EInputTypes.TEXT;
     } else {
@@ -170,7 +170,7 @@ export default class UIInput extends Vue {
     }
   }
 
-  private onBlur(): void {
+  public onBlur(): void {
     this.isFocusLost = true;
     this.$emit('blur');
   }

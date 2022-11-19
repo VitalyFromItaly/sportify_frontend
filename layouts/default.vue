@@ -45,11 +45,15 @@ export default class DefaultLayout extends Vue {
     this.setListeners();
     if (!this.$auth.isAuth()) {
       console.warn('[auth] not auth');
-      this.$router.replace({ name: 'sign-in' });
+      this.signOut();
       return;
     }
     console.log('[auth] success');
     this.initWs();
+  }
+
+  private signOut(): void {
+    this.$presenter.authInstance.onLogout();
   }
 
   private setListeners(): void {
@@ -92,14 +96,21 @@ export default class DefaultLayout extends Vue {
 
     // тут ваша логика по нотификациям пользователя о состоянии приложения
     webSocket.subject$.subscribe((status: ETransportStatus) => {
+      console.log('[net status]', status);
       if (status === ETransportStatus.CONNECTED) {
         console.log('[server config]', webSocket.serverConfig);
         this.isAppLoaded = true;
         this.removeIsLoading();
-      } else {
-        this.setIsLoading();
-        console.log('[net status]', status);
+        return;
       }
+
+      if (status === ETransportStatus.UNAUTHORIZED) {
+        this.removeIsLoading();
+        this.signOut();
+        return;
+      }
+
+      this.setIsLoading();
     });
   }
 }

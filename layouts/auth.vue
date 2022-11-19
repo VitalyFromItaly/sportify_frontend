@@ -3,7 +3,7 @@
     <portal-target multiple name="main" />
     <div class="flex-grow">
       <div class="flex flex-col min-h-screen items-stretch justify-center px-10">
-        <main-logo class="tablet:hidden block self-center mb-5" />
+        <athletick-logo-dark class="w-1/2 tablet:hidden block self-center mb-5" />
         <div class="flex flex-col-reverse tablet:flex-row">
           <nuxt class="w-1/2 flex justify-center self-center" />
           <auth-logo class="laptop:block w-3/4 laptop:w-1/2 self-center" />
@@ -24,8 +24,9 @@ import { EAppLanguages, TNotificationEvent, TRouteEventPayload } from '~/@types/
 import AuthLogo from '~/components/svg/AuthLogo.vue';
 import { EEventBusName } from '~/core/bus/Domain';
 import MainLogo from '~/components/svg/MainLogo.vue';
+import AthletickLogoDark from '~/components/svg/AthletickLogoDark.vue';
 
-@Component({ components: { AuthLogo, MainLogo } })
+@Component({ components: { AuthLogo, MainLogo, AthletickLogoDark } })
 export default class AuthLayout extends Vue {
   mounted(): void {
     this.$i18n.setLocale(localStorage.getItem('language'));

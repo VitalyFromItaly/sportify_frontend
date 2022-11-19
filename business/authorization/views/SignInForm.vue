@@ -51,15 +51,15 @@ import { authorizationStoreModule } from '../store';
 export default class SignInForm extends Vue {
   @authorizationStoreModule.State('internalState') state: TState;
 
-  private form = {} as TLoginForm;
+  public form = {} as TLoginForm;
 
-  private presenter: IPresenter;
+  public presenter: IPresenter;
 
-  private mounted(): void {
+  public mounted(): void {
     this.presenter = this.$presenter.authInstance;
   }
 
-  private async login(): Promise<void> {
+  public async login(): Promise<void> {
     // @ts-ignore
     const isFromValid = await this.$refs.validator.validate();
     if (!isFromValid) {

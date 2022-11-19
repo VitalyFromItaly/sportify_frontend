@@ -25,11 +25,11 @@ export default class ModeSwitcher extends Vue {
     return this.$store.getters[`${USER_STORE_NS}/id`];
   }
 
-  private get isDarkTheme(): boolean {
+  public get isDarkTheme(): boolean {
     return this.$store.state.Core.isDarkTheme;
   }
 
-  private set isDarkTheme(value) {
+  public set isDarkTheme(value) {
     this.setTheme(value);
   }
 
