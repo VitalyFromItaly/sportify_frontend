@@ -17,11 +17,16 @@ import { IPresenter as IPlanPresenter, initTrainingPlanState } from '~/business/
 import PlanPresenter from '~/business/trainingPlan/Presenter';
 import { TRAINING_PLAN_STORE_NS } from '~/business/trainingPlan/store/index';
 
+import { IPresenter as IPlanActivityPresenter, initTrainingPlanActivityState } from '~/business/trainingPlanActivity/Domain';
+import PlanActivityPresenter from '~/business/trainingPlanActivity/Presenter';
+import { TRAINING_PLAN_ACTIVITY_STORE_NS } from '~/business/trainingPlanActivity/store/index';
+
 export interface IPresenterPlugin {
   authInstance: IAuthPresenter;
   userInstance: IUserPresenter;
   contextInstance: IContextPresenter;
   trainingPlanInstance: IPlanPresenter;
+  trainingPlanActivityInstance: IPlanActivityPresenter;
 }
 
 const presenter = (context: Context, inject: any) => {
@@ -31,6 +36,7 @@ const presenter = (context: Context, inject: any) => {
   let presenterUser: IUserPresenter;
   let presenterContext: IContextPresenter;
   let presenterPlan: IPlanPresenter;
+  let presenterPlanActivity: IPlanActivityPresenter;
 
   inject('presenter', {
     get trainingPlanInstance(): IPlanPresenter {
@@ -41,6 +47,16 @@ const presenter = (context: Context, inject: any) => {
       const planAdapter = new BaseVuexStateHolder(store, initTrainingPlanState(), TRAINING_PLAN_STORE_NS);
       presenterPlan = new PlanPresenter(planAdapter);
       return presenterPlan;
+    },
+
+    get trainingPlanActivityInstance(): IPlanActivityPresenter {
+      if (presenterPlanActivity) {
+        return presenterPlanActivity;
+      }
+
+      const planActivityAdapter = new BaseVuexStateHolder(store, initTrainingPlanActivityState(), TRAINING_PLAN_ACTIVITY_STORE_NS);
+      presenterPlanActivity = new PlanActivityPresenter(planActivityAdapter);
+      return presenterPlanActivity;
     },
 
     get contextInstance(): IContextPresenter {

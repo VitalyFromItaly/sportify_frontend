@@ -14,7 +14,7 @@ export enum ELanguages {
   Ru = "ru",
 }
 
-export interface Activity {
+export interface ActivityEntity {
   /** uniq id */
   id: number;
 
@@ -105,7 +105,7 @@ export interface User {
   /**
    * user`s age
    * @format date-time
-   * @example "1916-07-15T19:22:49.000Z"
+   * @example "1916-07-15T18:30:00.000Z"
    */
   birthday: string | null;
 
@@ -119,7 +119,7 @@ export interface User {
   language: ELanguages;
 
   /** user activities  */
-  activities: Activity[];
+  activities: ActivityEntity[];
 }
 
 export interface CreateUserDto {
@@ -202,7 +202,7 @@ export interface UpdateUserProfileDto {
   /**
    * user`s age
    * @format date-time
-   * @example "1916-07-15T19:22:49.000Z"
+   * @example "1916-07-15T18:30:00.000Z"
    */
   birthday?: string | null;
 
@@ -216,7 +216,7 @@ export interface UpdateUserProfileDto {
   language?: ELanguages;
 
   /** user activities  */
-  activities?: Activity[];
+  activities?: ActivityEntity[];
 }
 
 export interface CommentDto {
@@ -277,7 +277,7 @@ export interface DictionaryDto {
   goals: AbstractSelectDto[];
 
   /** activities */
-  activities: Activity[];
+  activities: ActivityEntity[];
 
   /** activity types */
   activity_types: AbstractSelectDto[];
@@ -317,6 +317,49 @@ export interface CommandResult {
   status: EHttpStatus;
 }
 
+export interface TrainingPlanActivityEntity {
+  /**
+   * activity`s uniq id
+   * @example 45
+   */
+  id: number;
+
+  /** activity dictionary id */
+  activityId: number;
+
+  /**
+   * datetime user start the activity
+   * @format date-time
+   */
+  start_date: string;
+
+  /**
+   * datetime user end the activity
+   * @format date-time
+   */
+  end_date: string;
+
+  /** json extra the activity */
+  extra: object;
+
+  /** comment the activity */
+  comment: string;
+
+  /**
+   * date user was created
+   * @format date-time
+   * @example 2022-07-31 22:13:20.794424
+   */
+  created_at: string;
+
+  /**
+   * date user was created
+   * @format date-time
+   * @example 2022-07-31 22:13:20.794424
+   */
+  updated_at: string;
+}
+
 export interface ReadTrainingPlanDto {
   /**
    * plan`s uniq id
@@ -346,7 +389,7 @@ export interface ReadTrainingPlanDto {
   duration: number;
 
   /** user plan activities */
-  activities: Activity[];
+  activities: TrainingPlanActivityEntity[];
 
   /**
    * date user was created
@@ -392,7 +435,65 @@ export interface UpdateTrainingPlanDto {
   duration?: number;
 
   /** user plan activities */
-  activities?: Activity[];
+  activities?: ActivityEntity[];
+}
+
+export interface CreateTrainingPlanActivityDto {
+  /**
+   * date user start the activity
+   * @format date-time
+   */
+  start_date: string;
+
+  /**
+   * date user end the activity
+   * @format date-time
+   */
+  end_date: string;
+
+  /** link training plan ID */
+  trainingPlanId: number;
+
+  /** link activity ID */
+  activityId: number;
+
+  /** extra data for the activity */
+  extra: object | null;
+
+  /** comment the activity */
+  comment: string | null;
+}
+
+export interface ReadTrainingPlanActivityDto {
+  /**
+   * training activity uniq id
+   * @example 45
+   */
+  id: number;
+
+  /**
+   * date user start the activity
+   * @format date-time
+   */
+  start_date: string;
+
+  /**
+   * date user end the activity
+   * @format date-time
+   */
+  end_date: string;
+
+  /** link training plan ID */
+  trainingPlanId: number;
+
+  /** link activity ID */
+  activityId: number;
+
+  /** extra data for the activity */
+  extra: object | null;
+
+  /** comment the activity */
+  comment: string | null;
 }
 
 export namespace User {
@@ -523,6 +624,23 @@ export namespace Auth {
   }
 }
 
+export namespace Api {
+  /**
+   * No description
+   * @name ReadAll
+   * @request GET:/api/activity
+   * @secure
+   * @response `default` `(ActivityEntity)[]` get all activities
+   */
+  export namespace ReadAll {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = any;
+  }
+}
+
 export namespace Dictionary {
   /**
    * No description
@@ -620,6 +738,40 @@ export namespace TrainingPlan {
     export type RequestBody = never;
     export type RequestHeaders = {};
     export type ResponseBody = any[];
+  }
+}
+
+export namespace TrainingPlanActivity {
+  /**
+   * No description
+   * @tags TrainingPlanActivity
+   * @name Create
+   * @request POST:/api/training-plan-activity/create
+   * @secure
+   * @response `201` `CommandResult`
+   * @response `default` `CommandResult` new training activity create
+   */
+  export namespace Create {
+    export type RequestParams = {};
+    export type RequestQuery = {};
+    export type RequestBody = CreateTrainingPlanActivityDto;
+    export type RequestHeaders = {};
+    export type ResponseBody = CommandResult;
+  }
+  /**
+   * No description
+   * @tags TrainingPlanActivity
+   * @name Read
+   * @request GET:/api/training-plan-activity/{id}
+   * @secure
+   * @response `default` `ReadTrainingPlanActivityDto` get training activity by id
+   */
+  export namespace Read {
+    export type RequestParams = { id: number };
+    export type RequestQuery = {};
+    export type RequestBody = never;
+    export type RequestHeaders = {};
+    export type ResponseBody = any;
   }
 }
 
@@ -995,6 +1147,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
+  api = {
+    /**
+     * No description
+     *
+     * @name ReadAll
+     * @request GET:/api/activity
+     * @secure
+     * @response `default` `(ActivityEntity)[]` get all activities
+     */
+    readAll: (params: RequestParams = {}) =>
+      this.request<any, ActivityEntity[]>({
+        path: `/api/activity`,
+        method: "GET",
+        secure: true,
+        ...params,
+      }),
+  };
   dictionary = {
     /**
      * No description
@@ -1110,6 +1279,45 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         method: "GET",
         secure: true,
         format: "json",
+        ...params,
+      }),
+  };
+  trainingPlanActivity = {
+    /**
+     * No description
+     *
+     * @tags TrainingPlanActivity
+     * @name Create
+     * @request POST:/api/training-plan-activity/create
+     * @secure
+     * @response `201` `CommandResult`
+     * @response `default` `CommandResult` new training activity create
+     */
+    create: (data: CreateTrainingPlanActivityDto, params: RequestParams = {}) =>
+      this.request<CommandResult, CommandResult>({
+        path: `/api/training-plan-activity/create`,
+        method: "POST",
+        body: data,
+        secure: true,
+        type: ContentType.Json,
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags TrainingPlanActivity
+     * @name Read
+     * @request GET:/api/training-plan-activity/{id}
+     * @secure
+     * @response `default` `ReadTrainingPlanActivityDto` get training activity by id
+     */
+    read: (id: number, params: RequestParams = {}) =>
+      this.request<any, ReadTrainingPlanActivityDto>({
+        path: `/api/training-plan-activity/${id}`,
+        method: "GET",
+        secure: true,
         ...params,
       }),
   };

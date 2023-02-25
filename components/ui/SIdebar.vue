@@ -94,6 +94,7 @@ export default class Sidebar extends Vue {
 .sidebar {
   @apply flex fixed z-40 h-full p-4 w-64 overflow-y-auto bg-gray-200 dark:bg-darkContainer dark:text-white w-80 right-0 justify-between flex-col;
   @apply shadow-md;
+  background-color: white;
   top: 3rem;
 }
 .header {
